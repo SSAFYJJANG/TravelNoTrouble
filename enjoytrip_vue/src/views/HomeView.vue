@@ -15,9 +15,9 @@ import RecommendedAttraction from "@/components/home/RecommendedAttraction.vue";
         <!-- user & attractions countdown -->
         <CountDown />
         <Weather />
+        <RecommendedAttraction />
         <!-- hotplace 인기글 -->
         <PopularHotPlacesList />
-        <RecommendedAttraction />
     </div>
 </template>
 

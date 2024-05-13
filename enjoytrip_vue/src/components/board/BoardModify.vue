@@ -18,6 +18,8 @@ const article = ref({
 });
 
 onMounted(() => {
+  //   const editor = document.querySelector("#editor");
+  //   editor.children[0].innerHTML = article.content.value;
   getArticle();
 });
 
@@ -59,51 +61,38 @@ function onDeleteArticle() {
 </script>
 
 <template>
-  <div class="container py-5">
+  <div class="container d-flex flex-column py-5">
     <div class="row justify-content-center">
-      <div class="col-lg-10 border rounded-3">
-        <h3 class="m-4">{{ article.title }}</h3>
-        <div class="m-4">
-          <div>{{ article.writer }}</div>
-          <div>{{ article.date }} | 조회 12</div>
-          <hr />
+      <div class="col-lg-10">
+        <input
+          type="text"
+          class="w-100 mb-3 border px-3 py-1"
+          v-model="article.title"
+        />
+        <QuillEditor
+          id="editor"
+          toolbar="full"
+          theme="snow"
+          spellcheck="false"
+        />
+        <div class="d-flex justify-content-center">
+          <button
+            id="btn-board"
+            class="btn btn-primary rounded-pill mt-3"
+            @click="clickWrite"
+          >
+            수정
+          </button>
         </div>
-
-        <div class="ql-editor mb-3">
-          <div :innerHTML="article.content"></div>
-          <div class="mt-5">❤ 좋아요 7</div>
-        </div>
-      </div>
-
-      <div class="col-lg-10 d-flex justify-content-end mt-3">
-        <router-link
-          class="btn btn-primary mb-3 ms-1 rounded-pill"
-          :to="{ name: 'board-list' }"
-        >
-          글목록
-        </router-link>
-        <router-link
-          :to="{
-            name: 'article-modify',
-            params: { articleno: article.articleNo },
-          }"
-          class="btn btn-outline-success mb-3 ms-1 rounded-pill"
-        >
-          글수정
-        </router-link>
-        <button
-          type="button"
-          class="btn btn-outline-secondary mb-3 ms-1 rounded-pill"
-          @click="onDeleteArticle"
-        >
-          글삭제
-        </button>
       </div>
     </div>
   </div>
 </template>
 
 <style scoped>
+#editor {
+  overflow: auto;
+}
 .ql-align-right {
   text-align: right;
 }

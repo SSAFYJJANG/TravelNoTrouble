@@ -4,6 +4,7 @@ import BoardView from "@/views/BoardView.vue";
 import BoardList from "@/components/board/BoardList.vue";
 import BoardWrite from "@/components/board/BoardWrite.vue";
 import BoardDetail from "@/components/board/BoardDetail.vue";
+import BoardModify from "@/components/board/BoardModify.vue";
 import MypageView from "@/views/MypageView.vue";
 import MypageInfo from "@/components/user/MypageInfo.vue";
 import MypageModify from "@/components/user/MypageModify.vue";
@@ -39,6 +40,11 @@ const router = createRouter({
           path: "view/:articleno",
           name: "article-view",
           component: BoardDetail,
+        },
+        {
+          path: "modify/:articleno",
+          name: "article-modify",
+          component: BoardModify,
         },
       ],
     },

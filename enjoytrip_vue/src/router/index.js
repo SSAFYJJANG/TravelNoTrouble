@@ -4,11 +4,13 @@ import BoardView from "@/views/BoardView.vue";
 import BoardList from "@/components/board/BoardList.vue";
 import BoardWrite from "@/components/board/BoardWrite.vue";
 import BoardDetail from "@/components/board/BoardDetail.vue";
-import HotplaceView from "@/views/HotplaceView.vue";
 import MypageView from "@/views/MypageView.vue";
 import MypageInfo from "@/components/user/MypageInfo.vue";
 import MypageModify from "@/components/user/MypageModify.vue";
 import SpotView from "@/views/SpotView.vue";
+import HotplaceView from "@/views/HotplaceView.vue";
+import HotplaceFeed from "@/components/hotplace/HotplaceFeed.vue";
+import HotplaceWrite from "@/components/hotplace/HotplaceWrite.vue";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -41,11 +43,6 @@ const router = createRouter({
       ],
     },
     {
-      path: "/hotplace",
-      name: "hotplace",
-      component: HotplaceView,
-    },
-    {
       path: "/mypage",
       name: "mypage",
       component: MypageView,
@@ -60,6 +57,24 @@ const router = createRouter({
           path: "modify",
           name: "mypage-modify",
           component: MypageModify,
+        },
+      ],
+    },
+    {
+      path: "/hotplace",
+      name: "hotplace",
+      component: HotplaceView,
+      redirect: { name: "hotplace-feed" },
+      children: [
+        {
+          path: "feed",
+          name: "hotplace-feed",
+          component: HotplaceFeed,
+        },
+        {
+          path: "write",
+          name: "hotplace-write",
+          component: HotplaceWrite,
         },
       ],
     },

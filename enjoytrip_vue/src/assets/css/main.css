@@ -4808,7 +4808,7 @@ a {
 }
 .cid-uc9Pp8biJG {
   padding-top: 10rem;
-  padding-bottom: 10rem;
+  /* padding-bottom: 10rem; */
   background-color: #ffffff;
 }
 .cid-uc9Pp8biJG .item {
@@ -5068,9 +5068,9 @@ a {
   max-width: 800px;
 }
 .cid-uc9Pp8Jzvy {
-  padding-top: 6rem;
+  /* padding-top: 6rem; */
   padding-bottom: 6rem;
-  background: #edefeb;
+  /* background: #edefeb; */
 }
 .cid-uc9Pp8Jzvy .mbr-fallback-image.disabled {
   display: none;

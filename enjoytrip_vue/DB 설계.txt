@@ -1,0 +1,4 @@
+DB 설계
+인기글
+-> no를 쿼리할 때마다 1~ 새로 부여 & vue js 에서 dataBsSlideTo 등에 활용
+-> 기존 저장된 no를 불러오고 vue js에서는 따로 지정하여 dataBsSlideTo에 사용

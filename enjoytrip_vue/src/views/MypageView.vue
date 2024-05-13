@@ -2,7 +2,7 @@
 
 <template>
   <div class="page">
-  <RouterView />
+  <RouterView style="min-height: calc(100vh - 40px)" />
   </div>
 </template>
 

@@ -29,16 +29,30 @@ const clickWrite = function () {
 </script>
 
 <template>
-  <div class="container d-flex flex-column">
-    <QuillEditor id="editor" toolbar="full" theme="snow" spellcheck="false" />
-    <div class="d-flex justify-content-center">
-      <button
-        id="btn-board"
-        class="btn btn-primary rounded-pill mt-3"
-        @click="clickWrite"
-      >
-        글쓰기
-      </button>
+  <div class="container d-flex flex-column py-5">
+    <div class="row justify-content-center">
+      <div class="col-lg-10">
+        <input
+          type="text"
+          placeholder="제목을 입력하세요"
+          class="w-100 mb-3 border px-3 py-1"
+        />
+        <QuillEditor
+          id="editor"
+          toolbar="full"
+          theme="snow"
+          spellcheck="false"
+        />
+        <div class="d-flex justify-content-center">
+          <button
+            id="btn-board"
+            class="btn btn-primary rounded-pill mt-3"
+            @click="clickWrite"
+          >
+            글쓰기
+          </button>
+        </div>
+      </div>
     </div>
   </div>
 </template>

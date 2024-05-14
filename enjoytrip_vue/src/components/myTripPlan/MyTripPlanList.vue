@@ -26,6 +26,10 @@
         </div>
       </div>
     </div>
+
+    <div class="container border mb-5" style="height: 700px">
+      <h1>캘린더 넣을 곳</h1>
+    </div>
   </section>
 </template>
 

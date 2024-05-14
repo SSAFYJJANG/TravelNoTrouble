@@ -74,6 +74,8 @@ function onDeleteArticle() {
           toolbar="full"
           theme="snow"
           spellcheck="false"
+          v-model:content="article.content"
+          contentType="html"
         />
         <div class="d-flex justify-content-center">
           <button

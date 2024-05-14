@@ -26,7 +26,7 @@
     </div>
   </section>
 
-  <section class="page-section mt-5" id="hotplaceupload">
+  <section class="page-section my-5" id="hotplaceupload">
     <div class="container px-4 px-lg-5">
       <div class="row">
         <!-- 지도 Start -->
@@ -45,7 +45,7 @@
                   type="text"
                   data-sb-validations="required"
                 />
-                <label for="name" class="px-5">핫플 이름</label>
+                <label for="name" class="mx-4">핫플 이름</label>
                 <div
                   style="font-size: small"
                   class="invalid-feedback"
@@ -62,7 +62,7 @@
                   type="date"
                   data-sb-validations="required"
                 />
-                <label for="date" class="px-5">다녀온 날짜</label>
+                <label for="date" class="mx-4">다녀온 날짜</label>
                 <div class="invalid-feedback" data-sb-feedback="date:required">
                   날짜가 빈칸입니다.
                 </div>
@@ -75,7 +75,7 @@
                   type="text"
                   data-sb-validations="required"
                 />
-                <label for="type" class="px-5">장소 유형</label>
+                <label for="type" class="mx-4">장소 유형</label>
                 <div class="invalid-feedback" data-sb-feedback="type:required">
                   장소 유형이 빈칸입니다.
                 </div>
@@ -89,7 +89,7 @@
                   style="height: 10rem"
                   data-sb-validations="required"
                 ></textarea>
-                <label for="message" class="px-5">핫플 상세설명</label>
+                <label for="message" class="mx-4">핫플 상세설명</label>
                 <div
                   class="invalid-feedback px-5"
                   data-sb-feedback="message:required"
@@ -122,7 +122,7 @@
                   id="submitButton"
                   type="submit"
                 >
-                  자랑하기
+                  피드 올리기
                 </button>
               </div>
             </form>

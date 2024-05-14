@@ -71,7 +71,7 @@ function onDeleteArticle() {
 
         <div class="ql-editor mb-3">
           <div :innerHTML="article.content"></div>
-          <div class="mt-5">❤ 좋아요 7</div>
+          <div class="mt-5"><button id="article-like">❤</button>좋아요 7</div>
         </div>
       </div>
 

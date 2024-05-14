@@ -1,8 +1,18 @@
 <script setup>
-import { defineProps } from "vue";
+import { ref, defineProps } from "vue";
+import HotplaceView from "@/components/hotplace/HotplaceView.vue";
+
 const props = defineProps(["cardImg"]);
-console.log(props.cardImg);
+// console.log(props.cardImg);
+
 const hotplace_card = document.querySelector("#hotplace-card");
+
+const viewModalCheck = ref(false);
+const toggleViewModal = () => {
+  console.log(viewModalCheck.value);
+  viewModalCheck.value = !viewModalCheck.value;
+  console.log(viewModalCheck.value);
+};
 </script>
 
 <template>
@@ -14,13 +24,15 @@ const hotplace_card = document.querySelector("#hotplace-card");
     >
       <div class="content-wrap">
         <div class="mbr-section-btn card-btn align-center">
-          <a class="btn btn-white display-7" href="https://mobiri.se">
+          <a class="btn btn-white display-7" @click="toggleViewModal">
             Read More
           </a>
         </div>
       </div>
     </div>
   </div>
+
+  <HotplaceView :viewModalCheck="viewModalCheck" />
 </template>
 
 <style scoped>

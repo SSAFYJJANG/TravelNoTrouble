@@ -87,7 +87,7 @@
           <div class="image-wrapper">
             <img
               class="w-100"
-              src="../assets/images/gallery04.jpg"
+              src="../../assets/images/gallery04.jpg"
               alt="Mobirise Website Builder"
             />
           </div>

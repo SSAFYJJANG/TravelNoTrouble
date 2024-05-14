@@ -17,47 +17,24 @@ const article = ref({
     '<h1 class="ql-align-center">글쓰기 테스트</h1><h2 class="ql-align-center">글쓰기 테스트</h2><h3 class="ql-align-center">글쓰기 테스트</h3><h4 class="ql-align-center">글쓰기 테스트</h4><h1 class="ql-align-center">글쓰기 테스트</h1><h2 class="ql-align-center">글쓰기 테스트</h2><h3 class="ql-align-center">글쓰기 테스트</h3><h4 class="ql-align-center">글쓰기 테스트</h4><p class="ql-align-center"><br></p><p class="ql-align-center"><span style="background-color: rgb(250, 204, 204);">가나다라마바사</span></p><p class="ql-align-center"><br></p><ul><li class="ql-align-center"><span style="background-color: rgb(250, 204, 204);">아에이오우</span></li><li class="ql-align-center"><span style="background-color: rgb(255, 255, 204);">가나다라마바사</span></li><li class="ql-align-center"><span style="color: rgb(230, 0, 0); background-color: rgb(255, 255, 204);">ABCDEFG</span></li></ul><p class="ql-align-center"><br></p><p class="ql-align-center"><u style="color: rgb(230, 0, 0); background-color: rgb(255, 255, 204);">옹오오ㅗ오ㅗ</u></p><p><br></p><h1 class="ql-align-center">글쓰기 테스트</h1><h2 class="ql-align-center">글쓰기 테스트</h2><h3 class="ql-align-center">글쓰기 테스트</h3><h4 class="ql-align-center">글쓰기 테스트</h4><h1 class="ql-align-center">글쓰기 테스트</h1><h2 class="ql-align-center">글쓰기 테스트</h2><h3 class="ql-align-center">글쓰기 테스트</h3><h4 class="ql-align-center">글쓰기 테스트</h4><p class="ql-align-center"><br></p><p class="ql-align-center"><span style="background-color: rgb(250, 204, 204);">가나다라마바사</span></p><p class="ql-align-center"><br></p><ul><li class="ql-align-center"><span style="background-color: rgb(250, 204, 204);">아에이오우</span></li><li class="ql-align-center"><span style="background-color: rgb(255, 255, 204);">가나다라마바사</span></li><li class="ql-align-center"><span style="color: rgb(230, 0, 0); background-color: rgb(255, 255, 204);">ABCDEFG</span></li></ul><p class="ql-align-center"><br></p><p class="ql-align-center"><u style="color: rgb(230, 0, 0); background-color: rgb(255, 255, 204);">옹오오ㅗ오ㅗ</u></p><p><br></p>',
 });
 
-onMounted(() => {
-  //   const editor = document.querySelector("#editor");
-  //   editor.children[0].innerHTML = article.content.value;
-  getArticle();
-});
+onMounted(() => { });
 
-const getArticle = () => {
-  //   // const { articleno } = route.params;
-  console.log(articleno + "번글 얻으러 가자!!!");
-  //   detailArticle(
-  //     articleno,
-  //     ({ data }) => {
-  //       article.value = data;
-  //     },
-  //     (error) => {
-  //       console.log(error);
-  //     }
-  //   );
+const clickModify = function () {
+  const editor = document.querySelector("#editor");
+
+  const title = document.querySelector("#editor-title").value; // 제목
+  const content = editor.children[0].innerHTML; // 내용
+
+  const article = {
+    title: title,
+    content: content
+  };
+
+  console.log(article);
+
+  // axios.post();
+
 };
-
-function moveList() {
-  router.push({ name: "article-list" });
-}
-
-function moveModify() {
-  router.push({ name: "article-modify", params: { articleno } });
-}
-
-function onDeleteArticle() {
-  //   // const { articleno } = route.params;
-  console.log(articleno + "번글 삭제하러 가자!!!");
-  //   deleteArticle(
-  //     articleno,
-  //     (response) => {
-  //       if (response.status == 200) moveList();
-  //     },
-  //     (error) => {
-  //       console.log(error);
-  //     }
-  //   );
-}
 </script>
 
 <template>
@@ -66,6 +43,7 @@ function onDeleteArticle() {
       <div class="col-lg-10">
         <input
           type="text"
+          id="editor-title"
           class="w-100 mb-3 border px-3 py-1"
           v-model="article.title"
         />
@@ -81,7 +59,7 @@ function onDeleteArticle() {
           <button
             id="btn-board"
             class="btn btn-primary rounded-pill mt-3"
-            @click="clickWrite"
+            @click="clickModify"
           >
             수정
           </button>

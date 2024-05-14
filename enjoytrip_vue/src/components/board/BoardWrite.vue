@@ -24,7 +24,19 @@ const toolbarOptions = [
 
 const clickWrite = function () {
   const editor = document.querySelector("#editor");
-  console.log(editor.children[0].innerHTML); // editor 내용
+
+  const title = document.querySelector("#editor-title").value; // 제목
+  const content = editor.children[0].innerHTML; // 내용
+
+  const article = {
+    title: title,
+    content: content
+  };
+
+  console.log(article);
+
+  // axios.post();
+
 };
 </script>
 
@@ -34,6 +46,7 @@ const clickWrite = function () {
       <div class="col-lg-10">
         <input
           type="text"
+          id="editor-title"
           placeholder="제목을 입력하세요"
           class="w-100 mb-3 border px-3 py-1"
         />

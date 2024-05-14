@@ -3,7 +3,7 @@
 </script>
 
 <template>
-    <section
+  <section
     data-bs-version="5.1"
     class="gallery1 mbr-gallery cid-uc9Pp8biJG"
     id="gallery01-2e"
@@ -15,12 +15,12 @@
             <h3
               class="mbr-section-title mbr-fonts-style align-center m-0 display-2"
             >
-              <strong>My Plan List</strong>
+              <strong>Make My Plan</strong>
             </h3>
             <h4
               class="mbr-section-subtitle mbr-fonts-style align-center mb-0 mt-4 display-7"
             >
-              여행 계획 리스트
+              여행 계획 짜기
             </h4>
           </div>
         </div>
@@ -28,15 +28,11 @@
     </div>
 
     <div class="container border mb-5" style="height: 700px">
-      <h1>캘린더 넣을 곳</h1>
-      <RouterLink           
-        :to="{ name: 'plan-write'}"
-        class="btn btn-outline-success mb-3 ms-1 rounded-pill"
-      >
-        임시 글쓰기 버튼
-      </RouterLink>
+      <h1>test</h1>
     </div>
   </section>
 </template>
 
-<style scoped></style>
+<style scoped>
+
+</style>

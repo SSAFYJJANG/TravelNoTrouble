@@ -50,6 +50,7 @@ public class UserController {
 	@DeleteMapping("/")
 	public ResponseEntity<?> deleteUserInfo(@RequestBody String userId) throws Exception{
 		try {
+			
 			int result = service.deleteUserInfo(userId);
 			if(result < 1) throw new Exception();
 			return new ResponseEntity<Boolean>(true, HttpStatus.OK);

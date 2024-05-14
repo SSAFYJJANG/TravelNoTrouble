@@ -13,15 +13,18 @@
 	</select>
 
 	<select id="getAttractionList" parameterType="int" resultType="attractionDto">
-		select *
+		select content_id, title, addr1, first_image, sido_code, gugun_code, longitude, latitude
 		from attraction_info
-		where sido_code=#{sido_code} and gugun_code=#{gugun_code} and content_type_id=#{content_type_id}
+		where (#{sido_code} = 0 OR sido_code = #{sido_code})
+        AND (#{gugun_code} = 0 OR gugun_code = #{gugun_code})
+        AND (#{content_type_id} = 0 OR content_type_id = #{content_type_id})
 	</select>
 	
 	<select id="viewAttraction" parameterType="int" resultType="attractionDto">
 		select *
-		from attraction_info
-		where content_id=#{content_id}
+		from attraction_info ai left join attraction_description ad
+		on ai.content_id = ad.content_id
+		where ai.content_id=#{content_id}
 	</select>
 	
 	<select id="getTotalAttractionCount" resultType="int">
@@ -32,7 +35,8 @@
 	
 	<select id="getRecommendationAttraction" resultType="attractionDto">
 		select *
-		from hotplace
-		order by like desc limit 1
+		from attraction_info
+		Order by rand()
+		limit 1
 	</select>
 </mapper>

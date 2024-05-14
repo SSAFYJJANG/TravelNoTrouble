@@ -36,11 +36,15 @@
 		where board_id=#{board_id}
 	</update>
 	
-	<select id="searchBoard" parameterType="hashmap">
+	<select id="searchBoard" parameterType="map">
 		select *
 		from board
-		where title like '%#{title}%' or userid=#{userid}
-		
+		where 1=1
+        <foreach item="entry" index="key" collection="keyword">
+            <if test="entry.value != null">
+                AND ${key} = #{entry.value}
+            </if>
+        </foreach>
 		<!-- {'title', '테스트'} or {'userid', 'ssafy'} -->
 	</select>
 </mapper>

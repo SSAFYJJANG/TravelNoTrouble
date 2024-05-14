@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>	
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- namespace: dao 명, id: 메서드 명 -->
+<!-- <mapper namespace="com.edu.board.model.dao.Dao"> -->
+<mapper namespace="com.trip.vue.plan.model.dao.PlanDetailDao">
+
+	<select id="listPlanDetail" parameterType="integer" resultType="planDetailDto">
+		select *
+		from plan_detail
+		where plan_id = {plan_id}
+	</select>
+
+	<insert id="insertPlanDetail" parameterType="planDetailDto">
+		insert into plan_detail(plan_id, content_id)
+		values (#{plan_id}, #{content_id})
+	</insert>
+	
+	<delete id="deletePlanDetail" parameterType="integer">
+		delete
+		from plan_detail
+		where plan_detail_id=#{plan_detail_id}
+	</delete>
+	
+	<delete id="deleteAllPlanDetail" parameterType="integer">
+		delete
+		from plan
+		where plan_id=#{plan_id}
+	</delete>
+	
+</mapper>

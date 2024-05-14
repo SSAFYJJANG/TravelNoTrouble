@@ -55,5 +55,11 @@ public class BoardServiceImpl implements BoardService {
 	public List<BoardDto> searchBoard(Map<String, String> keyword) throws Exception {
 		return boardDao.searchBoard(keyword);
 	}
+	
+	@Transactional
+	@Override
+	public int deleteAllBoard(String userId) throws Exception {
+		return boardDao.deleteAllBoard(userId);
+	}
 
 }

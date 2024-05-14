@@ -31,9 +31,9 @@ public class PlanController {
 	//plan
 	//get list 가져오기 '/' 
 	@GetMapping("/")
-	public ResponseEntity<?> listPlan() throws Exception{
+	public ResponseEntity<?> listPlan(@RequestParam("userId") String userId) throws Exception{
 		try {
-			return new ResponseEntity<List<PlanDto>>(planService.listPlan(), HttpStatus.OK);
+			return new ResponseEntity<List<PlanDto>>(planService.listPlan(userId), HttpStatus.OK);
 		} catch (Exception e) {
 			return new ResponseEntity<String>("서버 오류", HttpStatus.INTERNAL_SERVER_ERROR);
 		}

@@ -1,4 +1,9 @@
-<script setup></script>
+<script setup>
+const clickSubmit = () => { 
+  
+};
+
+</script>
 
 <template>
   <section
@@ -118,9 +123,10 @@
               <!-- Submit Button-->
               <div class="d-grid" onclick="submitHotPlace(this)">
                 <button
-                  class="btn btn-primary btn-xl disabled fs-6"
+                  class="btn btn-primary btn-xl fs-6"
                   id="submitButton"
-                  type="submit"
+                  @click="clickSubmit"
+                  type="button"
                 >
                   피드 올리기
                 </button>

@@ -11,7 +11,7 @@ const toggleLoginModal = () => {
 
 <template>
   <!-- <button @click="toggleLoginModal">Login</button> -->
-  <div class="modal-wrap" v-show="loginModalCheck">
+  <div class="modal-wrap z-3" v-show="loginModalCheck">
     <div class="modal-container">
       <div class="modal-btn d-flex justify-content-end">
         <button

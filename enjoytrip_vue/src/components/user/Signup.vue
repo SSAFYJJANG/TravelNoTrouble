@@ -12,7 +12,7 @@ const toggleSignupModal = () => {
 
 <template>
   <!-- <button @click="toggleSignupModal">Signup</button> -->
-  <div class="modal-wrap" v-show="signupModalCheck">
+  <div class="modal-wrap z-3" v-show="signupModalCheck">
     <div class="modal-container">
       <div class="modal-btn d-flex justify-content-end">
         <button

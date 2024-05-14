@@ -24,7 +24,7 @@ async function loadScripts() {
   );
   await import("/src/assets/js/embla/embla.min.js");
   await import("/src/assets/js/embla/script.js");
-  await import("/src/assets/js/countdown/countdown.js");
+  // await import("/src/assets/js/countdown/countdown.js");
   await import("/src/assets/js/web/assets/jquery/jquery.min.js");
   await import("/src/assets/js/dropdown/js/navbar-dropdown.js");
   await import("/src/assets/js/smoothscroll/smooth-scroll.js");

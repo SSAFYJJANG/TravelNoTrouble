@@ -1,13 +1,13 @@
 <script setup>
 import { ref, computed, watch } from 'vue';
 import PopularHotPlace from './PopularHotPlace.vue';
-
+let id = 1;
 const popularHotPlacesCnt = ref(1);
 // TODO : dataSlideTo, dataBsSlideTo은 객체마다 숫자가 달라야하는지, 
 // 숫자는 순차적으로 나와야하는지 확인
 const popularHotPlaces = ref([
     {
-        no: 1,
+        no: id++,
         imgSrc: "/src/assets/images/shop1.jpg",
         alt: "",
         title: "",
@@ -15,7 +15,7 @@ const popularHotPlaces = ref([
         dataBsSlideTo: "1",
     },
     {
-        no: 2,
+        no: id++,
         imgSrc: "/src/assets/images/shop2.jpg",
         alt: "",
         title: "",
@@ -23,7 +23,7 @@ const popularHotPlaces = ref([
         dataBsSlideTo: "2",
     },
     {
-        no: 3,
+        no: id++,
         imgSrc: "/src/assets/images/shop3.jpg",
         alt: "",
         title: "",
@@ -31,7 +31,39 @@ const popularHotPlaces = ref([
         dataBsSlideTo: "3",
     },
     {
-        no: 4,
+        no: id++,
+        imgSrc: "/src/assets/images/shop4.jpg",
+        alt: "",
+        title: "",
+        dataSlideTo: "4",
+        dataBsSlideTo: "4",
+    },
+    {
+        no: id++,
+        imgSrc: "/src/assets/images/shop4.jpg",
+        alt: "",
+        title: "",
+        dataSlideTo: "4",
+        dataBsSlideTo: "4",
+    },
+    {
+        no: id++,
+        imgSrc: "/src/assets/images/shop4.jpg",
+        alt: "",
+        title: "",
+        dataSlideTo: "4",
+        dataBsSlideTo: "4",
+    },
+    {
+        no: id++,
+        imgSrc: "/src/assets/images/shop4.jpg",
+        alt: "",
+        title: "",
+        dataSlideTo: "4",
+        dataBsSlideTo: "4",
+    },
+    {
+        no: id++,
         imgSrc: "/src/assets/images/shop4.jpg",
         alt: "",
         title: "",
@@ -54,7 +86,7 @@ const lengthOfPopularHotPlaces = computed(() => {
                     <div class="col-12 content-head">
                         <div class="mbr-section-head mb-5">
                             <h5 class="mbr-section-subtitle mbr-fonts-style align-center mb-0 mt-4 display-6">
-                                [ popular Hotplaces ]
+                                [ Best Hotplaces ]
                             </h5>
                         </div>
                     </div>
@@ -92,4 +124,10 @@ const lengthOfPopularHotPlaces = computed(() => {
     </section>
 </template>
 
-<style scoped></style>
+<style scoped>
+.mbr-embla{
+    /* margin-bottom: 6rem; */
+    padding-bottom: 8rem;
+}
+
+</style>

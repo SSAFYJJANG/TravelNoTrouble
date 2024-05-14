@@ -6939,7 +6939,8 @@ a {
   background: transparent !important;
   padding: 0 !important;
   border: none !important;
-  box-shadow: none !important;
+  /* box-shadow: none !important; */
+  box-shadow: none;
   border-radius: 0 !important;
 }
 .cid-uc9QV2Aj9f .navbar.opened {
@@ -7156,9 +7157,12 @@ a {
   padding: 0;
   background-color: #ffffff !important;
   position: fixed;
+  /* header menu 추가 */
+  box-shadow: 0px -1px 15px 0px #a1a0a0;
 }
 .cid-uc9QV2Aj9f .opacityScroll {
   background: rgba(255, 255, 255, 0) !important;
+  box-shadow: none;
 }
 .cid-uc9QV2Aj9f a.nav-link {
   display: flex;

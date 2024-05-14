@@ -30,19 +30,18 @@ const clickWrite = function () {
 
   const article = {
     title: title,
-    content: content
+    content: content,
   };
 
   console.log(article);
 
   // axios.post();
-
 };
 </script>
 
 <template>
   <div class="container d-flex flex-column py-5">
-    <div class="row justify-content-center">
+    <div class="row justify-content-center px-4">
       <div class="col-lg-10">
         <input
           type="text"

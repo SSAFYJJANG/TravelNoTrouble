@@ -41,7 +41,7 @@ const hotplace_cards = [
 ];
 const cardImg = "/src/assets/images/shop7.jpg";
 
-const onPageChange = () => { };
+const onPageChange = () => {};
 </script>
 
 <template>
@@ -161,7 +161,11 @@ const onPageChange = () => { };
           </div>
 
           <div class="d-flex justify-content-center mt-5">
-            <PageNavigation :current-page="currentPage" :total-page="totalPage" @pageChange="onPageChange">
+            <PageNavigation
+              :current-page="currentPage"
+              :total-page="totalPage"
+              @pageChange="onPageChange"
+            >
             </PageNavigation>
           </div>
         </div>

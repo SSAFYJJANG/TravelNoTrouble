@@ -24,6 +24,7 @@ import com.trip.vue.board.model.service.BoardService;
 public class BoardController {
 	@Autowired
 	private BoardService service;
+	
 	//get list 가져오기 "/"
 	@GetMapping("/")
 	public ResponseEntity<?> listBoard() throws Exception{

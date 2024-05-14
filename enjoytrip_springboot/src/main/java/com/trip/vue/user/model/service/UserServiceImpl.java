@@ -2,47 +2,50 @@ package com.trip.vue.user.model.service;
 
 import java.util.Map;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.trip.vue.user.model.UserDto;
+import com.trip.vue.user.model.dao.UserDao;
 
 @Service
 public class UserServiceImpl implements UserService {
 
+	@Autowired
+	private UserDao userDao;
+
 	@Override
 	public UserDto getLoginUser(Map<String, String> user) {
-		// TODO Auto-generated method stub
-		return null;
+		return userDao.getLoginUser(user);
 	}
 
+	@Transactional
 	@Override
 	public int registUser(UserDto userinfo) {
-		// TODO Auto-generated method stub
-		return 0;
+		return userDao.registUser(userinfo);
 	}
 
+	@Transactional
 	@Override
 	public int updateUserInfo(UserDto userinfo) {
-		// TODO Auto-generated method stub
-		return 0;
+		return userDao.updateUserInfo(userinfo);
 	}
 
+	@Transactional
 	@Override
 	public int deleteUserInfo(String userId) {
-		// TODO Auto-generated method stub
-		return 0;
+		return userDao.deleteUserInfo(userId);
 	}
 
 	@Override
 	public UserDto getUserInfoById(String id) {
-		// TODO Auto-generated method stub
-		return null;
+		return userDao.getUserInfoById(id);
 	}
 
 	@Override
 	public int getTotalUserCount() throws Exception {
-		// TODO Auto-generated method stub
-		return 0;
+		return userDao.getTotalUserCount();
 	}
 
 }

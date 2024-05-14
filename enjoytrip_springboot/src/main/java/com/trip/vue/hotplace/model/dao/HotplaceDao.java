@@ -19,7 +19,7 @@ public interface HotplaceDao {
 	//글 수정
 	public int modifyHotplace(HotplaceDto ob) throws Exception;
 	//글 세부사항 가져오기
-	public HotplaceDto viewHotplace(int board_id) throws Exception;
+	public HotplaceDto viewHotplace(int hotplace_id) throws Exception;
 	//조회수 올리기
 	public void updateHit(int hotplace_id) throws Exception;
 	//종아요 올리기

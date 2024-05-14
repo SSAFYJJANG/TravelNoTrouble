@@ -1,4 +1,11 @@
-<script setup></script>
+<script setup>
+import VKakaoMap from "../common/VKakaoMap.vue";
+
+const clickSubmit = () => { 
+
+};
+
+</script>
 
 <template>
   <section
@@ -30,7 +37,9 @@
     <div class="container px-4 px-lg-5">
       <div class="row">
         <!-- 지도 Start -->
-        <div id="map2" class="col-lg-6" style="width: 50%"></div>
+        <div id="map2" class="col-lg-6" style="width: 50%">
+          <VKakaoMap />
+        </div>
         <!-- 지도 End -->
 
         <div class="col-lg-6">
@@ -118,9 +127,10 @@
               <!-- Submit Button-->
               <div class="d-grid" onclick="submitHotPlace(this)">
                 <button
-                  class="btn btn-primary btn-xl disabled fs-6"
+                  class="btn btn-primary btn-xl fs-6"
                   id="submitButton"
-                  type="submit"
+                  @click="clickSubmit"
+                  type="button"
                 >
                   피드 올리기
                 </button>

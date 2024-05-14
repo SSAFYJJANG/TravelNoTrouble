@@ -13,7 +13,7 @@ import com.trip.vue.map.model.SidoDto;
 import com.trip.vue.map.model.dao.MapDao;
 
 @Service
-public class MapServieImpl implements MapServie{
+public class MapServiceImpl implements MapService{
 
 	@Autowired
 	private MapDao mapDao;

@@ -4,7 +4,7 @@ import java.util.List;
 
 import com.trip.vue.hotplace.model.HotplaceDto;
 
-public interface HotplaceServie {
+public interface HotplaceService {
 	//좋아요순으로 가져오기(이미지, id) - 메인
 	public List<HotplaceDto> listBestHotplace() throws Exception;
 	//list 가져오기(최신순) - 피드

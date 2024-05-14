@@ -15,13 +15,13 @@ import org.springframework.web.bind.annotation.RestController;
 import com.trip.vue.map.model.AttractionDto;
 import com.trip.vue.map.model.GugunDto;
 import com.trip.vue.map.model.SidoDto;
-import com.trip.vue.map.model.service.MapServie;
+import com.trip.vue.map.model.service.MapService;
 
 @RestController
 @RequestMapping("/attraction")
 public class MapController {
 	@Autowired
-	private MapServie service;
+	private MapService service;
 	
 	// get 시도 리스트 가져오기 "/sido"
 	@GetMapping("/sido")

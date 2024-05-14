@@ -14,6 +14,7 @@ import HotplaceFeed from "@/components/hotplace/HotplaceFeed.vue";
 import HotplaceWrite from "@/components/hotplace/HotplaceWrite.vue";
 import MyTripPlanView from "@/views/MyTripPlanView.vue";
 import MyTripPlanList from "@/components/myTripPlan/MyTripPlanList.vue";
+import MyTripPlanWrite from "@/components/myTripPlan/MyTripPlanWrite.vue";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -102,6 +103,11 @@ const router = createRouter({
           name: "plan-list",
           component: MyTripPlanList,
         },
+        {
+          path: "write",
+          name: "plan-write",
+          component: MyTripPlanWrite,
+        }
       ],
     },
   ],

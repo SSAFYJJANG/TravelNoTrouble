@@ -7,7 +7,7 @@ import com.trip.vue.map.model.AttractionDto;
 import com.trip.vue.map.model.GugunDto;
 import com.trip.vue.map.model.SidoDto;
 
-public interface MapServie {
+public interface MapService {
 	// 시도 리스트 가져오기
 	public List<SidoDto> getSidoList();
 	// 시도에 따른 구군 리스트 가져오기

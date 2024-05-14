@@ -10,7 +10,7 @@ import com.trip.vue.hotplace.model.HotplaceDto;
 import com.trip.vue.hotplace.model.dao.HotplaceDao;
 
 @Service
-public class HotplaceServieImpl implements HotplaceServie {
+public class HotplaceServiceImpl implements HotplaceService {
 
 	@Autowired
 	private HotplaceDao hotplaceDao;

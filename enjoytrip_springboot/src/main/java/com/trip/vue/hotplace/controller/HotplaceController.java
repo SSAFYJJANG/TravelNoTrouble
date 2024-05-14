@@ -14,13 +14,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.trip.vue.hotplace.model.HotplaceDto;
-import com.trip.vue.hotplace.model.service.HotplaceServie;
+import com.trip.vue.hotplace.model.service.HotplaceService;
 
 @RestController
 @RequestMapping("/hotplace")
 public class HotplaceController {
 	@Autowired
-	private HotplaceServie service;
+	private HotplaceService service;
 	//get 좋아요순으로 가져오기(이미지, id) - 메인 "/best"
 	@GetMapping("/best")
 	public ResponseEntity<?> listBestHotplace() throws Exception{

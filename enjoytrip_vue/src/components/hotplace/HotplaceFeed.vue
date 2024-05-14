@@ -1,6 +1,7 @@
 <script setup>
 import { ref } from "vue";
 import HotplaceCard from "@/components/hotplace/HotplaceCard.vue";
+import PageNavigation from "../common/PageNavigation.vue";
 import {
   Listbox,
   ListboxButton,
@@ -39,6 +40,8 @@ const hotplace_cards = [
   },
 ];
 const cardImg = "/src/assets/images/shop7.jpg";
+
+const onPageChange = () => { };
 </script>
 
 <template>
@@ -158,7 +161,8 @@ const cardImg = "/src/assets/images/shop7.jpg";
           </div>
 
           <div class="d-flex justify-content-center mt-5">
-            <div>페이지 표시할 곳</div>
+            <PageNavigation :current-page="currentPage" :total-page="totalPage" @pageChange="onPageChange">
+            </PageNavigation>
           </div>
         </div>
       </section>

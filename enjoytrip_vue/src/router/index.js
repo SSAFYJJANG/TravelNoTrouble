@@ -92,19 +92,22 @@ const router = createRouter({
       component: SpotView,
     },
     {
-      path: '/plan',
-      name: 'plan',
+      path: "/plan",
+      name: "plan",
       component: MyTripPlanView,
       redirect: { name: "plan-list" },
       children: [
         {
-          path: '',
-          name: 'plan-list',
+          path: "",
+          name: "plan-list",
           component: MyTripPlanList,
-        }
-      ]
-    }
+        },
+      ],
+    },
   ],
+  scrollBehavior(to, from, savedPosition) {
+    return { top: 0 };
+  },
 });
 
 export default router;

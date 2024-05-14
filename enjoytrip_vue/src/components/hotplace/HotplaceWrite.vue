@@ -1,6 +1,8 @@
 <script setup>
+import VKakaoMap from "../common/VKakaoMap.vue";
+
 const clickSubmit = () => { 
-  
+
 };
 
 </script>
@@ -35,7 +37,9 @@ const clickSubmit = () => {
     <div class="container px-4 px-lg-5">
       <div class="row">
         <!-- 지도 Start -->
-        <div id="map2" class="col-lg-6" style="width: 50%"></div>
+        <div id="map2" class="col-lg-6" style="width: 50%">
+          <VKakaoMap />
+        </div>
         <!-- 지도 End -->
 
         <div class="col-lg-6">

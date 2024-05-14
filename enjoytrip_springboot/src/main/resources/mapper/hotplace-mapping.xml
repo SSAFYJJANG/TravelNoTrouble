@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>	
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- namespace: dao 명, id: 메서드 명 -->
+<!-- <mapper namespace="com.edu.board.model.dao.Dao"> -->
+<mapper namespace="com.trip.vue.hotplace.model.dao.HotplaceDao">
+
+	<select id="listBestHotplace" resultType="hotplaceDto">
+		select 
+		from hotplace
+		order by like desc 
+		limit 15
+	</select>
+	
+	<select id="listHotplace" resultType="hotplaceDto">
+		select hotplace_id, image, title
+		from hotplace
+	</select>
+
+	<insert id="insertHotplace" parameterType="hotplaceDto">
+		insert into hotplace(title, userId, overview, image. sido_code, gugun_code)
+		values (#{title), #{userId}, #{overview}, #{image}. #{sido_code}, #{gugun_code})
+	</insert>
+	
+	<delete id="deleteHotplace" parameterType="integer">
+		delete
+		from hotplace
+		where hotplace_id=#{hotplace_id}
+	</delete>
+	
+	<update id="modifyHotplace" parameterType="hotplaceDto">
+		update hotplace
+		set title=#{title}, overview=#{overview}, modified_time=now(), image={image}, sido_code=#{sido_code}, gugun_code=#{gugun_code}
+		where hotplace_id=#{hotplace_id}
+	</update>
+	
+	<select id="viewHotplace" parameterType="integer">
+		select *
+		from hotplace
+		where hotplace_id = {hotplace_id}
+	</select>
+	
+	<update id="updateHit" parameterType="integer">
+		update hotplace
+		set hit = hit + 1
+		where hotplace_id=#{hotplace_id}
+	</update>
+	
+	<update id="updateLike" parameterType="integer">
+		update hotplace
+		set like = like + 1
+		where hotplace_id=#{hotplace_id}
+	</update>
+	
+	<select id="getTotalHotplaceCount">
+		select count(*)
+		from hotplace
+	</select>
+	
+	<delete id="deleteAllHotplace" parameterType="string">
+		delete
+		from hotplace
+		where userId=#{userId}
+	</delete>
+	
+	<select id="viewUserHotplace" parameterType="string">
+		select hotplace_id, image, title
+		from hotplace
+		where userId = {userId}
+	</select>
+	
+</mapper>

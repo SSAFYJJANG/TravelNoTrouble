@@ -12,6 +12,8 @@ import SpotView from "@/views/SpotView.vue";
 import HotplaceView from "@/views/HotplaceView.vue";
 import HotplaceFeed from "@/components/hotplace/HotplaceFeed.vue";
 import HotplaceWrite from "@/components/hotplace/HotplaceWrite.vue";
+import MyTripPlanView from "@/views/MyTripPlanView.vue";
+import MyTripPlanList from "@/components/myTripPlan/MyTripPlanList.vue";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -89,6 +91,19 @@ const router = createRouter({
       name: "spot",
       component: SpotView,
     },
+    {
+      path: '/plan',
+      name: 'plan',
+      component: MyTripPlanView,
+      redirect: { name: "plan-list" },
+      children: [
+        {
+          path: '',
+          name: 'plan-list',
+          component: MyTripPlanList,
+        }
+      ]
+    }
   ],
 });
 

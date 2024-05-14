@@ -11,4 +11,6 @@ public interface PlanDetailService {
 	public int insertPlanDetail(PlanDetailDto ob) throws Exception;
 	// 세부일정 삭제
 	public int deletePlanDetail(int plan_detail_id) throws Exception;
+	// 전체 세부 일정 삭제
+	public int deleteAllPlanDetail(int plan_id) throws Exception;
 }

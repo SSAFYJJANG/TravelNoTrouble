@@ -23,4 +23,6 @@ public interface BoardDao {
 	public void updateHit(int board_id) throws Exception;
 	//글 검색하기(글제목, 작성자)
 	public List<BoardDto> searchBoard(Map<String, String> keyword) throws Exception;
+	// 사용자 전체 글 삭제
+	public int deleteAllBoard(String userId) throws Exception;
 }

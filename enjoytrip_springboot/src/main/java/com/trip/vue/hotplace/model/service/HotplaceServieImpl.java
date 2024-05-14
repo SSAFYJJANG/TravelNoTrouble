@@ -65,5 +65,16 @@ public class HotplaceServieImpl implements HotplaceServie {
 	public int getTotalHotplaceCount() throws Exception {
 		return hotplaceDao.getTotalHotplaceCount();
 	}
+	
+	@Transactional
+	@Override
+	public int deleteAllHotplace(String userId) throws Exception {
+		return hotplaceDao.deleteAllHotplace(userId);
+	}
+
+	@Override
+	public int viewUserHotplace(String userId) throws Exception {
+		return hotplaceDao.viewUserHotplace(userId);
+	}
 
 }

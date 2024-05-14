@@ -15,8 +15,8 @@ public class PlanServiceImpl implements PlanService {
 	private PlanDao planDao;
 
 	@Override
-	public List<PlanDto> listPlan() throws Exception {
-		return planDao.listPlan();
+	public List<PlanDto> listPlan(String userId) throws Exception {
+		return planDao.listPlan(userId);
 	}
 
 	@Transactional
@@ -35,6 +35,12 @@ public class PlanServiceImpl implements PlanService {
 	@Override
 	public int modifyPlan(PlanDto ob) throws Exception {
 		return planDao.modifyPlan(ob);
+	}
+	
+	@Transactional
+	@Override
+	public int deleteAllPlan(String userId) throws Exception {
+		return planDao.deleteAllPlan(userId);
 	}
 
 }

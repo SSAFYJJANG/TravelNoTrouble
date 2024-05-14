@@ -26,4 +26,8 @@ public interface HotplaceDao {
 	public void updateLike(int hotplace_id) throws Exception;
 	// 핫플 수 가져오기 - 메인화면
 	public int getTotalHotplaceCount() throws Exception;
+	// 전체 핫플 삭제
+	public int deleteAllHotplace(String userId) throws Exception;
+	// 유저 자신의 핫플 가져오기
+	public int viewUserHotplace(String userId) throws Exception;
 }

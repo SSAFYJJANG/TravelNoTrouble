@@ -82,85 +82,87 @@ const cardImg = "/src/assets/images/shop7.jpg";
       </div>
     </section>
 
-    <div class="container-fluid pb-3">
-      <div style="width: 200px">
-        <Listbox v-model="selectedOption">
-          <div class="relative mt-1">
-            <ListboxButton
-              class="w-100 d-flex justify-content-between shadow rounded bg-white py-2 px-4 z-0"
-            >
-              <span class="block truncate">{{ selectedOption.name }}</span>
-              <span class="absolute right-0 flex items-center pr-2">
-                <i
-                  class="fa-solid fa-caret-down text-secondary"
-                  aria-hidden="true"
-                ></i>
-              </span>
-            </ListboxButton>
-
-            <transition
-              leave-active-class="transition duration-100 ease-in"
-              leave-from-class="opacity-100"
-              leave-to-class="opacity-0"
-            >
-              <ListboxOptions
-                class="absolute z-3 rounded mt-1 py-1 text-base shadow"
+    <div class="container">
+      <div class="pb-3">
+        <div style="width: 200px">
+          <Listbox v-model="selectedOption">
+            <div class="relative mt-1">
+              <ListboxButton
+                class="w-100 d-flex justify-content-between shadow rounded bg-white py-2 px-4 z-0"
               >
-                <ListboxOption
-                  class="list-unstyled"
-                  v-slot="{ active, selected }"
-                  v-for="option in options"
-                  :key="option.name"
-                  :value="option"
-                  as="template"
+                <span class="block truncate">{{ selectedOption.name }}</span>
+                <span class="absolute right-0 flex items-center pr-2">
+                  <i
+                    class="fa-solid fa-caret-down text-secondary"
+                    aria-hidden="true"
+                  ></i>
+                </span>
+              </ListboxButton>
+
+              <transition
+                leave-active-class="transition duration-100 ease-in"
+                leave-from-class="opacity-100"
+                leave-to-class="opacity-0"
+              >
+                <ListboxOptions
+                  class="absolute z-3 rounded mt-1 py-1 text-base shadow"
                 >
-                  <li
-                    :class="[
-                      active ? 'bg-light text-primary' : 'text-black',
-                      'relative cursor-default select-none py-2 pl-10 pr-4',
-                    ]"
+                  <ListboxOption
+                    class="list-unstyled"
+                    v-slot="{ active, selected }"
+                    v-for="option in options"
+                    :key="option.name"
+                    :value="option"
+                    as="template"
                   >
-                    <span
+                    <li
                       :class="[
-                        selected ? 'font-medium' : 'font-normal',
-                        'block truncate',
+                        active ? 'bg-light text-primary' : 'text-black',
+                        'relative cursor-default select-none py-2 pl-10 pr-4',
                       ]"
-                      >{{ option.name }}</span
                     >
-                    <span
-                      v-if="selected"
-                      class="absolute inset-y-0 left-0 flex items-center pl-3 text-amber-600"
-                    >
-                      <!-- <CheckIcon class="h-5 w-5" aria-hidden="true" /> -->
-                    </span>
-                  </li>
-                </ListboxOption>
-              </ListboxOptions>
-            </transition>
+                      <span
+                        :class="[
+                          selected ? 'font-medium' : 'font-normal',
+                          'block truncate',
+                        ]"
+                        >{{ option.name }}</span
+                      >
+                      <span
+                        v-if="selected"
+                        class="absolute inset-y-0 left-0 flex items-center pl-3 text-amber-600"
+                      >
+                        <!-- <CheckIcon class="h-5 w-5" aria-hidden="true" /> -->
+                      </span>
+                    </li>
+                  </ListboxOption>
+                </ListboxOptions>
+              </transition>
+            </div>
+          </Listbox>
+        </div>
+      </div>
+
+      <section
+        data-bs-version="5.1"
+        class="clients1 cid-uc9Pp8Jzvy"
+        id="clients01-2f"
+      >
+        <div class="">
+          <div class="row mt-5">
+            <!-- -->
+            <HotplaceCard
+              v-for="card in hotplace_cards"
+              :cardImg="card.cardImg"
+            />
           </div>
-        </Listbox>
-      </div>
+
+          <div class="d-flex justify-content-center mt-5">
+            <div>페이지 표시할 곳</div>
+          </div>
+        </div>
+      </section>
     </div>
-
-    <section
-      data-bs-version="5.1"
-      class="clients1 cid-uc9Pp8Jzvy"
-      id="clients01-2f"
-    >
-      <div class="container-fluid">
-        <div class="row mt-5">
-          <!-- -->
-          <HotplaceCard
-            v-for="card in hotplace_cards"
-            :cardImg="card.cardImg"
-          />
-        </div>
-
-        <div class="d-flex justify-content-center mt-5">
-          <div>페이지 표시할 곳</div>
-        </div>
-      </div>
-    </section>
   </div>
 </template>
 

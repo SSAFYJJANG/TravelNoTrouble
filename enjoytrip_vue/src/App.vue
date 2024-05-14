@@ -1,5 +1,5 @@
 <script setup>
-import { ref, onMounted } from "vue";
+import { ref, onMounted, onUpdated } from "vue";
 import { RouterView, useRouter } from "vue-router";
 import Header from "@/components/header/Header.vue";
 import Footer from "./components/footer/Footer.vue";
@@ -46,33 +46,23 @@ const toggleSignupModal = () => {
 
 <template>
   <header>
-    <Header
-      :loginModalCheck="loginModalCheck"
-      :signupModalCheck="signupModalCheck"
-      @toggleLoginModal="toggleLoginModal"
-      @toggleSignupModal="toggleSignupModal"
-    />
+    <Header :loginModalCheck="loginModalCheck" :signupModalCheck="signupModalCheck" @toggleLoginModal="toggleLoginModal"
+      @toggleSignupModal="toggleSignupModal" />
   </header>
 
-  <RouterView/>
+  <RouterView />
 
   <footer>
     <Footer />
   </footer>
 
   <!-- Modal -->
-  <Login
-    :loginModalCheck="loginModalCheck"
-    @toggleLoginModal="toggleLoginModal"
-  />
-  <Signup
-    :signupModalCheck="signupModalCheck"
-    @toggleSignupModal="toggleSignupModal"
-  />
+  <Login :loginModalCheck="loginModalCheck" @toggleLoginModal="toggleLoginModal" />
+  <Signup :signupModalCheck="signupModalCheck" @toggleSignupModal="toggleSignupModal" />
 </template>
 
 <style scoped>
-.page{
+.page {
   min-height: calc(100vh - 3rem);
 }
 </style>

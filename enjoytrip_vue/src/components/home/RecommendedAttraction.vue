@@ -3,15 +3,15 @@
 </script>
 
 <template>
-    <div>
+    <div class="col-lg-10">
         추천 여행지
     </div>
 </template>
 
 <style scoped>
 div {
-    padding: 300px;
+    padding: 25rem;
     background-color: blanchedalmond;
-    margin: 10%;
+    margin: 5rem auto;
 }
 </style>

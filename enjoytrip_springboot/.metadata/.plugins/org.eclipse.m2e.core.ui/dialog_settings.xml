@@ -62,6 +62,7 @@
 	</section>
 	<section name="MavenProjectImportWizardPage">
 		<list key="rootDirectory">
+			<item value="C:\Users\SSAFY\Desktop\TravelNoTrouble"/>
 			<item value="C:\Users\SSAFY\Desktop\TravelNoTrouble\enjoytrip_springboot"/>
 		</list>
 		<list key="projectNameTemplate">

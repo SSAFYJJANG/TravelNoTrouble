@@ -60,7 +60,7 @@ function onDeleteArticle() {
 
 <template>
   <div class="container py-5">
-    <div class="row justify-content-center">
+    <div class="row justify-content-center px-4">
       <div class="col-lg-10 border rounded-3">
         <h3 class="m-4">{{ article.title }}</h3>
         <div class="m-4">

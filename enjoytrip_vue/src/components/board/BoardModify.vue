@@ -17,7 +17,7 @@ const article = ref({
     '<h1 class="ql-align-center">글쓰기 테스트</h1><h2 class="ql-align-center">글쓰기 테스트</h2><h3 class="ql-align-center">글쓰기 테스트</h3><h4 class="ql-align-center">글쓰기 테스트</h4><h1 class="ql-align-center">글쓰기 테스트</h1><h2 class="ql-align-center">글쓰기 테스트</h2><h3 class="ql-align-center">글쓰기 테스트</h3><h4 class="ql-align-center">글쓰기 테스트</h4><p class="ql-align-center"><br></p><p class="ql-align-center"><span style="background-color: rgb(250, 204, 204);">가나다라마바사</span></p><p class="ql-align-center"><br></p><ul><li class="ql-align-center"><span style="background-color: rgb(250, 204, 204);">아에이오우</span></li><li class="ql-align-center"><span style="background-color: rgb(255, 255, 204);">가나다라마바사</span></li><li class="ql-align-center"><span style="color: rgb(230, 0, 0); background-color: rgb(255, 255, 204);">ABCDEFG</span></li></ul><p class="ql-align-center"><br></p><p class="ql-align-center"><u style="color: rgb(230, 0, 0); background-color: rgb(255, 255, 204);">옹오오ㅗ오ㅗ</u></p><p><br></p><h1 class="ql-align-center">글쓰기 테스트</h1><h2 class="ql-align-center">글쓰기 테스트</h2><h3 class="ql-align-center">글쓰기 테스트</h3><h4 class="ql-align-center">글쓰기 테스트</h4><h1 class="ql-align-center">글쓰기 테스트</h1><h2 class="ql-align-center">글쓰기 테스트</h2><h3 class="ql-align-center">글쓰기 테스트</h3><h4 class="ql-align-center">글쓰기 테스트</h4><p class="ql-align-center"><br></p><p class="ql-align-center"><span style="background-color: rgb(250, 204, 204);">가나다라마바사</span></p><p class="ql-align-center"><br></p><ul><li class="ql-align-center"><span style="background-color: rgb(250, 204, 204);">아에이오우</span></li><li class="ql-align-center"><span style="background-color: rgb(255, 255, 204);">가나다라마바사</span></li><li class="ql-align-center"><span style="color: rgb(230, 0, 0); background-color: rgb(255, 255, 204);">ABCDEFG</span></li></ul><p class="ql-align-center"><br></p><p class="ql-align-center"><u style="color: rgb(230, 0, 0); background-color: rgb(255, 255, 204);">옹오오ㅗ오ㅗ</u></p><p><br></p>',
 });
 
-onMounted(() => { });
+onMounted(() => {});
 
 const clickModify = function () {
   const editor = document.querySelector("#editor");
@@ -27,19 +27,18 @@ const clickModify = function () {
 
   const article = {
     title: title,
-    content: content
+    content: content,
   };
 
   console.log(article);
 
   // axios.post();
-
 };
 </script>
 
 <template>
   <div class="container d-flex flex-column py-5">
-    <div class="row justify-content-center">
+    <div class="row justify-content-center px-4">
       <div class="col-lg-10">
         <input
           type="text"

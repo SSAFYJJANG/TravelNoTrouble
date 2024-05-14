@@ -3,53 +3,57 @@ package com.trip.vue.board.model.service;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.trip.vue.board.model.BoardDto;
+import com.trip.vue.board.model.dao.BoardDao;
 
 @Service
-public class BoardServiceImpl implements BoardService{
+public class BoardServiceImpl implements BoardService {
+
+	@Autowired
+	private BoardDao boardDao;
 
 	@Override
 	public List<BoardDto> listBoard() throws Exception {
-		// TODO Auto-generated method stub
-		return null;
+		return boardDao.listBoard();
 	}
 
+	@Transactional
 	@Override
 	public int insertBoard(BoardDto ob) throws Exception {
-		// TODO Auto-generated method stub
-		return 0;
+		return boardDao.insertBoard(ob);
 	}
 
+	@Transactional
 	@Override
 	public int deleteBoard(int board_id) throws Exception {
-		// TODO Auto-generated method stub
-		return 0;
+		return boardDao.deleteBoard(board_id);
 	}
 
+	@Transactional
 	@Override
 	public int modifyBoard(BoardDto ob) throws Exception {
-		// TODO Auto-generated method stub
-		return 0;
+		return boardDao.modifyBoard(ob);
 	}
 
 	@Override
 	public BoardDto viewBoard(int board_id) throws Exception {
-		// TODO Auto-generated method stub
-		return null;
+		updateHit(board_id);
+		return boardDao.viewBoard(board_id);
 	}
 
+	@Transactional
 	@Override
 	public void updateHit(int board_id) throws Exception {
-		// TODO Auto-generated method stub
-		
+		boardDao.updateHit(board_id);
 	}
 
 	@Override
 	public List<BoardDto> searchBoard(Map<String, String> keyword) throws Exception {
-		// TODO Auto-generated method stub
-		return null;
+		return boardDao.searchBoard(keyword);
 	}
 
 }

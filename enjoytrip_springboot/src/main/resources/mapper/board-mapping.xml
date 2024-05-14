@@ -4,19 +4,21 @@
 <mapper namespace="com.trip.vue.board.model.dao.BoardDao">
 
 	<insert id="insertBoard" parameterType="boardDto">
-		insert into board(title, userid, overview, hit)
-		values (#{title}, #{userId}, #{overview}, #{hit})
+		insert into board(title, userid, overview)
+		values (#{title}, #{userId}, #{overview})
 	</insert>
 
 	<select id="listBoard" resultType="boardDto">
-		select *
-		from board
+		select b.board_id, b.title, b.userid, b.regist_time, b.modified_time, b.hit, u.username
+		from board b join user u
+		on b.userid = u.userid
 	</select>
 	
 	<select id="viewBoard" parameterType="int" resultType="boardDto">
-		select *
-		from board
-		where board_id=#{board_id}
+		select b.board_id, b.title, b.userid, b.overview, b.regist_time, b.modified_time, b.hit, u.username
+		from board b join user u
+		on b.userid = u.userid
+		where b.board_id=#{board_id}
 	</select>
 
 	<update id="modifyBoard" parameterType="boardDto">

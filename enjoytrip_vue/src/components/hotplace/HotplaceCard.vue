@@ -8,9 +8,7 @@ const hotplace_card = document.querySelector("#hotplace-card");
 
 const viewModalCheck = ref(false);
 const toggleViewModal = () => {
-  console.log(viewModalCheck.value);
   viewModalCheck.value = !viewModalCheck.value;
-  console.log(viewModalCheck.value);
 };
 </script>
 
@@ -37,7 +35,7 @@ const toggleViewModal = () => {
       <div class="modal-btn d-flex justify-content-end">
         <button @click="toggleViewModal" class="display-4">✖</button>
       </div>
-      <HotplaceViewModal :card="props.card" />
+      <HotplaceViewModal :hotplace_id="props.card.id" />
     </div>
   </div>
 </template>

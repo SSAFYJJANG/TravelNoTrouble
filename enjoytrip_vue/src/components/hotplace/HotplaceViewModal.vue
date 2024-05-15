@@ -1,7 +1,22 @@
+<script setup>
+import { defineProps } from "vue";
+
+const props = defineProps(["card"]);
+</script>
+
 <template>
-  <div>HELLo</div>
+  <div>
+    <p>ID: {{ props.card.id }}</p>
+    <p>title: {{ props.card.title }}</p>
+    <!-- <div :style="{ backgroundImage: `url(${props.card.cardImg})` }"></div> -->
+    <img class="hotplace-img" :src="`${props.card.cardImg}`" />
+  </div>
 </template>
 
-<script setup></script>
-
-<style scoped></style>
+<style scoped>
+.hotplace-img {
+  height: 300px;
+  width: 300px;
+  object-fit: cover;
+}
+</style>

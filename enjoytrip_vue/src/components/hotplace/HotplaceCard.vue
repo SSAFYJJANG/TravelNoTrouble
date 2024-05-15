@@ -1,9 +1,8 @@
 <script setup>
 import { ref, defineProps } from "vue";
-import HotplaceView from "@/components/hotplace/HotplaceView.vue";
+import HotplaceViewModal from "@/components/hotplace/HotplaceViewModal.vue";
 
-const props = defineProps(["cardImg"]);
-// console.log(props.cardImg);
+const props = defineProps(["card"]);
 
 const hotplace_card = document.querySelector("#hotplace-card");
 
@@ -18,7 +17,7 @@ const toggleViewModal = () => {
 <template>
   <div class="col-sm-6 card col-md-4 col-lg-3">
     <div
-      :style="{ backgroundImage: `url(${props.cardImg})` }"
+      :style="{ backgroundImage: `url(${props.card.cardImg})` }"
       class="card-wrap hoptplace-card"
     >
       <div class="content-wrap card">
@@ -33,7 +32,14 @@ const toggleViewModal = () => {
     </div>
   </div>
 
-  <HotplaceView :viewModalCheck="viewModalCheck" />
+  <div class="modal-wrap z-3" v-show="viewModalCheck">
+    <div class="modal-container">
+      <div class="modal-btn d-flex justify-content-end">
+        <button @click="toggleViewModal" class="display-4">✖</button>
+      </div>
+      <HotplaceViewModal :card="props.card" />
+    </div>
+  </div>
 </template>
 
 <style scoped>
@@ -41,7 +47,28 @@ const toggleViewModal = () => {
   background-size: cover;
   background-position: center center;
 }
-.hotplace-card::before {
-  background-color: rgba(0, 0, 0, 0.5);
+.modal-wrap {
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.4);
+}
+.modal-container {
+  position: relative;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  max-width: 1000px;
+  background: white;
+  border-radius: 10px;
+  padding: 20px;
+  box-sizing: border-box;
+}
+@media (max-width: 1100px) {
+  .modal-container {
+    max-width: 90%;
+  }
 }
 </style>

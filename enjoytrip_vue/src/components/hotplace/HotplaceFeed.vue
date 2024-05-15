@@ -18,8 +18,8 @@ const selectedOption = ref(options[0]);
 
 const hotplace_cards = [
   {
-    id: "1",
-    title: "제목1",
+    id: "0",
+    title: "제목0",
     cardImg: "/src/assets/images/shop7.jpg",
   },
   {
@@ -167,11 +167,7 @@ const onPageChange = () => {};
       >
         <div class="">
           <div class="row mt-5">
-            <!-- -->
-            <HotplaceCard
-              v-for="card in hotplace_cards"
-              :cardImg="card.cardImg"
-            />
+            <HotplaceCard v-for="card in hotplace_cards" :card="card" />
           </div>
 
           <div class="d-flex justify-content-center mt-5">

@@ -14,12 +14,7 @@ const toggleLoginModal = () => {
   <div class="modal-wrap z-3" v-show="loginModalCheck">
     <div class="modal-container">
       <div class="modal-btn d-flex justify-content-end">
-        <button
-          @click="toggleLoginModal"
-          class="btn btn-primary-emphasis display-4"
-        >
-          ✖
-        </button>
+        <button @click="toggleLoginModal" class="display-4">✖</button>
       </div>
       <LoginModal />
     </div>

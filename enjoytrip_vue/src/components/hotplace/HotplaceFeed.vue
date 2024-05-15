@@ -18,24 +18,38 @@ const selectedOption = ref(options[0]);
 
 const hotplace_cards = [
   {
+    id: "0",
+    title: "제목0",
     cardImg: "/src/assets/images/shop7.jpg",
   },
   {
+    id: "1",
+    title: "제목1",
     cardImg: "/src/assets/images/shop6.jpg",
   },
   {
+    id: "2",
+    title: "제목2",
     cardImg: "/src/assets/images/shop5.jpg",
   },
   {
+    id: "3",
+    title: "제목3",
     cardImg: "/src/assets/images/shop4.jpg",
   },
   {
+    id: "4",
+    title: "제목4",
     cardImg: "/src/assets/images/shop3.jpg",
   },
   {
+    id: "5",
+    title: "제목5",
     cardImg: "/src/assets/images/shop2.jpg",
   },
   {
+    id: "6",
+    title: "제목6",
     cardImg: "/src/assets/images/shop1.jpg",
   },
 ];
@@ -153,11 +167,7 @@ const onPageChange = () => {};
       >
         <div class="">
           <div class="row mt-5">
-            <!-- -->
-            <HotplaceCard
-              v-for="card in hotplace_cards"
-              :cardImg="card.cardImg"
-            />
+            <HotplaceCard v-for="card in hotplace_cards" :card="card" />
           </div>
 
           <div class="d-flex justify-content-center mt-5">

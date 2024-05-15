@@ -18,15 +18,16 @@ const toggleViewModal = () => {
 <template>
   <div class="col-sm-6 card col-md-4 col-lg-3">
     <div
-      id="hoptplace-card"
       :style="{ backgroundImage: `url(${props.cardImg})` }"
-      class="card-wrap"
+      class="card-wrap hoptplace-card"
     >
-      <div class="content-wrap">
-        <div class="mbr-section-btn card-btn align-center">
-          <a class="btn btn-white display-7" @click="toggleViewModal">
-            Read More
-          </a>
+      <div class="content-wrap card">
+        <div id="card-behind" class="content-wrap">
+          <div class="mbr-section-btn card-btn align-center">
+            <a class="btn btn-white display-7" @click="toggleViewModal">
+              Read More
+            </a>
+          </div>
         </div>
       </div>
     </div>
@@ -36,13 +37,11 @@ const toggleViewModal = () => {
 </template>
 
 <style scoped>
-#hoptplace-card {
-  /* background-image: url(props.cardImg); */
-  /* background-image: url("/src/assets/images/shop7.jpg"); */
+.hoptplace-card {
   background-size: cover;
   background-position: center center;
 }
-#hotplace-card:before {
+.hotplace-card::before {
   background-color: rgba(0, 0, 0, 0.5);
 }
 </style>

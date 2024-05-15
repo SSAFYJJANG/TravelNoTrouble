@@ -1,4 +1,6 @@
 <script setup>
+import HotplaceViewModal from "./HotplaceViewModal.vue";
+
 const props = defineProps(["viewModalCheck"]);
 const emit = defineEmits(["toggleViewModal"]);
 const toggleViewModal = () => {
@@ -9,8 +11,10 @@ const toggleViewModal = () => {
 <template>
   <div class="modal-wrap z-3" v-show="viewModalCheck">
     <div class="modal-container">
-      <!-- -->
-      <div>HELLO</div>
+      <div class="modal-btn d-flex justify-content-end">
+        <button @click="toggleLoginModal" class="display-4">✖</button>
+      </div>
+      <HotplaceViewModal />
     </div>
   </div>
 </template>
@@ -29,8 +33,8 @@ const toggleViewModal = () => {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  max-width: 1100px;
-  background: #edefeb;
+  max-width: 1000px;
+  background: white;
   border-radius: 10px;
   padding: 20px;
   box-sizing: border-box;

@@ -12,8 +12,8 @@
 .item-wrapper {
   border-radius: 2rem !important;
 }
-img{
-  border-radius: 2rem
+img {
+  border-radius: 2rem;
 }
 .video-wrapper {
   overflow: hidden;
@@ -5093,6 +5093,9 @@ a {
 }
 .cid-uc9Pp8Jzvy .content-head {
   max-width: 800px;
+}
+.hoptplace-card::before {
+  background-color: rgba(0, 0, 0, 0.5);
 }
 .cid-uc9Pp8Jzvy .card1 {
   background-image: url("../images/gallery01.jpg");

@@ -83,6 +83,7 @@ public class JWTUtil {
 	
 //	전달 받은 토큰이 제대로 생성된 것인지 확인 하고 문제가 있다면 UnauthorizedException 발생.
 	public boolean checkToken(String token) {
+		System.out.println("token: " + token);
 		try {
 //			Json Web Signature? 서버에서 인증을 근거로 인증 정보를 서버의 private key 서명 한것을 토큰화 한것
 //			setSigningKey : JWS 서명 검증을 위한  secret key 세팅

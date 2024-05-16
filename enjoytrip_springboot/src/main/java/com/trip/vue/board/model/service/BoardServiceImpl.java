@@ -56,7 +56,7 @@ public class BoardServiceImpl implements BoardService {
 		return boardDao.searchBoard(keyword);
 	}
 	
-	@Transactional
+	// user 탈퇴
 	@Override
 	public int deleteAllBoard(String userId) throws Exception {
 		return boardDao.deleteAllBoard(userId);

@@ -59,7 +59,7 @@ public class HotplaceServiceImpl implements HotplaceService {
 		return hotplaceDao.getTotalHotplaceCount();
 	}
 	
-	@Transactional
+	// user 탈퇴
 	@Override
 	public int deleteAllHotplace(String userId) throws Exception {
 		return hotplaceDao.deleteAllHotplace(userId);

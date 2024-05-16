@@ -67,6 +67,7 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public int getTotalUserCount() throws Exception {
+		System.out.println("TEST 123");
 		return userDao.getTotalUserCount();
 	}
 

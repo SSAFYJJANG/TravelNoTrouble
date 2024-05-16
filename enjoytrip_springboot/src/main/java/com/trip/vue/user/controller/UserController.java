@@ -114,13 +114,18 @@ public class UserController {
 	}
 	
 	//post 회원가입 "/"
-	@PostMapping("/")
+	@PostMapping("")
 	public ResponseEntity<?> registUser(@RequestBody UserDto userinfo) throws Exception{
+		System.out.println("TEST OOO");
+		System.out.println(userinfo.getUserId());
+		System.out.println(userinfo.getPassword());
+		System.out.println(userinfo.getUsername());
 		try {
 			int result = service.registUser(userinfo);
 			if(result < 1) throw new Exception();
 			return new ResponseEntity<Boolean>(true, HttpStatus.OK);
 		} catch (Exception e) {
+			e.printStackTrace();
 			return new ResponseEntity<String>("서버 오류", HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
@@ -180,9 +185,11 @@ public class UserController {
 	//get 유저 수 가져오기 - 메인화면 "/cnt"
 	@GetMapping("/cnt")
 	public ResponseEntity<?> getTotalUserCount() throws Exception{
+		System.out.println("HAHAHAHA");
 		try {
 			return new ResponseEntity<Integer>(service.getTotalUserCount(), HttpStatus.OK);
 		} catch (Exception e) {
+			e.printStackTrace();
 			return new ResponseEntity<String>("서버 오류", HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}

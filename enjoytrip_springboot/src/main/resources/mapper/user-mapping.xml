@@ -4,7 +4,7 @@
 
 <!-- namespace: dao 명, id: 메서드 명 -->
 <mapper namespace="com.trip.vue.user.model.dao.UserDao">
-	<select id="login" parameterType="map" resultMap="userDto">
+	<select id="login" parameterType="map" resultType="userDto">
 		select userId, username, refresh_token
 		from user
 		where userId = #{userId} and password = #{password}
@@ -21,7 +21,7 @@
 		set refresh_token = #{refresh_token, jdbcType=VARCHAR}
 		where userId = #{userId}
 	</update>
-	<select id="getUserInfoById" parameterType="string" resultMap="userDto">
+	<select id="getUserInfoById" parameterType="string" resultType="userDto">
 		select *
 		from user
 		where userId = #{userId}
@@ -40,10 +40,12 @@
 	</insert>
 	 
 	<!-- 회원정보수정  -->
+	<update id="updateUserInfo"></update>
 	<!-- 회원탈퇴 --> 
-	
+	<delete id="deleteUserInfo">
+	</delete>
 	<!-- 유저 수 가져오기 -->
-	<select id="getTotalUserCount" >
+	<select id="getTotalUserCount" resultType="integer">
 		select count(*)
 		from user
 	</select>

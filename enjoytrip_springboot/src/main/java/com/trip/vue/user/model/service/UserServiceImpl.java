@@ -1,5 +1,6 @@
 package com.trip.vue.user.model.service;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,8 +17,29 @@ public class UserServiceImpl implements UserService {
 	private UserDao userDao;
 
 	@Override
-	public UserDto getLoginUser(Map<String, String> user) {
-		return userDao.getLoginUser(user);
+	public UserDto login(UserDto userDto) {
+		return userDao.login(userDto);
+	}
+	
+	@Override
+	public void saveRefreshToken(String userId, String refreshToken) throws Exception {
+		Map<String, String> map = new HashMap<String, String>();
+		map.put("userId", userId);
+		map.put("token", refreshToken);
+		userDao.saveRefreshToken(map);
+	}
+	
+	@Override
+	public void deleteRefreshToken(String userId) throws Exception {
+		Map<String, String> map = new HashMap<String, String>();
+		map.put("userId", userId);
+		map.put("token", null);
+		userDao.deleteRefreshToken(map);
+	}
+	
+	@Override
+	public Object getRefreshToken(String userId) throws Exception {
+		return userDao.getRefreshToken(userId);
 	}
 
 	@Transactional

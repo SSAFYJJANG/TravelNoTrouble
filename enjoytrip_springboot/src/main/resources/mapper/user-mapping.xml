@@ -12,13 +12,13 @@
 	
 	<update id="saveRefreshToken" parameterType="map">
 		update user
-		set refresh_token = #{refresh_token}
+		set refresh_token = #{token}
 		where userId = #{userId}
 	</update>
 	
 	<update id="deleteRefreshToken" parameterType="map">
 		update user
-		set refresh_token = #{refresh_token, jdbcType=VARCHAR}
+		set refresh_token = #{token, jdbcType=VARCHAR}
 		where userId = #{userId}
 	</update>
 	<select id="getUserInfoById" parameterType="string" resultType="userDto">

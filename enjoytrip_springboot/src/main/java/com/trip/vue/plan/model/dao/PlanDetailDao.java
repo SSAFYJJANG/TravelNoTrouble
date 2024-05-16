@@ -5,6 +5,7 @@ import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
 
 import com.trip.vue.plan.model.PlanDetailDto;
+import com.trip.vue.plan.model.PlanDto;
 
 @Mapper
 public interface PlanDetailDao {
@@ -16,4 +17,6 @@ public interface PlanDetailDao {
 	public int deletePlanDetail(int plan_detail_id) throws Exception;
 	// 전체 세부 일정 삭제
 	public int deleteAllPlanDetail(int plan_id) throws Exception;
+	// 메모 수정
+	public int modifyPlanDetailOverview(PlanDetailDto ob) throws Exception;
 }

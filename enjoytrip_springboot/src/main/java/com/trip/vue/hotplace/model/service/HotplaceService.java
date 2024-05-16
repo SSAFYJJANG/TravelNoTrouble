@@ -17,8 +17,6 @@ public interface HotplaceService {
 	public int modifyHotplace(HotplaceDto ob) throws Exception;
 	//글 세부사항 가져오기
 	public HotplaceDto viewHotplace(int hotplace_id) throws Exception;
-	//조회수 올리기
-	public void updateHit(int hotplace_id) throws Exception;
 	//종아요 올리기
 	public void updateLike(int hotplace_id) throws Exception;
 	// 핫플 수 가져오기 - 메인화면

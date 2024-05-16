@@ -15,6 +15,5 @@ public class HotplaceDto {
     private int gugun_code;
     private String regist_time;
     private String modified_time;
-    private int hit;
     private int like;
 }

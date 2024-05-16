@@ -10,7 +10,7 @@ public class HotplaceDto {
     private String title;
     private String userId;
     private String overview;
-    private byte[] image;
+    private String image;
     private int sido_code;
     private int gugun_code;
     private String regist_time;

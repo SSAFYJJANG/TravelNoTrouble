@@ -1,10 +1,25 @@
 <script setup>
-import VKakaoMap from "../common/VKakaoMap.vue";
+// import VKakaoMap from "../common/VKakaoMap.vue";
+import { ref } from "vue";
 
-const clickSubmit = () => { 
+const previewImage = ref("/src/assets/images/gallery06.jpg"); // 기본 이미지
 
+const uploadImage = (event) => {
+  const files = event.target?.files;
+  if (files.length > 0) {
+    const file = files[0];
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      previewImage.value = e.target.result;
+    };
+    reader.readAsDataURL(file);
+
+    console.log(file);
+    // 이미지 파일 이름 : file.name
+  }
 };
 
+const clickSubmit = () => {};
 </script>
 
 <template>
@@ -36,12 +51,15 @@ const clickSubmit = () => {
   <section class="page-section my-5" id="hotplaceupload">
     <div class="container px-4 px-lg-5">
       <div class="row">
-        <!-- 지도 Start -->
-        <div id="map2" class="col-lg-6" style="width: 50%">
-          <VKakaoMap />
+        <!-- 이미지 파일 업로드 -->
+        <div class="col-lg-6">
+          <input type="file" id="hotplace-img" hidden @change="uploadImage" />
+          <label for="hotplace-img">
+            <img :src="previewImage" />
+          </label>
         </div>
-        <!-- 지도 End -->
 
+        <!-- 입력 폼 -->
         <div class="col-lg-6">
           <!-- <div class="col-lg-6 row gx-4 gx-lg-5 justify-content-center mb-5"> -->
           <div class="col-lg-12">

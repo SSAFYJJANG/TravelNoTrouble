@@ -8,11 +8,14 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.trip.vue.plan.model.PlanDto;
 import com.trip.vue.plan.model.dao.PlanDao;
+import com.trip.vue.plan.model.dao.PlanDetailDao;
 
 @Service
 public class PlanServiceImpl implements PlanService {
 	@Autowired
 	private PlanDao planDao;
+	@Autowired
+	private PlanDetailDao planDetailDao;
 
 	@Override
 	public List<PlanDto> listPlan(String userId) throws Exception {
@@ -40,7 +43,14 @@ public class PlanServiceImpl implements PlanService {
 	@Transactional
 	@Override
 	public int deleteAllPlan(String userId) throws Exception {
+		planDao.deleteAllPlanDays(userId);
+		planDetailDao.deleteAllPlanDetail(userId);
 		return planDao.deleteAllPlan(userId);
+	}
+
+	@Override
+	public int deleteAllPlanDays(String userId) throws Exception {
+		return planDao.deleteAllPlanDays(userId);
 	}
 
 }

@@ -18,21 +18,24 @@ public class PlanDetailServiceImpl implements PlanDetailService{
 	public List<PlanDetailDto> listPlanDetail(int plan_id) throws Exception {
 		return planDetailDao.listPlanDetail(plan_id);
 	}
+	
 	@Transactional
 	@Override
 	public int insertPlanDetail(PlanDetailDto ob) throws Exception {
 		return planDetailDao.insertPlanDetail(ob);
 	}
-	@Transactional
+	
 	@Override
 	public int deletePlanDetail(int plan_detail_id) throws Exception {
 		return planDetailDao.deletePlanDetail(plan_detail_id);
 	}
+	
 	@Transactional
 	@Override
-	public int deleteAllPlanDetail(int plan_id) throws Exception {
-		return planDetailDao.deleteAllPlanDetail(plan_id);
+	public int deleteAllPlanDetail(String userId) throws Exception {
+		return planDetailDao.deleteAllPlanDetail(userId);
 	}
+	
 	@Override
 	public int modifyPlanDetailOverview(PlanDetailDto ob) throws Exception {
 		return planDetailDao.modifyPlanDetailOverview(ob);

@@ -45,14 +45,7 @@ public class HotplaceServiceImpl implements HotplaceService {
 
 	@Override
 	public HotplaceDto viewHotplace(int hotplace_id) throws Exception {
-		updateHit(hotplace_id);
 		return hotplaceDao.viewHotplace(hotplace_id);
-	}
-
-	@Transactional
-	@Override
-	public void updateHit(int hotplace_id) throws Exception {
-		hotplaceDao.updateHit(hotplace_id);
 	}
 
 	@Transactional

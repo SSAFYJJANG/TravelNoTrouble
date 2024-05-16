@@ -20,4 +20,6 @@ public interface MapService {
 	public int getTotalAttractionCount() throws Exception;
 	// 추천 여행지(랜덤 or 핫플기반) 가져오기 - 메인화면
 	public AttractionDto getRecommendationAttraction() throws Exception;
+	// 사용자가 찜한 관광지 가져오기
+	public List<AttractionDto> getUserAttractionList(String userid);
 }

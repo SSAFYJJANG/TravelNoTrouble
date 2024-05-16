@@ -79,4 +79,13 @@ public class MapController {
 			return new ResponseEntity<String>("서버 오류", HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
+	// 사용자가 찜한 관광지 가져오기
+	@GetMapping("/{userid}")
+	public ResponseEntity<?> getUserAttractionList(@PathVariable("userid") String userid) throws Exception{
+		try {
+			return new ResponseEntity<List<AttractionDto>>(service.getUserAttractionList(userid), HttpStatus.OK);
+		} catch (Exception e) {
+			return new ResponseEntity<String>("서버 오류", HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
 }

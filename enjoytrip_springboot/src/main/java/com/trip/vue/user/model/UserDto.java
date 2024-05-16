@@ -8,7 +8,9 @@ public class UserDto {
 	private String password;
 	private String username;
 	private String email;
+	private String image;
 	private int sido_code;
 	private int gugun_code;
 	private int admin;
+	private String refresh_token;
 }

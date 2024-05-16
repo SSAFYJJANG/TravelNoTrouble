@@ -134,6 +134,7 @@ CREATE TABLE IF NOT EXISTS `db_trip`.`user` (
   `userid` VARCHAR(8) NOT NULL,
   `password` VARCHAR(10) NOT NULL,
   `username` VARCHAR(20) NOT NULL,
+  `image` VARCHAR(200) NULL,
   `email` VARCHAR(30) NULL,
   `sido_code` INT NULL,
   `gugun_code` INT NULL,

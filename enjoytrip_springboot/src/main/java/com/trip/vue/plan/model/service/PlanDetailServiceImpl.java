@@ -33,5 +33,9 @@ public class PlanDetailServiceImpl implements PlanDetailService{
 	public int deleteAllPlanDetail(int plan_id) throws Exception {
 		return planDetailDao.deleteAllPlanDetail(plan_id);
 	}
+	@Override
+	public int modifyPlanDetailOverview(PlanDetailDto ob) throws Exception {
+		return planDetailDao.modifyPlanDetailOverview(ob);
+	}
 
 }

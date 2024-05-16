@@ -48,4 +48,9 @@ public class MapServiceImpl implements MapService{
 		return mapDao.getRecommendationAttraction();
 	}
 
+	@Override
+	public List<AttractionDto> getUserAttractionList(String userid) {
+		return mapDao.getUserAttractionList(userid);
+	}
+
 }

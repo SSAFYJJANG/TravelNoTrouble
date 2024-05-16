@@ -7,6 +7,7 @@ public class BoardDto {
 	private int board_id;
     private String title;
     private String userId;
+    private String username;
     private String overview;
     private String regist_time;
     private String modified_time;

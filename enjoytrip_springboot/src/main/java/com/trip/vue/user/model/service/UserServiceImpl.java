@@ -26,6 +26,7 @@ public class UserServiceImpl implements UserService {
 		Map<String, String> map = new HashMap<String, String>();
 		map.put("userId", userId);
 		map.put("token", refreshToken);
+		
 		userDao.saveRefreshToken(map);
 	}
 	

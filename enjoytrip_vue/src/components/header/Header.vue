@@ -1,15 +1,6 @@
 <script setup>
 import HeaderLogo from "@/components/header/HeaderLogo.vue";
 import HeaderMenu from "@/components/header/HeaderMenu.vue";
-
-const props = defineProps(["loginModalCheck", "signupModalCheck"]);
-const emit = defineEmits(["toggleLoginModal", "toggleSignupModal"]);
-const toggleLoginModal = () => {
-  emit("toggleLoginModal");
-};
-const toggleSignupModal = () => {
-  emit("toggleSignupModal");
-};
 </script>
 
 <template>
@@ -26,12 +17,7 @@ const toggleSignupModal = () => {
         <!-- Logo -->
         <HeaderLogo />
         <!-- menu -->
-        <HeaderMenu
-          :loginModalCheck="loginModalCheck"
-          :signupModalCheck="signupModalCheck"
-          @toggleLoginModal="toggleLoginModal"
-          @toggleSignupModal="toggleSignupModal"
-        />
+        <HeaderMenu />
       </div>
     </nav>
   </section>

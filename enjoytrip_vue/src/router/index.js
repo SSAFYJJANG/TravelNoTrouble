@@ -15,6 +15,9 @@ import HotplaceWrite from "@/components/hotplace/HotplaceWrite.vue";
 import MyTripPlanView from "@/views/MyTripPlanView.vue";
 import MyTripPlanList from "@/components/myTripPlan/MyTripPlanList.vue";
 import MyTripPlanWrite from "@/components/myTripPlan/MyTripPlanWrite.vue";
+import AuthView from "@/views/AuthView.vue";
+import Login from "@/components/user/auth/Login.vue";
+import Signup from "@/components/user/auth/Signup.vue";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -22,6 +25,7 @@ const router = createRouter({
     {
       path: "/",
       name: "home",
+      beforeEnter: checkLoginUser,
       component: HomeView,
     },
     {
@@ -107,7 +111,24 @@ const router = createRouter({
           path: "write",
           name: "plan-write",
           component: MyTripPlanWrite,
-        }
+        },
+      ],
+    },
+    {
+      path: "/auth",
+      name: "auth",
+      component: AuthView,
+      children: [
+        {
+          path: "",
+          name: "auth-login",
+          component: Login,
+        },
+        {
+          path: "signup",
+          name: "auth-signup",
+          component: Signup,
+        },
       ],
     },
   ],
@@ -115,5 +136,13 @@ const router = createRouter({
     return { top: 0 };
   },
 });
+
+function checkLoginUser(to, from) {
+  const isLogin = false;
+  if (!isLogin) {
+    console.log("로그인이 필요합니다");
+    return { name: "auth" };
+  }
+}
 
 export default router;

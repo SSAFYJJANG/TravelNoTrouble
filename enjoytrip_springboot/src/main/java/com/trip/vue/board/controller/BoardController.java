@@ -25,8 +25,8 @@ public class BoardController {
 	@Autowired
 	private BoardService service;
 	
-	//get list 가져오기 "/"
-	@GetMapping("/")
+	//get list 가져오기 ""
+	@GetMapping("")
 	public ResponseEntity<?> listBoard() throws Exception{
 		try {
 			return new ResponseEntity<List<BoardDto>>(service.listBoard(), HttpStatus.OK);
@@ -34,8 +34,8 @@ public class BoardController {
 			return new ResponseEntity<String>("서버 오류", HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
-	//post 글쓰기 "/"
-	@PostMapping("/")
+	//post 글쓰기 ""
+	@PostMapping("")
 	public ResponseEntity<?> insertBoard(@RequestBody BoardDto ob) throws Exception{
 		try {
 			return new ResponseEntity<Integer>(service.insertBoard(ob), HttpStatus.OK);
@@ -43,8 +43,8 @@ public class BoardController {
 			return new ResponseEntity<String>("서버 오류", HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
-	//put 글수정 "/"
-	@PutMapping("/")
+	//put 글수정 ""
+	@PutMapping("")
 	public ResponseEntity<?> modifyBoard(@RequestBody BoardDto ob) throws Exception{
 		try {
 			return new ResponseEntity<Integer>(service.modifyBoard(ob), HttpStatus.OK);
@@ -52,8 +52,8 @@ public class BoardController {
 			return new ResponseEntity<String>("서버 오류", HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
-	//delete 글 삭제 "/"
-	@DeleteMapping("/")
+	//delete 글 삭제 ""
+	@DeleteMapping("")
 	public ResponseEntity<?> deleteBoard(@RequestBody int board_id) throws Exception{
 		try {
 			return new ResponseEntity<Integer>(service.deleteBoard(board_id), HttpStatus.OK);

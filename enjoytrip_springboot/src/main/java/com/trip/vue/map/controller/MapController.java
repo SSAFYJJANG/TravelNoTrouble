@@ -41,8 +41,8 @@ public class MapController {
 			return new ResponseEntity<String>("서버 오류", HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
-	// get 관광지 리스트 가져오기 (sido_code, gugun_code, content_type_id, keyword) "/"
-	@GetMapping("/")
+	// get 관광지 리스트 가져오기 (sido_code, gugun_code, content_type_id, keyword) ""
+	@GetMapping("")
 	public ResponseEntity<?> getAttractionList(@RequestParam("sido_code") int sido_code,
 												@RequestParam("gugun_code") int gugun_code, 
 												@RequestParam("content_type_id")	int content_type_id) throws Exception{
@@ -87,5 +87,18 @@ public class MapController {
 		} catch (Exception e) {
 			return new ResponseEntity<String>("서버 오류", HttpStatus.INTERNAL_SERVER_ERROR);
 		}
+	}
+	
+	// 사용자가 찜한 관광지 추가하기
+	public ResponseEntity<?> insertAttraction(AttractionDto ob) throws Exception{
+		return new ResponseEntity<String>("서버 오류", HttpStatus.INTERNAL_SERVER_ERROR);
+	}
+	// 사용자가 찜한 관광지 삭제하기
+	public ResponseEntity<?> deleteAttraction(int attraction_card) throws Exception{
+		return new ResponseEntity<String>("서버 오류", HttpStatus.INTERNAL_SERVER_ERROR);
+	}
+	// 사용자가 찜한 관광지 다 삭제하기
+	public ResponseEntity<?> deleteAllBoard(Map<String, String> map) throws Exception{
+		return new ResponseEntity<String>("서버 오류", HttpStatus.INTERNAL_SERVER_ERROR);
 	}
 }

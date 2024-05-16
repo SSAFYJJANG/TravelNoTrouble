@@ -40,8 +40,8 @@ public class HotplaceController {
 		}
 	}
 	
-	//get list 가져오기(최신순) - 피드 "/"
-	@GetMapping("/")
+	//get list 가져오기(최신순) - 피드 ""
+	@GetMapping("")
 	public ResponseEntity<?> listHotplace() throws Exception{
 		try {
 			return new ResponseEntity<List<HotplaceDto>>(service.listHotplace(), HttpStatus.OK);
@@ -49,8 +49,8 @@ public class HotplaceController {
 			return new ResponseEntity<String>("서버 오류", HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
-	//post 글쓰기 "/"
-	@PostMapping("/")
+	//post 글쓰기 ""
+	@PostMapping("")
 	public ResponseEntity<?> insertHotplace(@RequestBody HotplaceDto ob) throws Exception{
 		try {
 			return new ResponseEntity<Integer>(service.insertHotplace(ob), HttpStatus.OK);
@@ -58,8 +58,8 @@ public class HotplaceController {
 			return new ResponseEntity<String>("서버 오류", HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
-	//put 글수정 "/"
-	@PutMapping("/")
+	//put 글수정 ""
+	@PutMapping("")
 	public ResponseEntity<?> modifyHotplace(@RequestBody HotplaceDto ob) throws Exception{
 		try {
 			return new ResponseEntity<Integer>(service.modifyHotplace(ob), HttpStatus.OK);
@@ -67,8 +67,8 @@ public class HotplaceController {
 			return new ResponseEntity<String>("서버 오류", HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
-	//delete 글 삭제 "/"
-	@DeleteMapping("/")
+	//delete 글 삭제 ""
+	@DeleteMapping("")
 	public ResponseEntity<?> deleteHotplace(@RequestBody int hotplace_id) throws Exception{
 		try {
 			return new ResponseEntity<Integer>(service.deleteHotplace(hotplace_id), HttpStatus.OK);

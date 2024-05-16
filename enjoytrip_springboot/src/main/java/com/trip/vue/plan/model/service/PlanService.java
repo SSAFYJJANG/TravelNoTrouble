@@ -15,4 +15,6 @@ public interface PlanService {
 	public int modifyPlan(PlanDto ob) throws Exception;
 	// 일정 전체 삭제
 	public int deleteAllPlan(String userId) throws Exception;
+	// 일정 날짜 삭제
+	public int deleteAllPlanDays(String userId) throws Exception;
 }

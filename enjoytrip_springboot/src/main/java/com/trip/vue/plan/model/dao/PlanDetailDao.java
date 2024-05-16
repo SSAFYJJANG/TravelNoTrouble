@@ -16,7 +16,7 @@ public interface PlanDetailDao {
 	// 세부일정 삭제
 	public int deletePlanDetail(int plan_detail_id) throws Exception;
 	// 전체 세부 일정 삭제
-	public int deleteAllPlanDetail(int plan_id) throws Exception;
+	public int deleteAllPlanDetail(String userId) throws Exception;
 	// 메모 수정
 	public int modifyPlanDetailOverview(PlanDetailDto ob) throws Exception;
 }

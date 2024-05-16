@@ -33,8 +33,18 @@
 		where userId = #{userId}
 	</select>
 	
-	<!-- 회원가입 --> 
+	<!-- 회원가입 -->
+	<insert id="registUser" parameterType="userDto">
+		insert into user(userId, password, username, email, sido_code, gugun_code)
+		values (#{userId}, #{password}, #{username}, #{email}, #{sido_code}, #{gugun_code})
+	</insert>
+	 
 	<!-- 회원정보수정  -->
 	<!-- 회원탈퇴 --> 
+	
 	<!-- 유저 수 가져오기 -->
+	<select id="getTotalUserCount" >
+		select count(*)
+		from user
+	</select>
 </mapper>

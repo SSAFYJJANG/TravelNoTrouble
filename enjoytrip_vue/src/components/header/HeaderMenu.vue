@@ -3,7 +3,7 @@ import { ref, defineProps, defineEmits } from "vue";
 const login = ref({
   id: "",
   name: "",
-  isLogin: false,
+  isLogin: true,
 });
 
 const props = defineProps(["loginModalCheck", "signupModalCheck"]);

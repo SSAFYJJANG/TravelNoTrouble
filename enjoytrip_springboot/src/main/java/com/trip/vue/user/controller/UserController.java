@@ -83,7 +83,7 @@ public class UserController {
 		return new ResponseEntity<Map<String, Object>>(resultMap, status);
 	}
 	
-	//post 로그아웃 "/logout/{userId}"
+	//get 로그아웃 "/logout/{userId}"
 	@Operation(summary = "로그아웃", description = "회원 정보를 담은 Token 을 제거한다.")
 	@GetMapping("/logout/{userId}")
 	@Hidden
@@ -91,6 +91,7 @@ public class UserController {
 		Map<String, Object> resultMap = new HashMap<>();
 		HttpStatus status = HttpStatus.ACCEPTED;
 		try {
+			System.out.println("TESTSTSTST");
 			service.deleteRefreshToken(userId);
 			status = HttpStatus.OK;
 		} catch (Exception e) {

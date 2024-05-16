@@ -21,6 +21,7 @@
 		set refresh_token = #{token, jdbcType=VARCHAR}
 		where userId = #{userId}
 	</update>
+	
 	<select id="getUserInfoById" parameterType="string" resultType="userDto">
 		select *
 		from user

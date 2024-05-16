@@ -7,7 +7,7 @@
         class="position-absolute top-50 start-50 translate-middle p-3 border rounded-3 d-flex flex-column align-center"
       >
         <Strong>로그인</Strong>
-        <div>테스트</div>
+        <div>헤더랑 푸터 빼는게 더 나을듯</div>
 
         <form action="" method="POST">
           <div class="" data-for="userid">

@@ -73,8 +73,6 @@ public class MapServiceImpl implements MapService{
 
 	@Override
 	public int insertAttraction(Map<String, Object> map) throws Exception {
-		System.out.println("content_id = " + map.get("content_id"));
-		System.out.println("userid = " + map.get("userid"));
 		return mapDao.insertAttraction(map);
 	}
 

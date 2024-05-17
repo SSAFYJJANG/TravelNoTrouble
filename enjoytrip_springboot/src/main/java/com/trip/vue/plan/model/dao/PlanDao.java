@@ -15,6 +15,7 @@ public interface PlanDao {
 	public int deletePlan(int plan_id) throws Exception;
 	//일정 메모 수정
 	public int modifyPlan(PlanDto ob) throws Exception;
+	// user 탈퇴시 동작
 	// 일정 전체 삭제
 	public int deleteAllPlan(String userId) throws Exception;
 	// 일정 날짜 삭제

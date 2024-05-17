@@ -100,8 +100,8 @@ public class MapController {
 	
 	// 사용자가 찜한 관광지 추가하기 --
 	@PostMapping("/cart")
-	public ResponseEntity<?> insertAttraction(@RequestParam("userid") String userid,
-						@RequestParam("content_id") int content_id) throws Exception{
+	public ResponseEntity<?> insertAttraction(@RequestParam("userid") String userid, 
+			@RequestParam("content_id") int content_id) throws Exception{
 		try {
 			Map<String, Object> map = new HashMap<>();
 			map.put("userid", userid);
@@ -117,6 +117,8 @@ public class MapController {
 						@RequestParam("content_id") int content_id) throws Exception{
 		try {
 			Map<String, Object> map = new HashMap<>();
+			map.put("userid", userid);
+			map.put("content_id", content_id);
 			return new ResponseEntity<Integer>(service.deleteAttraction(map), HttpStatus.OK);
 		} catch (Exception e) {
 			return new ResponseEntity<String>("서버 오류", HttpStatus.INTERNAL_SERVER_ERROR);

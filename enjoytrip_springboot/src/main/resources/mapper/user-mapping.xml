@@ -41,10 +41,18 @@
 	</insert>
 	 
 	<!-- 회원정보수정  -->
-	<update id="updateUserInfo"></update>
+	<update id="updateUserInfo" parameterType="userDto">
+ 		update user
+		set username=#{username}, email=#{email}, sido_code=#{sido_code}, gugun_code=#{gugun_code}
+		where userId=#{userId}
+	</update>
+	
 	<!-- 회원탈퇴 --> 
 	<delete id="deleteUserInfo">
+		delete from user
+		where userid=#{userid}
 	</delete>
+	
 	<!-- 유저 수 가져오기 -->
 	<select id="getTotalUserCount" resultType="integer">
 		select count(*)

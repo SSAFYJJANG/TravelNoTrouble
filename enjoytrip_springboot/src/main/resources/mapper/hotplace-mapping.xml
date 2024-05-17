@@ -7,9 +7,9 @@
 <mapper namespace="com.trip.vue.hotplace.model.dao.HotplaceDao">
 
 	<select id="listBestHotplace" resultType="hotplaceDto">
-		select 
+		select hotplace_id, image, title, hotplace.like
 		from hotplace
-		order by like desc 
+		order by hotplace.like desc 
 		limit 15
 	</select>
 	
@@ -43,7 +43,7 @@
 	
 	<update id="updateLike" parameterType="integer">
 		update hotplace
-		set like = like + 1
+		set hotplace.like = hotplace.like + 1
 		where hotplace_id=#{hotplace_id}
 	</update>
 	

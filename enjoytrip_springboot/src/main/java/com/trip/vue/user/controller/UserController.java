@@ -182,6 +182,7 @@ public class UserController {
 			@PathVariable ("userId") @Parameter(description = "탈퇴할 회원의 아이디.", required = true) String userId) throws Exception{
 		Map<String, Object> resultMap = new HashMap<>();
 		HttpStatus status = HttpStatus.ACCEPTED;
+		log.info("deleteUserInfo access", userId);
 		try {
 			service.deleteRefreshToken(userId);
 			// plan_detail

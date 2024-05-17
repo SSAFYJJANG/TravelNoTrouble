@@ -62,10 +62,10 @@ public class UserController {
 				log.debug("access token : {}", accessToken);
 				log.debug("refresh token : {}", refreshToken);
 				
-//				발급받은 refresh token 을 DB에 저장.
+//					발급받은 refresh token 을 DB에 저장.
 				service.saveRefreshToken(loginUser.getUserId(), refreshToken);
 				
-//				JSON 으로 token 전달.
+//					JSON 으로 token 전달.
 				resultMap.put("access-token", accessToken);
 				resultMap.put("refresh-token", refreshToken);
 				
@@ -91,7 +91,6 @@ public class UserController {
 		Map<String, Object> resultMap = new HashMap<>();
 		HttpStatus status = HttpStatus.ACCEPTED;
 		try {
-			System.out.println("TESTSTSTST");
 			service.deleteRefreshToken(userId);
 			status = HttpStatus.OK;
 		} catch (Exception e) {
@@ -126,13 +125,9 @@ public class UserController {
 		return new ResponseEntity<Map<String, Object>>(resultMap, status);
 	}
 	
-	//post 회원가입 ""
+	//post 회원가입 "/"
 	@PostMapping("")
 	public ResponseEntity<?> registUser(@RequestBody UserDto userinfo) throws Exception{
-		System.out.println("TEST OOO");
-		System.out.println(userinfo.getUserId());
-		System.out.println(userinfo.getPassword());
-		System.out.println(userinfo.getUsername());
 		try {
 			int result = service.registUser(userinfo);
 			if(result < 1) throw new Exception();
@@ -143,7 +138,7 @@ public class UserController {
 		}
 	}
 	
-	//put 수정 "/{userId}"
+	//put 수정 "/{userId}" --
 	@Operation(summary = "회원인증", description = "회원 정보를 담은 Token 을 반환한다.")
 	@PutMapping("/{userId}")
 	public ResponseEntity<?> updateUserInfo(
@@ -174,7 +169,7 @@ public class UserController {
 	
 	
 	
-	//delete 탈퇴 ""
+	//delete 탈퇴 "" --
 	@DeleteMapping("/{userId}")
 	public ResponseEntity<?> deleteUserInfo(
 			@PathVariable ("userId") @Parameter(description = "탈퇴할 회원의 아이디.", required = true) String userId) throws Exception{
@@ -208,13 +203,15 @@ public class UserController {
 	public ResponseEntity<Map<String, Object>> getInfo(
 			@PathVariable("userId") @Parameter(description = "인증할 회원의 아이디.", required = true) String userId,
 			HttpServletRequest request) {
-//		logger.debug("userId : {} ", userId);
+//			logger.debug("userId : {} ", userId);
 		Map<String, Object> resultMap = new HashMap<>();
 		HttpStatus status = HttpStatus.ACCEPTED;
+		System.out.println("HEADER:" + request.getHeader("Authorization")); //
 		if (jwtUtil.checkToken(request.getHeader("Authorization"))) {
 			log.info("사용 가능한 토큰!!!");
+			System.out.println("ttStST");
 			try {
-//				로그인 사용자 정보.
+//					로그인 사용자 정보.
 				UserDto userDto = service.getUserInfoById(userId);
 				resultMap.put("userInfo", userDto);
 				status = HttpStatus.OK;

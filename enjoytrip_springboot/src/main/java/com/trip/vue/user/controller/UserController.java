@@ -126,11 +126,7 @@ public class UserController {
 		return new ResponseEntity<Map<String, Object>>(resultMap, status);
 	}
 	
-<<<<<<< HEAD
 	//post 회원가입 ""
-=======
-	//post 회원가입 "/"
->>>>>>> f8a6ba7 (docs: modify sql mapper - resultMap to resultType)
 	@PostMapping("")
 	public ResponseEntity<?> registUser(@RequestBody UserDto userinfo) throws Exception{
 		System.out.println("TEST RegistUser\n");

@@ -18,9 +18,13 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.trip.vue.board.model.BoardDto;
 import com.trip.vue.board.model.service.BoardService;
+import com.trip.vue.user.controller.UserController;
+
+import lombok.extern.slf4j.Slf4j;
 
 @RestController
 @RequestMapping("/board")
+@Slf4j
 public class BoardController {
 	@Autowired
 	private BoardService service;
@@ -28,6 +32,7 @@ public class BoardController {
 	//get list 가져오기 ""
 	@GetMapping("")
 	public ResponseEntity<?> listBoard() throws Exception{
+		log.info("listBoard access");
 		try {
 			return new ResponseEntity<List<BoardDto>>(service.listBoard(), HttpStatus.OK);
 		} catch (Exception e) {
@@ -37,6 +42,7 @@ public class BoardController {
 	//post 글쓰기 ""
 	@PostMapping("")
 	public ResponseEntity<?> insertBoard(@RequestBody BoardDto ob) throws Exception{
+		log.info("insertBoard access = {}", ob);
 		try {
 			return new ResponseEntity<Integer>(service.insertBoard(ob), HttpStatus.OK);
 		} catch (Exception e) {
@@ -46,6 +52,7 @@ public class BoardController {
 	//put 글수정 ""
 	@PutMapping("")
 	public ResponseEntity<?> modifyBoard(@RequestBody BoardDto ob) throws Exception{
+		log.info("modifyBoard access = {}", ob);
 		try {
 			return new ResponseEntity<Integer>(service.modifyBoard(ob), HttpStatus.OK);
 		} catch (Exception e) {
@@ -55,6 +62,7 @@ public class BoardController {
 	//delete 글 삭제 ""
 	@DeleteMapping("")
 	public ResponseEntity<?> deleteBoard(@RequestBody int board_id) throws Exception{
+		log.info("deleteBoard access id = {}", board_id);
 		try {
 			return new ResponseEntity<Integer>(service.deleteBoard(board_id), HttpStatus.OK);
 		} catch (Exception e) {

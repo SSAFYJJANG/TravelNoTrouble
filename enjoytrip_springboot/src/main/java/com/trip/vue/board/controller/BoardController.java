@@ -61,7 +61,7 @@ public class BoardController {
 	}
 	//delete 글 삭제 ""
 	@DeleteMapping("/{id}")
-	public ResponseEntity<?> deleteBoard(@RequestBody int board_id) throws Exception{
+	public ResponseEntity<?> deleteBoard(@PathVariable("id") int board_id) throws Exception{
 		log.info("deleteBoard access id = {}", board_id);
 		try {
 			return new ResponseEntity<Integer>(service.deleteBoard(board_id), HttpStatus.OK);

@@ -19,8 +19,8 @@
 	</select>
 
 	<insert id="insertHotplace" parameterType="hotplaceDto">
-		insert into hotplace(title, userId, overview, image. sido_code, gugun_code)
-		values (#{title}, #{userId}, #{overview}, #{image}. #{sido_code}, #{gugun_code})
+		insert into hotplace(title, userId, overview, image, sido_code, gugun_code)
+		values (#{title}, #{userId}, #{overview}, #{image}, #{sido_code}, #{gugun_code})
 	</insert>
 	
 	<delete id="deleteHotplace" parameterType="integer">

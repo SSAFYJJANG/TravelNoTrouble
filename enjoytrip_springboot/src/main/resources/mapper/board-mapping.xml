@@ -42,6 +42,7 @@
 	<select id="searchBoard" parameterType="map">
 		select b.board_id, b.title, b.userid, b.regist_time, b.modified_time, b.hit, u.username
 		from board b left join user u
+		on b.userid = u.userid
 		where
         <if test="title != null">
             b.title like CONCAT("%", #{title}, "%")

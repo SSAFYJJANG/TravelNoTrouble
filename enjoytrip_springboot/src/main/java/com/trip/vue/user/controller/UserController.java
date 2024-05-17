@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.trip.vue.board.model.service.BoardService;
 import com.trip.vue.hotplace.model.service.HotplaceService;
 import com.trip.vue.map.model.service.MapService;
+import com.trip.vue.plan.model.service.PlanDetailService;
 import com.trip.vue.plan.model.service.PlanService;
 import com.trip.vue.user.model.UserDto;
 import com.trip.vue.user.model.service.UserService;
@@ -37,6 +38,8 @@ public class UserController {
 	private UserService service;
 	@Autowired
 	private PlanService planService;
+	@Autowired
+	private PlanDetailService planDetailService;
 	@Autowired
 	private BoardService boardService;
 	@Autowired
@@ -153,6 +156,7 @@ public class UserController {
 			try {
 //				로그인 사용자 정보.
 				if(service.updateUserInfo(userinfo) < 1) throw new Exception();
+				System.out.println("userinfo" + userinfo);
 				resultMap.put("userInfo", userinfo);
 //				resultMap.put("userInfo", service.getUserInfoById(userinfo.getUserId()));
 				status = HttpStatus.OK;
@@ -178,9 +182,12 @@ public class UserController {
 		HttpStatus status = HttpStatus.ACCEPTED;
 		log.info("deleteUserInfo access", userId);
 		try {
+			// refresh token
 			service.deleteRefreshToken(userId);
 			// plan_detail
-			// plan_days 삭제
+			planDetailService.deleteAllPlanDetail(userId);
+			// plan_days
+			planService.deleteAllPlanDays(userId);
 			// plan
 			planService.deleteAllPlan(userId);
 			// board
@@ -188,6 +195,7 @@ public class UserController {
 			// hotplace
 			hotplaceService.deleteAllHotplace(userId);
 			// attaction_card
+			mapService.deleteAllAttraction(userId);
 			int result = service.deleteUserInfo(userId);
 			if(result < 1) throw new Exception();
 			status = HttpStatus.OK;

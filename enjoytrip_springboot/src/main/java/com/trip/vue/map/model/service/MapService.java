@@ -22,4 +22,10 @@ public interface MapService {
 	public AttractionDto getRecommendationAttraction() throws Exception;
 	// 사용자가 찜한 관광지 가져오기
 	public List<AttractionDto> getUserAttractionList(String userid);
+	// 사용자가 찜한 관광지 추가하기
+	public int insertAttraction(Map<String, Object> map) throws Exception;
+	// 사용자가 찜한 관광지 삭제하기
+	public int deleteAttraction(Map<String, Object> map) throws Exception;
+	// 사용자가 찜한 관광지 다 삭제하기
+	public int deleteAllAttraction(String userid) throws Exception;
 }

@@ -55,6 +55,7 @@ public class PlanController {
 	}
 	//delete 일정 삭제 '/'
 	@DeleteMapping("")
+	// @RequestParam Map<String, Object> map = key : userId, paln_id
 	public ResponseEntity<?> deletePlan(@RequestParam Map<String, Object> map) throws Exception{
 		log.info("deletePlan access = {}", map);
 		try {

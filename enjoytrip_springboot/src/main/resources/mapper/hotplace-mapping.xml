@@ -31,7 +31,7 @@
 	
 	<update id="modifyHotplace" parameterType="hotplaceDto">
 		update hotplace
-		set title=#{title}, overview=#{overview}, modified_time=now(), image={image}, sido_code=#{sido_code}, gugun_code=#{gugun_code}
+		set title=#{title}, overview=#{overview}, modified_time=now(), image=#{image}, sido_code=#{sido_code}, gugun_code=#{gugun_code}
 		where hotplace_id=#{hotplace_id}
 	</update>
 	

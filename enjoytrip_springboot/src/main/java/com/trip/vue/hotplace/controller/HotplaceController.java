@@ -66,8 +66,9 @@ public class HotplaceController {
 		}
 	}
 	//put 글수정 ""
-	@PutMapping("")
+	@PutMapping("/{hotplace_id}")
 	public ResponseEntity<?> modifyHotplace(@RequestBody HotplaceDto ob) throws Exception{
+		log.info("modifyHotplace access = {}", ob);
 		try {
 			return new ResponseEntity<Integer>(service.modifyHotplace(ob), HttpStatus.OK);
 		} catch (Exception e) {
@@ -75,8 +76,8 @@ public class HotplaceController {
 		}
 	}
 	//delete 글 삭제 ""
-	@DeleteMapping("")
-	public ResponseEntity<?> deleteHotplace(@RequestBody int hotplace_id) throws Exception{
+	@DeleteMapping("/{hotplace_id}")
+	public ResponseEntity<?> deleteHotplace(@PathVariable("hotplace_id") int hotplace_id) throws Exception{
 		try {
 			return new ResponseEntity<Integer>(service.deleteHotplace(hotplace_id), HttpStatus.OK);
 		} catch (Exception e) {

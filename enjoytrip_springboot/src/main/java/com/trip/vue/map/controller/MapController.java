@@ -44,7 +44,6 @@ public class MapController {
 	public ResponseEntity<?> getGugunList() throws Exception{
 		log.info("getGugunList access");
 		try {
-//			System.out.println(service.getGugunList());
 			return new ResponseEntity<Map<Integer, List<GugunDto>>>(service.getGugunList(), HttpStatus.OK);
 		} catch (Exception e) {
 			return new ResponseEntity<String>("서버 오류", HttpStatus.INTERNAL_SERVER_ERROR);
@@ -100,12 +99,9 @@ public class MapController {
 	
 	// 사용자가 찜한 관광지 추가하기 --
 	@PostMapping("/cart")
-	public ResponseEntity<?> insertAttraction(@RequestParam("userid") String userid, 
-			@RequestParam("content_id") int content_id) throws Exception{
+	public ResponseEntity<?> insertAttraction(@RequestParam Map<String, Object> map) throws Exception{
 		try {
-			Map<String, Object> map = new HashMap<>();
-			map.put("userid", userid);
-			map.put("content_id", content_id);
+			log.info("insertAttraction access = {}", map);
 			return new ResponseEntity<Integer>(service.insertAttraction(map), HttpStatus.OK);
 		} catch (Exception e) {
 			return new ResponseEntity<String>("서버 오류", HttpStatus.INTERNAL_SERVER_ERROR);
@@ -113,12 +109,9 @@ public class MapController {
 	}
 	// 사용자가 찜한 관광지 삭제하기
 	@DeleteMapping("/cart")
-	public ResponseEntity<?> deleteAttraction(@RequestParam("userid") String userid, 
-						@RequestParam("content_id") int content_id) throws Exception{
+	public ResponseEntity<?> deleteAttraction(@RequestParam Map<String, Object> map) throws Exception{
 		try {
-			Map<String, Object> map = new HashMap<>();
-			map.put("userid", userid);
-			map.put("content_id", content_id);
+			log.info("deleteAttraction access = {}", map);
 			return new ResponseEntity<Integer>(service.deleteAttraction(map), HttpStatus.OK);
 		} catch (Exception e) {
 			return new ResponseEntity<String>("서버 오류", HttpStatus.INTERNAL_SERVER_ERROR);

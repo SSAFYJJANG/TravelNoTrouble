@@ -41,12 +41,6 @@
 		where hotplace_id = {hotplace_id}
 	</select>
 	
-	<update id="updateHit" parameterType="integer">
-		update hotplace
-		set hit = hit + 1
-		where hotplace_id=#{hotplace_id}
-	</update>
-	
 	<update id="updateLike" parameterType="integer">
 		update hotplace
 		set like = like + 1

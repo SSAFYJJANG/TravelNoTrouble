@@ -48,7 +48,7 @@
                 AND ${key} = #{entry.value}
             </if>
         </foreach>
-		<!-- {'title', '테스트'} or {'userid', 'ssafy'} -->
+		<!-- {'title', '테스트'} or {'username', 'ssafy'} -->
 	</select>
 	
 	<delete id="deleteAllBoard" parameterType="string">

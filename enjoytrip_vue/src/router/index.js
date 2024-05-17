@@ -141,7 +141,7 @@ function checkLoginUser(to, from) {
   const isLogin = false;
   if (!isLogin) {
     console.log("로그인이 필요합니다");
-    return { name: "auth" };
+    return { name: "auth-login" };
   }
 }
 

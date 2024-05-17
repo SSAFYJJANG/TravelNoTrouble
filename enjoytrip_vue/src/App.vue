@@ -3,8 +3,6 @@ import { ref, onMounted, onUpdated } from "vue";
 import { RouterView, useRouter } from "vue-router";
 import Header from "@/components/header/Header.vue";
 import Footer from "./components/footer/Footer.vue";
-import Login from "@/components/user/Login.vue";
-import Signup from "@/components/user/Signup.vue";
 
 // 매 라우터 이동마다 새로고침
 const router = useRouter();
@@ -31,23 +29,11 @@ async function loadScripts() {
   await import("/src/assets/js/parallax/jarallax.js");
   await import("/src/assets/js/theme/js/script.js");
 }
-
-// login&signup modal open/close
-const loginModalCheck = ref(false);
-const signupModalCheck = ref(false);
-const emit = defineEmits(["toggleLoginModal", "toggleSignupModal"]);
-const toggleLoginModal = () => {
-  loginModalCheck.value = !loginModalCheck.value;
-};
-const toggleSignupModal = () => {
-  signupModalCheck.value = !signupModalCheck.value;
-};
 </script>
 
 <template>
   <header>
-    <Header :loginModalCheck="loginModalCheck" :signupModalCheck="signupModalCheck" @toggleLoginModal="toggleLoginModal"
-      @toggleSignupModal="toggleSignupModal" />
+    <Header />
   </header>
 
   <RouterView />
@@ -55,10 +41,6 @@ const toggleSignupModal = () => {
   <footer>
     <Footer />
   </footer>
-
-  <!-- Modal -->
-  <Login :loginModalCheck="loginModalCheck" @toggleLoginModal="toggleLoginModal" />
-  <Signup :signupModalCheck="signupModalCheck" @toggleSignupModal="toggleSignupModal" />
 </template>
 
 <style scoped>

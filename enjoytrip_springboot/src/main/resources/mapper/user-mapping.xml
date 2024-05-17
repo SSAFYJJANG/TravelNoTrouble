@@ -4,7 +4,7 @@
 
 <!-- namespace: dao 명, id: 메서드 명 -->
 <mapper namespace="com.trip.vue.user.model.dao.UserDao">
-	<select id="login" parameterType="map" resultMap="userDto">
+	<select id="login" parameterType="map" resultType="userDto">
 		select userId, username, refresh_token
 		from user
 		where userId = #{userId} and password = #{password}
@@ -12,16 +12,17 @@
 	
 	<update id="saveRefreshToken" parameterType="map">
 		update user
-		set refresh_token = #{refresh_token}
+		set refresh_token = #{token}
 		where userId = #{userId}
 	</update>
 	
 	<update id="deleteRefreshToken" parameterType="map">
 		update user
-		set refresh_token = #{refresh_token, jdbcType=VARCHAR}
+		set refresh_token = #{token, jdbcType=VARCHAR}
 		where userId = #{userId}
 	</update>
-	<select id="getUserInfoById" parameterType="string" resultMap="userDto">
+	
+	<select id="getUserInfoById" parameterType="string" resultType="userDto">
 		select *
 		from user
 		where userId = #{userId}
@@ -33,8 +34,20 @@
 		where userId = #{userId}
 	</select>
 	
-	<!-- 회원가입 --> 
+	<!-- 회원가입 -->
+	<insert id="registUser" parameterType="userDto">
+		insert into user(userId, password, username, email, sido_code, gugun_code)
+		values (#{userId}, #{password}, #{username}, #{email}, #{sido_code}, #{gugun_code})
+	</insert>
+	 
 	<!-- 회원정보수정  -->
+	<update id="updateUserInfo"></update>
 	<!-- 회원탈퇴 --> 
+	<delete id="deleteUserInfo">
+	</delete>
 	<!-- 유저 수 가져오기 -->
+	<select id="getTotalUserCount" resultType="integer">
+		select count(*)
+		from user
+	</select>
 </mapper>

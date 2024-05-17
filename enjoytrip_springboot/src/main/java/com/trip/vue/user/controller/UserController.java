@@ -51,7 +51,7 @@ public class UserController {
 	@PostMapping("/login")
 	public ResponseEntity<Map<String, Object>> login(
 			@RequestBody @Parameter(description = "로그인 시 필요한 회원정보(아이디, 비밀번호).", required = true) UserDto userDto) {
-		log.debug("login user : {}", userDto);
+		log.trace("login user : {}", userDto);
 		Map<String, Object> resultMap = new HashMap<String, Object>();
 		HttpStatus status = HttpStatus.ACCEPTED;
 		try {
@@ -129,10 +129,8 @@ public class UserController {
 	//post 회원가입 ""
 	@PostMapping("")
 	public ResponseEntity<?> registUser(@RequestBody UserDto userinfo) throws Exception{
-		System.out.println("TEST OOO");
-		System.out.println(userinfo.getUserId());
-		System.out.println(userinfo.getPassword());
-		System.out.println(userinfo.getUsername());
+		System.out.println("TEST RegistUser\n");
+		log.info("TEST RegistUser\n" + userinfo);
 		try {
 			int result = service.registUser(userinfo);
 			if(result < 1) throw new Exception();
@@ -205,7 +203,7 @@ public class UserController {
 	//get 세부정보 가져오기 - "/{userid}"
 	@Operation(summary = "회원인증", description = "회원 정보를 담은 Token 을 반환한다.")
 	@GetMapping("/{userId}")
-	public ResponseEntity<Map<String, Object>> getInfo(
+	public ResponseEntity<Map<String, Object>> getUserInfoById(
 			@PathVariable("userId") @Parameter(description = "인증할 회원의 아이디.", required = true) String userId,
 			HttpServletRequest request) {
 //		logger.debug("userId : {} ", userId);

@@ -50,7 +50,7 @@ public class BoardController {
 		}
 	}
 	//put 글수정 ""
-	@PutMapping("")
+	@PutMapping("/{id}")
 	public ResponseEntity<?> modifyBoard(@RequestBody BoardDto ob) throws Exception{
 		log.info("modifyBoard access = {}", ob);
 		try {
@@ -60,7 +60,7 @@ public class BoardController {
 		}
 	}
 	//delete 글 삭제 ""
-	@DeleteMapping("")
+	@DeleteMapping("/{id}")
 	public ResponseEntity<?> deleteBoard(@RequestBody int board_id) throws Exception{
 		log.info("deleteBoard access id = {}", board_id);
 		try {

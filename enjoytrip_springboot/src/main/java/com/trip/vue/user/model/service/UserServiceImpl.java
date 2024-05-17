@@ -63,7 +63,6 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public UserDto getUserInfoById(String id) {
-		System.out.println("id:" + id);
 		return userDao.getUserInfoById(id);
 	}
 

@@ -10,13 +10,13 @@
 
 	<select id="listBoard" resultType="boardDto">
 		select b.board_id, b.title, b.userid, b.regist_time, b.modified_time, b.hit, u.username
-		from board b join user u
+		from board b left join user u
 		on b.userid = u.userid
 	</select>
 	
 	<select id="viewBoard" parameterType="int" resultType="boardDto">
 		select b.board_id, b.title, b.userid, b.overview, b.regist_time, b.modified_time, b.hit, u.username
-		from board b join user u
+		from board b left join user u
 		on b.userid = u.userid
 		where b.board_id=#{board_id}
 	</select>
@@ -40,15 +40,17 @@
 	</update>
 	
 	<select id="searchBoard" parameterType="map">
-		select *
-		from board
-		where 1=1
-        <foreach item="entry" index="key" collection="keyword">
-            <if test="entry.value != null">
-                AND ${key} = #{entry.value}
-            </if>
-        </foreach>
-		<!-- {'title', '테스트'} or {'userid', 'ssafy'} -->
+		select b.board_id, b.title, b.userid, b.regist_time, b.modified_time, b.hit, u.username
+		from board b left join user u
+		on b.userid = u.userid
+		where
+        <if test="title != null">
+            b.title like CONCAT("%", #{title}, "%")
+        </if>
+        <if test="username != null">
+            u.username = #{username}
+        </if>
+		<!-- {'title', '테스트'} or {'username', 'ssafy'} -->
 	</select>
 	
 	<delete id="deleteAllBoard" parameterType="string">

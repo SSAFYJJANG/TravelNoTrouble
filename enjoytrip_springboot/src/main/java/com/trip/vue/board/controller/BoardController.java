@@ -80,7 +80,7 @@ public class BoardController {
 	}
 	
 	//TODO 동작 확인 후 url 고민해보기
-	//get 글 검색 "/title={title}&id={id}"
+	//get 글 검색 "/title={title}&username={username}"
 	@GetMapping("/{title}&{id}")
 	public ResponseEntity<?> searchBoard(@RequestParam Map<String, String> keyword) throws Exception{
 		try {

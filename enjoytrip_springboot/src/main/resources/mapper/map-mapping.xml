@@ -8,8 +8,7 @@
 	</select>
 
 	<select id="getGugunList" resultType="gugunDto">
-		select *
-		from gugun
+		select * from gugun
 	</select>
 
 	<select id="getAttractionList" parameterType="int" resultType="attractionDto">
@@ -32,11 +31,30 @@
 		from attraction_info
 	</select>
 	
-	
 	<select id="getRecommendationAttraction" resultType="attractionDto">
 		select *
 		from attraction_info
 		Order by rand()
 		limit 1
 	</select>
+	
+	<select id="getUserAttractionList" parameterType="string">
+		select * from attraction_cart
+		where userid=#{userid}
+	</select>
+	
+	<insert id="insertAttraction" parameterType="map">
+		insert into attraction_cart(content_id, userid)
+		values (#{content_id}, #{userid})
+	</insert>
+	
+	<delete id="deleteAttraction" parameterType="map">
+		delete from attraction_cart
+		where content_id=#{content_id} and userid=#{userid}
+	</delete>
+	
+	<delete id="deleteAllAttraction" parameterType="string">
+		delete from attraction_cart
+		where userid=#{userid}
+	</delete>
 </mapper>

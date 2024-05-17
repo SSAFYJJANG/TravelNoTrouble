@@ -5,7 +5,6 @@ import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
 
-import com.trip.vue.board.model.BoardDto;
 import com.trip.vue.map.model.AttractionDto;
 import com.trip.vue.map.model.GugunDto;
 import com.trip.vue.map.model.SidoDto;
@@ -15,7 +14,7 @@ public interface MapDao {
 	// 시도 리스트 가져오기
 	public List<SidoDto> getSidoList();
 	// 시도에 따른 구군 리스트 가져오기
-	public Map<Integer, List<GugunDto>> getGugunList();
+	public List<GugunDto> getGugunList();
 	// 관광지 리스트 가져오기 (sido_code, gugun_code, content_type_id, keyword)
 	public List<AttractionDto> getAttractionList(int sido_code, int gugun_code, int content_type_id);
 	// 관광지 세부사항 가져오기 ()
@@ -27,9 +26,9 @@ public interface MapDao {
 	// 사용자가 찜한 관광지 가져오기
 	public List<AttractionDto> getUserAttractionList(String userid);
 	// 사용자가 찜한 관광지 추가하기
-	public int insertAttraction(AttractionDto ob) throws Exception;
+	public int insertAttraction(Map<String, Object> map) throws Exception;
 	// 사용자가 찜한 관광지 삭제하기
-	public int deleteAttraction(int attraction_card) throws Exception;
+	public int deleteAttraction(Map<String, Object> map) throws Exception;
 	// 사용자가 찜한 관광지 다 삭제하기
-	public int deleteAllBoard(Map<String, String> map) throws Exception;
+	public int deleteAllAttraction(String userid) throws Exception;
 }

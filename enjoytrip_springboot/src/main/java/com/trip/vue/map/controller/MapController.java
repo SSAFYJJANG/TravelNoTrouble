@@ -1,13 +1,16 @@
 package com.trip.vue.map.controller;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -36,6 +39,7 @@ public class MapController {
 	@GetMapping("/gugun")
 	public ResponseEntity<?> getGugunList() throws Exception{
 		try {
+//			System.out.println(service.getGugunList());
 			return new ResponseEntity<Map<Integer, List<GugunDto>>>(service.getGugunList(), HttpStatus.OK);
 		} catch (Exception e) {
 			return new ResponseEntity<String>("서버 오류", HttpStatus.INTERNAL_SERVER_ERROR);
@@ -89,16 +93,37 @@ public class MapController {
 		}
 	}
 	
-	// 사용자가 찜한 관광지 추가하기
-	public ResponseEntity<?> insertAttraction(AttractionDto ob) throws Exception{
-		return new ResponseEntity<String>("서버 오류", HttpStatus.INTERNAL_SERVER_ERROR);
+	// 사용자가 찜한 관광지 추가하기 --
+	@PostMapping("/cart")
+	public ResponseEntity<?> insertAttraction(@RequestParam("userid") String userid,
+						@RequestParam("content_id") int content_id) throws Exception{
+		try {
+			Map<String, Object> map = new HashMap<>();
+			map.put("userid", userid);
+			map.put("content_id", content_id);
+			return new ResponseEntity<Integer>(service.insertAttraction(map), HttpStatus.OK);
+		} catch (Exception e) {
+			return new ResponseEntity<String>("서버 오류", HttpStatus.INTERNAL_SERVER_ERROR);
+		}
 	}
 	// 사용자가 찜한 관광지 삭제하기
-	public ResponseEntity<?> deleteAttraction(int attraction_card) throws Exception{
-		return new ResponseEntity<String>("서버 오류", HttpStatus.INTERNAL_SERVER_ERROR);
+	@DeleteMapping("/cart")
+	public ResponseEntity<?> deleteAttraction(@RequestParam("userid") String userid, 
+						@RequestParam("content_id") int content_id) throws Exception{
+		try {
+			Map<String, Object> map = new HashMap<>();
+			return new ResponseEntity<Integer>(service.deleteAttraction(map), HttpStatus.OK);
+		} catch (Exception e) {
+			return new ResponseEntity<String>("서버 오류", HttpStatus.INTERNAL_SERVER_ERROR);
+		}
 	}
 	// 사용자가 찜한 관광지 다 삭제하기
-	public ResponseEntity<?> deleteAllBoard(Map<String, String> map) throws Exception{
-		return new ResponseEntity<String>("서버 오류", HttpStatus.INTERNAL_SERVER_ERROR);
+	@DeleteMapping("/cart/{userid}")
+	public ResponseEntity<?> deleteAllAttraction(@PathVariable("userid") String userid) throws Exception{
+		try {
+			return new ResponseEntity<Integer>(service.deleteAllAttraction(userid), HttpStatus.OK);
+		} catch (Exception e) {
+			return new ResponseEntity<String>("서버 오류", HttpStatus.INTERNAL_SERVER_ERROR);
+		}
 	}
 }

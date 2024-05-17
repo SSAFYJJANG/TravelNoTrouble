@@ -7,23 +7,29 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.trip.vue.hotplace.model.HotplaceDto;
 import com.trip.vue.hotplace.model.service.HotplaceService;
 
+import lombok.extern.slf4j.Slf4j;
+
 @RestController
 @RequestMapping("/hotplace")
+@Slf4j
 public class HotplaceController {
 	@Autowired
 	private HotplaceService service;
 	//get 좋아요순으로 가져오기(이미지, id) - 메인 "/best"
 	@GetMapping("/best")
 	public ResponseEntity<?> listBestHotplace() throws Exception{
+		log.info("listBestHotplace access = {}");
 		try {
 			return new ResponseEntity<List<HotplaceDto>>(service.listBestHotplace(), HttpStatus.OK);
 		} catch (Exception e) {
@@ -52,6 +58,7 @@ public class HotplaceController {
 	//post 글쓰기 ""
 	@PostMapping("")
 	public ResponseEntity<?> insertHotplace(@RequestBody HotplaceDto ob) throws Exception{
+		log.info("insertHotplace access = {}", ob);
 		try {
 			return new ResponseEntity<Integer>(service.insertHotplace(ob), HttpStatus.OK);
 		} catch (Exception e) {
@@ -59,8 +66,9 @@ public class HotplaceController {
 		}
 	}
 	//put 글수정 ""
-	@PutMapping("")
+	@PutMapping("/{hotplace_id}")
 	public ResponseEntity<?> modifyHotplace(@RequestBody HotplaceDto ob) throws Exception{
+		log.info("modifyHotplace access = {}", ob);
 		try {
 			return new ResponseEntity<Integer>(service.modifyHotplace(ob), HttpStatus.OK);
 		} catch (Exception e) {
@@ -68,8 +76,8 @@ public class HotplaceController {
 		}
 	}
 	//delete 글 삭제 ""
-	@DeleteMapping("")
-	public ResponseEntity<?> deleteHotplace(@RequestBody int hotplace_id) throws Exception{
+	@DeleteMapping("/{hotplace_id}")
+	public ResponseEntity<?> deleteHotplace(@PathVariable("hotplace_id") int hotplace_id) throws Exception{
 		try {
 			return new ResponseEntity<Integer>(service.deleteHotplace(hotplace_id), HttpStatus.OK);
 		} catch (Exception e) {
@@ -78,17 +86,19 @@ public class HotplaceController {
 	}
 	
 	//get 글 세부사항 가져오기 "/{id}"
-	@GetMapping("/{id}")
-	public ResponseEntity<?> viewHotplace(@RequestBody int board_id) throws Exception{
+	@GetMapping("/{hotplace_id}")
+	public ResponseEntity<?> viewHotplace(@PathVariable("hotplace_id") int hotplace_id) throws Exception{
+		log.info("viewHotplace access = {}", hotplace_id);
 		try {
-			return new ResponseEntity<HotplaceDto>(service.viewHotplace(board_id), HttpStatus.OK);
+			return new ResponseEntity<HotplaceDto>(service.viewHotplace(hotplace_id), HttpStatus.OK);
 		} catch (Exception e) {
 			return new ResponseEntity<String>("서버 오류", HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
 	//put 글 세부사항 좋아요 올리기 "/like"
 	@PutMapping("/like")
-	public ResponseEntity<?> updateLike(@RequestBody int hotplace_id) throws Exception{
+	public ResponseEntity<?> updateLike(@RequestParam int hotplace_id) throws Exception{
+		log.info("updateLike access = {}", hotplace_id);
 		try {
 			service.updateLike(hotplace_id);
 			return new ResponseEntity<String>("좋아요 성공", HttpStatus.OK);

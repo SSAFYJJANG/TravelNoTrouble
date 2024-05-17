@@ -20,8 +20,11 @@ import com.trip.vue.map.model.GugunDto;
 import com.trip.vue.map.model.SidoDto;
 import com.trip.vue.map.model.service.MapService;
 
+import lombok.extern.slf4j.Slf4j;
+
 @RestController
 @RequestMapping("/attraction")
+@Slf4j
 public class MapController {
 	@Autowired
 	private MapService service;
@@ -29,6 +32,7 @@ public class MapController {
 	// get 시도 리스트 가져오기 "/sido"
 	@GetMapping("/sido")
 	public ResponseEntity<?> getSidoList() throws Exception{
+		log.info("getSidoList access");
 		try {
 			return new ResponseEntity<List<SidoDto>>(service.getSidoList(), HttpStatus.OK);
 		} catch (Exception e) {
@@ -38,6 +42,7 @@ public class MapController {
 	// get 시도에 따른 구군 리스트 가져오기 "/gugun"
 	@GetMapping("/gugun")
 	public ResponseEntity<?> getGugunList() throws Exception{
+		log.info("getGugunList access");
 		try {
 //			System.out.println(service.getGugunList());
 			return new ResponseEntity<Map<Integer, List<GugunDto>>>(service.getGugunList(), HttpStatus.OK);

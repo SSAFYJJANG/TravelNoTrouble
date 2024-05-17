@@ -156,7 +156,6 @@ public class UserController {
 			try {
 //				로그인 사용자 정보.
 				if(service.updateUserInfo(userinfo) < 1) throw new Exception();
-				System.out.println("userinfo" + userinfo);
 				resultMap.put("userInfo", userinfo);
 //				resultMap.put("userInfo", service.getUserInfoById(userinfo.getUserId()));
 				status = HttpStatus.OK;

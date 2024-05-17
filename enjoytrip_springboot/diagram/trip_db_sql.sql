@@ -307,6 +307,18 @@ CREATE TABLE IF NOT EXISTS `db_trip`.`attraction_cart` (
 ENGINE = InnoDB;
 
 
+-- -----------------------------------------------------
+-- Table `db_trip`.`content_type`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `db_trip`.`content_type` ;
+
+CREATE TABLE IF NOT EXISTS `db_trip`.`content_type` (
+  `content_type_id` INT NOT NULL,
+  `content_name` VARCHAR(45) NULL,
+  PRIMARY KEY (`content_type_id`))
+ENGINE = InnoDB;
+
+
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;

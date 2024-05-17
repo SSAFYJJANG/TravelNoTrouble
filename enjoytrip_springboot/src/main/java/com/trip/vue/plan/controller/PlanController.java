@@ -97,7 +97,7 @@ public class PlanController {
 		}
 	}
 	
-	// delete 세부일정 삭제 '/{plan_id}'
+	// 세부 일정 메모 수정
 	@PutMapping("/{plan_id}")
 	public ResponseEntity<?> modifyPlanDetailOverview(@RequestBody PlanDetailDto ob) throws Exception{
 		try {

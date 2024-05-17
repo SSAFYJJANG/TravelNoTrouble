@@ -5,6 +5,7 @@
 <!-- namespace: dao 명, id: 메서드 명 -->
 <!-- <mapper namespace="com.edu.board.model.dao.Dao"> -->
 <mapper namespace="com.trip.vue.plan.model.dao.PlanDao">
+	
 	<select id="listPlan" parameterType="string" resultType="planDto">
 		select *
 		from plan
@@ -32,6 +33,12 @@
 		delete
 		from plan
 		where userId=#{userId}
+	</delete>
+	
+	<delete id="deleteAllPlanDays" parameterType="string">
+		delete pd
+		from ( plan p left join plan_days pd on p.plan_id = pd.plan_id) 
+		where p.userid=#{userId};
 	</delete>
 	
 </mapper>

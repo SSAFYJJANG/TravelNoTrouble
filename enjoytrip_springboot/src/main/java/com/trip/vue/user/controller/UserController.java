@@ -15,6 +15,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.trip.vue.board.model.service.BoardService;
+import com.trip.vue.hotplace.model.service.HotplaceService;
+import com.trip.vue.map.model.service.MapService;
+import com.trip.vue.plan.model.service.PlanService;
 import com.trip.vue.user.model.UserDto;
 import com.trip.vue.user.model.service.UserService;
 import com.trip.vue.util.JWTUtil;
@@ -31,6 +35,14 @@ import lombok.extern.slf4j.Slf4j;
 public class UserController {
 	@Autowired
 	private UserService service;
+	@Autowired
+	private PlanService planService;
+	@Autowired
+	private BoardService boardService;
+	@Autowired
+	private HotplaceService hotplaceService;
+	@Autowired
+	private MapService mapService;
 	@Autowired
 	private JWTUtil jwtUtil;
 	
@@ -114,7 +126,7 @@ public class UserController {
 		return new ResponseEntity<Map<String, Object>>(resultMap, status);
 	}
 	
-	//post 회원가입 "/"
+	//post 회원가입 ""
 	@PostMapping("")
 	public ResponseEntity<?> registUser(@RequestBody UserDto userinfo) throws Exception{
 		System.out.println("TEST OOO");
@@ -130,29 +142,64 @@ public class UserController {
 			return new ResponseEntity<String>("서버 오류", HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
-	//put 수정 "/"
-	@PutMapping("/")
-	public ResponseEntity<?> updateUserInfo(@RequestBody UserDto userinfo) throws Exception{
-		try {
-			int result = service.updateUserInfo(userinfo);
-			if(result < 1) throw new Exception();
-			return new ResponseEntity<Boolean>(true, HttpStatus.OK);
-		} catch (Exception e) {
-			return new ResponseEntity<String>("서버 오류", HttpStatus.INTERNAL_SERVER_ERROR);
+	
+	//put 수정 "/{userId}"
+	@Operation(summary = "회원인증", description = "회원 정보를 담은 Token 을 반환한다.")
+	@PutMapping("/{userId}")
+	public ResponseEntity<?> updateUserInfo(
+			@RequestBody @Parameter(description = "인증할 회원의 아이디.", required = true) UserDto userinfo,
+			HttpServletRequest request) 
+					throws Exception{
+		Map<String, Object> resultMap = new HashMap<>();
+		HttpStatus status = HttpStatus.ACCEPTED;
+		if (jwtUtil.checkToken(request.getHeader("Authorization"))) {
+			log.info("사용 가능한 토큰!!!");
+			try {
+//				로그인 사용자 정보.
+				if(service.updateUserInfo(userinfo) < 1) throw new Exception();
+				resultMap.put("userInfo", userinfo);
+//				resultMap.put("userInfo", service.getUserInfoById(userinfo.getUserId()));
+				status = HttpStatus.OK;
+			} catch (Exception e) {
+				log.error("정보수정 실패 : {}", e);
+				resultMap.put("message", e.getMessage());
+				status = HttpStatus.INTERNAL_SERVER_ERROR;
+			}
+		} else {
+			log.error("사용 불가능 토큰!!!");
+			status = HttpStatus.UNAUTHORIZED;
 		}
+		return new ResponseEntity<Map<String, Object>>(resultMap, status);
 	}
 	
-	//delete 탈퇴 "/"
-	@DeleteMapping("/")
-	public ResponseEntity<?> deleteUserInfo(@RequestBody String userId) throws Exception{
+	
+	
+	//delete 탈퇴 ""
+	@DeleteMapping("/{userId}")
+	public ResponseEntity<?> deleteUserInfo(
+			@PathVariable ("userId") @Parameter(description = "탈퇴할 회원의 아이디.", required = true) String userId) throws Exception{
+		Map<String, Object> resultMap = new HashMap<>();
+		HttpStatus status = HttpStatus.ACCEPTED;
 		try {
-			
+			service.deleteRefreshToken(userId);
+			// plan_detail
+			// plan_days 삭제
+			// plan
+			planService.deleteAllPlan(userId);
+			// board
+			boardService.deleteAllBoard(userId);
+			// hotplace
+			hotplaceService.deleteAllHotplace(userId);
+			// attaction_card
 			int result = service.deleteUserInfo(userId);
 			if(result < 1) throw new Exception();
-			return new ResponseEntity<Boolean>(true, HttpStatus.OK);
+			status = HttpStatus.OK;
 		} catch (Exception e) {
-			return new ResponseEntity<String>("서버 오류", HttpStatus.INTERNAL_SERVER_ERROR);
+			log.error("탈퇴 실패 : {}", e);
+			resultMap.put("message", e.getMessage());
+			status = HttpStatus.INTERNAL_SERVER_ERROR;
 		}
+		return new ResponseEntity<Map<String, Object>>(resultMap, status);
 	}
 	
 	//get 세부정보 가져오기 - "/{userid}"

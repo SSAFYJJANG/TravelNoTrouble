@@ -5,6 +5,7 @@ import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
 
+import com.trip.vue.board.model.BoardDto;
 import com.trip.vue.map.model.AttractionDto;
 import com.trip.vue.map.model.GugunDto;
 import com.trip.vue.map.model.SidoDto;
@@ -25,4 +26,10 @@ public interface MapDao {
 	public AttractionDto getRecommendationAttraction() throws Exception;
 	// 사용자가 찜한 관광지 가져오기
 	public List<AttractionDto> getUserAttractionList(String userid);
+	// 사용자가 찜한 관광지 추가하기
+	public int insertAttraction(AttractionDto ob) throws Exception;
+	// 사용자가 찜한 관광지 삭제하기
+	public int deleteAttraction(int attraction_card) throws Exception;
+	// 사용자가 찜한 관광지 다 삭제하기
+	public int deleteAllBoard(Map<String, String> map) throws Exception;
 }

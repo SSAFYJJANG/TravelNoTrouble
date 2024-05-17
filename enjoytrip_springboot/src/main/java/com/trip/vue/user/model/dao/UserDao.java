@@ -21,12 +21,11 @@ public interface UserDao {
 
 	//회원가입 - 아이디 중복체크
 	public int registUser(UserDto userinfo);
-
+	//유저 수 가져오기 - 메인화면
+	public int getTotalUserCount() throws Exception;
+	
 	//수정
 	public int updateUserInfo(UserDto userinfo);
 	//탈퇴
 	public int deleteUserInfo(String userId);
-	
-	//유저 수 가져오기 - 메인화면
-	public int getTotalUserCount() throws Exception;
 }

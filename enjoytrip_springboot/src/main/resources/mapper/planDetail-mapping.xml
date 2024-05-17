@@ -23,10 +23,17 @@
 		where plan_detail_id=#{plan_detail_id}
 	</delete>
 	
-	<delete id="deleteAllPlanDetail" parameterType="integer">
-		delete
-		from plan
-		where plan_id=#{plan_id}
+	<delete id="deleteAllPlanDetail" parameterType="string">
+		delete pdt
+		from ( plan p left join plan_days pd on p.plan_id = pd.plan_id
+		left join plan_detail pdt on pd.plan_days_id = pdt.plan_days_id) 
+		where p.userid=#{userId};
 	</delete>
+	
+	<update id="modifyPlanDetailOverview" parameterType="planDetailDto">
+		update hotplace
+		set title=#{title}, overview=#{overview}, modified_time=now(), image={image}, sido_code=#{sido_code}, gugun_code=#{gugun_code}
+		where hotplace_id=#{hotplace_id}
+	</update>
 	
 </mapper>

@@ -10,7 +10,7 @@
 .plan,
 .card,
 .item-wrapper {
-  border-radius: 2rem !important;
+  border-radius: 2rem;
 }
 img {
   border-radius: 2rem;
@@ -1609,6 +1609,8 @@ a {
   display: flex;
   justify-content: center;
   position: relative;
+}
+.cid-uc0ssjsXFN{
   min-width: 370px;
   max-width: 370px;
 }
@@ -3231,11 +3233,10 @@ a {
     padding: 1.2rem;
   }
 }
-.cid-uc9PmWNUs6 {
+/* .cid-uc9PmWNUs6 {
   padding-top: 1rem;
   padding-bottom: 5rem;
-  background-color: #edefeb;
-}
+} */
 .cid-uc9PmWNUs6 img,
 .cid-uc9PmWNUs6 .item-img {
   width: 100%;
@@ -3298,8 +3299,8 @@ a {
   display: flex;
   justify-content: center;
   position: relative;
-  min-width: 370px;
-  max-width: 370px;
+  min-width: 250px;
+  max-width: 250px;
 }
 @media (max-width: 768px) {
   .cid-uc9PmWNUs6 .embla__slide {
@@ -3386,7 +3387,11 @@ a {
   max-width: 800px;
 }
 .cid-uc9PmWNUs6 .mbr-section-subtitle {
-  text-align: center;
+  /* text-align: center; */
+  /*change*/
+  text-align: left;
+  margin-left: 15%;
+
 }
 .cid-uc9PmZ4HqK {
   padding-top: 3rem;

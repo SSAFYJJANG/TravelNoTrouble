@@ -18,6 +18,8 @@ import MyTripPlanWrite from "@/components/myTripPlan/MyTripPlanWrite.vue";
 import AuthView from "@/views/AuthView.vue";
 import Login from "@/components/user/auth/Login.vue";
 import Signup from "@/components/user/auth/Signup.vue";
+import AOS from "aos";
+import 'aos/dist/aos.css';
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -138,11 +140,16 @@ const router = createRouter({
 });
 
 function checkLoginUser(to, from) {
-  const isLogin = false;
+  const isLogin = true;
   if (!isLogin) {
     console.log("로그인이 필요합니다");
     return { name: "auth-login" };
   }
 }
+
+router.beforeEach((to, from, next) => {
+  AOS.init(); // Initialize AOS
+  next();
+});
 
 export default router;

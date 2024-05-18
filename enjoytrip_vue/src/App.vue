@@ -1,11 +1,11 @@
 <script setup>
-import { ref, onMounted, onUpdated } from "vue";
-import { RouterView, useRouter } from "vue-router";
+import { onMounted } from "vue";
+import { RouterView } from "vue-router";
 import Header from "@/components/header/Header.vue";
-import Footer from "./components/footer/Footer.vue";
+import Footer from "@/components/footer/Footer.vue";
+import router from "@/router"
 
 // 매 라우터 이동마다 새로고침
-const router = useRouter();
 router.afterEach((to, from) => {
   if (from.name && to.name && from.name !== to.name) {
     router.go(0);
@@ -22,7 +22,6 @@ async function loadScripts() {
   );
   await import("/src/assets/js/embla/embla.min.js");
   await import("/src/assets/js/embla/script.js");
-  // await import("/src/assets/js/countdown/countdown.js");
   await import("/src/assets/js/web/assets/jquery/jquery.min.js");
   await import("/src/assets/js/dropdown/js/navbar-dropdown.js");
   await import("/src/assets/js/smoothscroll/smooth-scroll.js");

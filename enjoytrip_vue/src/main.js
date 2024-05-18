@@ -18,6 +18,10 @@ import "bootstrap-icons/font/bootstrap-icons.css";
 const app = createApp(App);
 app.component("QuillEditor", QuillEditor);
 
+//AOS
+import AOS from 'aos';
+import "aos/dist/aos.css";
+app.use(AOS);
 app.use(router);
 app.use(BootstrapVue3);
 

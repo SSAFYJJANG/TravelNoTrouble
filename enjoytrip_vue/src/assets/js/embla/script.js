@@ -117,6 +117,10 @@
                 break;
               case "interval":
                 e.autoPlayInterval = +u;
+                break;
+              case "direction":
+                e.direction = u;
+                break;
             }
             n(i), (b.draggable = !1), a(t.target, b), r(i, b.autoPlay, b.autoPlayInterval);
           }

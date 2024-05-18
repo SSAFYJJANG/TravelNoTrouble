@@ -5,6 +5,7 @@ import CountDown from '@/components/home/CountDown.vue';
 import PopularHotPlacesList from '@/components/home/PopularHotPlacesList.vue';
 import Weather from "@/components/home/Weather.vue";
 import RecommendedAttraction from "@/components/home/RecommendedAttraction.vue";
+import AreaAttractionList from "@/components/home/AreaAttractionList.vue";
 </script>
 
 
@@ -15,9 +16,12 @@ import RecommendedAttraction from "@/components/home/RecommendedAttraction.vue";
         <!-- user & attractions countdown -->
         <CountDown />
         <Weather />
+        <!-- 추천 & 지역 여행지 -->
         <RecommendedAttraction />
+        <AreaAttractionList />
         <!-- hotplace 인기글 -->
-        <PopularHotPlacesList />
+        <PopularHotPlacesList 
+        />
     </div>
 </template>
 

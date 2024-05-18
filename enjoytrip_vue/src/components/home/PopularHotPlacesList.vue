@@ -1,75 +1,79 @@
 <script setup>
-import { ref, computed, watch } from 'vue';
+import { ref, computed } from 'vue';
 import PopularHotPlace from './PopularHotPlace.vue';
+// import "/src/assets/js/embla/embla.min.js";
+// import "/src/assets/js/embla/script.js";
+
 let id = 1;
 const popularHotPlacesCnt = ref(1);
+const imgsrc = "/src/assets/images/trip.jpg"
 // TODO : dataSlideTo, dataBsSlideTo은 객체마다 숫자가 달라야하는지, 
 // 숫자는 순차적으로 나와야하는지 확인
 const popularHotPlaces = ref([
     {
-        no: id++,
-        imgSrc: "/src/assets/images/shop1.jpg",
+        no: id,
+        imgSrc: imgsrc,
         alt: "",
         title: "",
-        dataSlideTo: "1",
-        dataBsSlideTo: "1",
+        dataSlideTo: id,
+        dataBsSlideTo: id++,
     },
     {
-        no: id++,
-        imgSrc: "/src/assets/images/shop2.jpg",
+        no: id,
+        imgSrc: imgsrc,
         alt: "",
         title: "",
-        dataSlideTo: "2",
-        dataBsSlideTo: "2",
+        dataSlideTo: id,
+        dataBsSlideTo: id++,
     },
     {
-        no: id++,
-        imgSrc: "/src/assets/images/shop3.jpg",
+        no: id,
+        imgSrc: imgsrc,
         alt: "",
         title: "",
-        dataSlideTo: "3",
-        dataBsSlideTo: "3",
+        dataSlideTo: id,
+        dataBsSlideTo: id++,
     },
     {
-        no: id++,
-        imgSrc: "/src/assets/images/shop4.jpg",
+        no: id,
+        imgSrc: imgsrc,
         alt: "",
         title: "",
-        dataSlideTo: "4",
-        dataBsSlideTo: "4",
+        dataSlideTo: id,
+        dataBsSlideTo: id++,
     },
     {
-        no: id++,
-        imgSrc: "/src/assets/images/shop4.jpg",
+        no: id,
+        imgSrc: imgsrc,
         alt: "",
         title: "",
-        dataSlideTo: "4",
-        dataBsSlideTo: "4",
+        dataSlideTo: id,
+        dataBsSlideTo: id++,
     },
     {
-        no: id++,
-        imgSrc: "/src/assets/images/shop4.jpg",
+        no: id,
+        imgSrc: imgsrc,
         alt: "",
         title: "",
-        dataSlideTo: "4",
-        dataBsSlideTo: "4",
+        dataSlideTo: id,
+        dataBsSlideTo: id++,
     },
     {
-        no: id++,
-        imgSrc: "/src/assets/images/shop4.jpg",
+        no: id,
+        imgSrc: imgsrc,
         alt: "",
         title: "",
-        dataSlideTo: "4",
-        dataBsSlideTo: "4",
+        dataSlideTo: id,
+        dataBsSlideTo: id++,
     },
     {
-        no: id++,
-        imgSrc: "/src/assets/images/shop4.jpg",
+        no: id,
+        imgSrc: imgsrc,
         alt: "",
         title: "",
-        dataSlideTo: "4",
-        dataBsSlideTo: "4",
-    }
+        dataSlideTo: id,
+        dataBsSlideTo: id++,
+    },
 ]);
 
 const lengthOfPopularHotPlaces = computed(() => {
@@ -82,20 +86,21 @@ const lengthOfPopularHotPlaces = computed(() => {
 
         <div class="position-relative">
             <div class="container-fluid">
-                <div class="row justify-content-center">
-                    <div class="col-12 content-head">
-                        <div class="mbr-section-head mb-5">
-                            <h5 class="mbr-section-subtitle mbr-fonts-style align-center mb-0 mt-4 display-6">
-                                [ Best Hotplaces ]
-                            </h5>
+                <div class="row">
+                    <div class="col-12">
+                        <div class="mbr-section-head mb-4 mt-4">
+                            <h3 class="mbr-section-subtitle mbr-fonts-style ">
+                                인기 리뷰
+                            </h3>
+                            <hr style="margin: auto 12%;">
                         </div>
                     </div>
                 </div>
             </div>
 
             <div v-if="lengthOfPopularHotPlaces" class="embla" data-skip-snaps="true" data-align="center"
-                data-contain-scroll="trimSnaps" data-loop="true" data-auto-play="true" data-auto-play-interval="2"
-                data-draggable="true">
+                data-contain-scroll="trimSnaps" data-loop="true" data-auto-play="true" data-auto-play-interval="2.5"
+                data-draggable="true" data-direction="ltr">
                 <div class="embla__viewport container-fluid">
                     <div class="embla__container">
                         <PopularHotPlace v-for="popularHotPlace
@@ -103,21 +108,22 @@ const lengthOfPopularHotPlaces = computed(() => {
                     </div>
                 </div>
 
-                <button class="embla__button embla__button--prev">
-                    <span class="mobi-mbri mobi-mbri-arrow-prev mbr-iconfont" aria-hidden="true"></span>
+                <button class="embla__button embla__button--prev" style="display: none;">
+                    <span class="mobi-mbri mobi-mbri-arrow-prev mbr-iconfont" aria-hidden="true">
+                        <i class="bi bi-caret-left-fill"></i>
+                    </span>
                     <span class="sr-only visually-hidden visually-hidden visually-hidden">Previous</span>
                 </button>
-                <button class="embla__button embla__button--next">
-                    <span class="mobi-mbri mobi-mbri-arrow-next mbr-iconfont" aria-hidden="true"></span>
+                <button class="embla__button embla__button--next"  style="display: none;">
+                    <span class="mobi-mbri mobi-mbri-arrow-next mbr-iconfont" aria-hidden="true">
+                        <i class="bi bi-caret-right-fill"></i>
+                    </span>
                     <span class="sr-only visually-hidden visually-hidden visually-hidden">Next</span>
                 </button>
             </div>
 
             <div v-else>
                 현재 등록된 hotplace가 없습니다.
-                <!-- <router-link >
-                    hotplace 등록하러 가기
-                </router-link> -->
             </div>
 
         </div>
@@ -125,9 +131,8 @@ const lengthOfPopularHotPlaces = computed(() => {
 </template>
 
 <style scoped>
-.mbr-embla{
-    /* margin-bottom: 6rem; */
-    padding-bottom: 8rem;
+.cid-uc9PmWNUs6 {
+  /* padding-top: 1rem; */
+  padding-bottom: 5rem;
 }
-
 </style>

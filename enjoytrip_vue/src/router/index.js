@@ -8,7 +8,7 @@ import BoardModify from "@/components/board/BoardModify.vue";
 import MypageView from "@/views/MypageView.vue";
 import MypageInfo from "@/components/user/MypageInfo.vue";
 import MypageModify from "@/components/user/MypageModify.vue";
-import SpotView from "@/views/SpotView.vue";
+import AttractionView from "@/views/AttractionView.vue";
 import HotplaceView from "@/views/HotplaceView.vue";
 import HotplaceFeed from "@/components/hotplace/HotplaceFeed.vue";
 import HotplaceWrite from "@/components/hotplace/HotplaceWrite.vue";
@@ -94,9 +94,9 @@ const router = createRouter({
       ],
     },
     {
-      path: "/spot",
-      name: "spot",
-      component: SpotView,
+      path: "/place",
+      name: "place",
+      component: AttractionView,
     },
     {
       path: "/plan",

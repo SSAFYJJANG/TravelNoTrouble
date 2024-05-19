@@ -36,7 +36,7 @@ const login = ref({
         </router-link>
       </li>
       <li class="nav-item">
-        <router-link class="nav-link link text-black display-4" :to="{ name: 'spot' }">
+        <router-link class="nav-link link text-black display-4" :to="{ name: 'place' }">
           나의 여행 계획
         </router-link>
       </li>

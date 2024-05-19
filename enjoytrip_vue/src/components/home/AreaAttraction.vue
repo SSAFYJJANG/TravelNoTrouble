@@ -6,7 +6,7 @@ defineProps({
 })
 
 const clickMove = () => {
-    router.push({ name: 'spot' });
+    router.push({ name: 'place' });
 }
 
 </script>

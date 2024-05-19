@@ -14,7 +14,7 @@
                     </h4>
                     <p>{{ monthInfo.address }}</p>
                     <p class="description">{{ monthInfo.desc }}</p>
-                    <router-link :to="{ name: 'plan' }" class="cta-btn align-self-start">여행 계획 짜러가기</router-link>
+                    <router-link :to="{ name: 'place' }" class="cta-btn align-self-start">여행 계획 짜러가기</router-link>
                 </div>
                 <div class="col-lg-5 order-first order-lg-last d-flex align-items-center img-area">
                     <div class="img">

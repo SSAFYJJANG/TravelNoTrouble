@@ -1,15 +1,19 @@
 <script setup>
-import { onMounted } from "vue";
+import { ref , onMounted } from "vue";
 import { RouterView } from "vue-router";
 import Header from "@/components/header/Header.vue";
 import Footer from "@/components/footer/Footer.vue";
 import router from "@/router"
+
+const path = ref("");
 
 // 매 라우터 이동마다 새로고침
 router.afterEach((to, from) => {
   if (from.name && to.name && from.name !== to.name) {
     router.go(0);
   }
+    path.value = to.name;
+    console.log(to.name);
 });
 
 onMounted(() => {
@@ -31,13 +35,13 @@ async function loadScripts() {
 </script>
 
 <template>
-  <header>
+  <header :class="path">
     <Header />
   </header>
 
   <RouterView />
 
-  <footer>
+  <footer :class="path">
     <Footer />
   </footer>
 </template>
@@ -45,5 +49,11 @@ async function loadScripts() {
 <style scoped>
 .page {
   min-height: calc(100vh - 3rem);
+}
+.auth-login, .auth-signup {
+  display: none;
+}
+footer.place{
+  display: none;
 }
 </style>

@@ -1,143 +1,424 @@
-<script setup></script>
+<script setup>
+import { ref } from "vue";
+
+const info = ref({
+  userid: "ssafy",
+  username: "싸피",
+  email: "ssafy123@ssafy.com",
+  previewImage: "/src/assets/images/shop3.jpg",
+  sido: 1,
+  gugun: 3,
+});
+
+const previewImage = ref("/src/assets/images/shop5.jpg"); // 기본 이미지
+
+const uploadImage = (event) => {
+  const files = event.target?.files;
+  if (files.length > 0) {
+    const file = files[0];
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      previewImage.value = e.target.result;
+    };
+    reader.readAsDataURL(file);
+
+    console.log("file name : ", file);
+    info.value.previewImage = file;
+    // 이미지 파일 이름 : file.name
+  }
+};
+
+const completeModify = () => {
+  console.log(info.value);
+};
+</script>
 
 <template>
-  <section data-bs-version="5.1" class="header5 cid-tJS6uM4N87" id="header05-1">
-    <div class="topbg"></div>
-    <div class="align-center container">
-      <div class="row justify-content-center">
-        <div class="col-md-12 col-lg-9">
-          <h1 class="mbr-section-title mbr-fonts-style mb-4 display-1">
-            <strong>Edit Profile</strong>
-          </h1>
-          <p class="mbr-text mbr-fonts-style mb-4 display-7">
-            Click any text to edit or style it. Select text to insert a link.
-            <br />Click the blue icon at the top right corner (Block Parameters)
-            of the block to hide/show buttons, text, title, and change the block
-            background. Click the red "+" button at the bottom right corner to
-            add a new block. Use the top left menu to create new pages, sites,
-            and add new themes and extensions.
-          </p>
-        </div>
-      </div>
-      <div class="row mt-5 mx-3 justify-content-center">
-        <div class="col-12 col-lg-12">
-          <div class="container bg-white rounded-5 shadow py-3">
-            <div class="row justify-content-center py-5">
-              <div class="card col-12 col-md-7">
-                <div class="card-wrapper">
-                  <div class="text-wrapper">
-                    <h5 class="cardTitle mbr-fonts-style mb-2 display-5 mt-2">
-                      <strong>회원 정보 수정</strong>
-                    </h5>
-                    <ul class="mt-5 list mbr-fonts-style display-7">
-                      <label class="mbr-text item-wrap mb-3">
-                        <span>ID</span>
-                        <input
-                          type="text"
-                          name="userid"
-                          data-form-field="userid"
-                          class="form-control"
-                          value=""
-                          id="phone-form03-19"
-                        />
-                      </label>
+  <!-- 후보1 -->
+  <div class="container">
+    <div class="p-5">
+      <div class="d-flex flex-column">
+        <div class="mypage-item row justify-content-center rounded-4 mt-5">
+          <!-- 프로필 이미지 파일 업로드 -->
+          <div class="mt-4 px-5 py-4 d-flex justify-content-center">
+            <input type="file" id="profile-img" hidden @change="uploadImage" />
+            <label for="profile-img">
+              <img
+                :src="previewImage"
+                style="width: 200px; height: 200px"
+                class="rounded-pill align-self-center border"
+              />
+            </label>
+          </div>
 
-                      <label class="mbr-text item-wrap mb-3">
-                        <span>Password</span>
-                        <input
-                          type="password"
-                          name="password"
-                          data-form-field="password"
-                          class="form-control"
-                          placeholder="Password"
-                          value=""
-                          id="phone-form03-19"
-                        />
-                      </label>
+          <!-- 프로필 정보 -->
+          <div class="row">
+            <div class="align-center">
+              <table>
+                <tr>
+                  <td>닉네임</td>
+                  <td class="ps-5">
+                    <input
+                      type="text"
+                      name="username"
+                      data-form-field="username"
+                      class="form-control fs-6 py-0 px-4"
+                      :value="info.username"
+                    />
+                  </td>
+                </tr>
+                <tr>
+                  <td>이메일</td>
+                  <td class="ps-5">
+                    <input
+                      type="text"
+                      name="email"
+                      data-form-field="email"
+                      class="form-control fs-6 py-0 px-4"
+                      :value="info.email"
+                    />
+                  </td>
+                </tr>
+                <tr>
+                  <td>시도</td>
+                  <td class="ps-5">
+                    <select
+                      name="sido"
+                      class="form-control fs-6 py-0 px-4"
+                      data-form-field="sido"
+                      :value="info.sido"
+                    >
+                      <option value="0">시도</option>
+                      <option value="1">대구</option>
+                    </select>
+                  </td>
+                </tr>
+                <tr>
+                  <td>구군</td>
+                  <td class="ps-5">
+                    <select
+                      name="gugun"
+                      class="form-control fs-6 py-0 px-4"
+                      data-form-field="gugun"
+                      :value="info.gugun"
+                    >
+                      <option value="0">구군</option>
+                      <option value="1">수성구</option>
+                      <option value="1">달서구</option>
+                      <option value="3">중구</option>
+                    </select>
+                  </td>
+                </tr>
+              </table>
 
-                      <label class="mbr-text item-wrap mb-3">
-                        <span>Name</span>
-                        <input
-                          type="text"
-                          name="username"
-                          data-form-field="username"
-                          class="form-control"
-                          value=""
-                          id="phone-form03-19"
-                        />
-                      </label>
-
-                      <label class="mbr-text item-wrap">
-                        <span>E-mail</span>
-                        <input
-                          type="email"
-                          name="email"
-                          data-form-field="email"
-                          class="form-control"
-                          value=""
-                          id="phone-form03-19"
-                        />
-                      </label>
-                    </ul>
-                  </div>
-                </div>
+              <div>
+                <button
+                  class="btn btn-primary display-7 py-2 px-4 mt-4 mb-5 rounded-3 fs-6 fw-normal"
+                  @click="completeModify"
+                >
+                  수정 완료
+                </button>
               </div>
             </div>
-            <!-- <div class="mbr-section-btn mt-3">
-                <a class="btn btn-primary display-7" href="index.html#form02-6"
-                    >수정</a
-                >
-                <a
-                    class="btn btn-primary-outline display-7"
-                    href="index.html#gallery02-v"
-                    >탈퇴</a
-                >
-                </div> -->
           </div>
-        </div>
-
-        <div class="mbr-section-btn mt-3">
-          <a class="btn btn-primary display-7" href="index.html#form02-6"
-            >수정완료</a
-          >
         </div>
       </div>
     </div>
-  </section>
+  </div>
+
+  <!-- 후보2 -->
+  <div class="container">
+    <div class="p-5">
+      <div class="d-flex flex-column">
+        <div class="row justify-content-center rounded-4 mt-5">
+          <!-- 프로필 이미지 파일 업로드 -->
+          <div class="mt-4 px-5 py-4 d-flex justify-content-center">
+            <input type="file" id="profile-img" hidden @change="uploadImage" />
+            <label for="profile-img">
+              <img
+                :src="previewImage"
+                style="width: 200px; height: 200px"
+                class="rounded-pill align-self-center border"
+              />
+            </label>
+          </div>
+
+          <!-- 프로필 정보 -->
+          <div class="row mypage-item rounded-4 mt-4">
+            <div class="align-center mt-4">
+              <table>
+                <tr>
+                  <td>닉네임</td>
+                  <td class="ps-5">
+                    <input
+                      type="text"
+                      name="username"
+                      data-form-field="username"
+                      class="form-control fs-6 py-0 px-4"
+                      :value="info.username"
+                    />
+                  </td>
+                </tr>
+                <tr>
+                  <td>이메일</td>
+                  <td class="ps-5">
+                    <input
+                      type="text"
+                      name="email"
+                      data-form-field="email"
+                      class="form-control fs-6 py-0 px-4"
+                      :value="info.email"
+                    />
+                  </td>
+                </tr>
+                <tr>
+                  <td>시도</td>
+                  <td class="ps-5">
+                    <select
+                      name="sido"
+                      class="form-control fs-6 py-0 px-4"
+                      data-form-field="sido"
+                      :value="info.sido"
+                    >
+                      <option value="0">시도</option>
+                      <option value="1">대구</option>
+                    </select>
+                  </td>
+                </tr>
+                <tr>
+                  <td>구군</td>
+                  <td class="ps-5">
+                    <select
+                      name="gugun"
+                      class="form-control fs-6 py-0 px-4"
+                      data-form-field="gugun"
+                      :value="info.gugun"
+                    >
+                      <option value="0">구군</option>
+                      <option value="1">수성구</option>
+                      <option value="1">달서구</option>
+                      <option value="3">중구</option>
+                    </select>
+                  </td>
+                </tr>
+              </table>
+
+              <div>
+                <button
+                  class="btn btn-primary display-7 py-2 px-4 mt-4 mb-5 rounded-3 fs-6 fw-normal"
+                  @click="completeModify"
+                >
+                  수정 완료
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 후보3 -->
+  <div class="container">
+    <div class="p-5">
+      <div class="d-flex flex-column">
+        <div class="row justify-content-center rounded-4 mt-5">
+          <!-- 프로필 이미지 파일 업로드 -->
+          <div class="mt-4 px-5 py-4 d-flex justify-content-center">
+            <input type="file" id="profile-img" hidden @change="uploadImage" />
+            <label for="profile-img">
+              <img
+                :src="previewImage"
+                style="width: 200px; height: 200px"
+                class="rounded-pill align-self-center border"
+              />
+            </label>
+          </div>
+
+          <!-- 프로필 정보 -->
+          <div class="row rounded-4">
+            <div class="align-center mt-3">
+              <table class="mypage-item rounded-4 px-5 py-3">
+                <tr>
+                  <td>닉네임</td>
+                  <td class="ps-5">
+                    <input
+                      type="text"
+                      name="username"
+                      data-form-field="username"
+                      class="form-control fs-6 py-0 px-4"
+                      :value="info.username"
+                    />
+                  </td>
+                </tr>
+                <tr>
+                  <td>이메일</td>
+                  <td class="ps-5">
+                    <input
+                      type="text"
+                      name="email"
+                      data-form-field="email"
+                      class="form-control fs-6 py-0 px-4"
+                      :value="info.email"
+                    />
+                  </td>
+                </tr>
+                <tr>
+                  <td>시도</td>
+                  <td class="ps-5">
+                    <select
+                      name="sido"
+                      class="form-control fs-6 py-0 px-4"
+                      data-form-field="sido"
+                      :value="info.sido"
+                    >
+                      <option value="0">시도</option>
+                      <option value="1">대구</option>
+                    </select>
+                  </td>
+                </tr>
+                <tr>
+                  <td>구군</td>
+                  <td class="ps-5">
+                    <select
+                      name="gugun"
+                      class="form-control fs-6 py-0 px-4"
+                      data-form-field="gugun"
+                      :value="info.gugun"
+                    >
+                      <option value="0">구군</option>
+                      <option value="1">수성구</option>
+                      <option value="1">달서구</option>
+                      <option value="3">중구</option>
+                    </select>
+                  </td>
+                </tr>
+                <tr>
+                  <td colspan="2">
+                    <button
+                      class="btn btn-primary display-7 mt-4 py-2 px-4 rounded-3 fs-6 fw-normal"
+                      @click="completeModify"
+                    >
+                      수정 완료
+                    </button>
+                  </td>
+                </tr>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 후보4 -->
+  <div class="container">
+    <div class="p-5">
+      <div class="d-flex flex-column">
+        <div class="row justify-content-center rounded-4 mt-5">
+          <!-- 프로필 이미지 파일 업로드 -->
+          <div class="mt-4 px-5 py-4 d-flex justify-content-center">
+            <input type="file" id="profile-img" hidden @change="uploadImage" />
+            <label for="profile-img">
+              <img
+                :src="previewImage"
+                style="width: 200px; height: 200px"
+                class="rounded-pill align-self-center border"
+              />
+            </label>
+          </div>
+
+          <!-- 프로필 정보 -->
+          <div class="row rounded-4">
+            <div class="align-center mt-3">
+              <table class="px-5 py-3">
+                <tr>
+                  <td>닉네임</td>
+                  <td class="ps-5">
+                    <input
+                      type="text"
+                      name="username"
+                      data-form-field="username"
+                      class="form-control fs-6 py-0 px-4"
+                      :value="info.username"
+                    />
+                  </td>
+                </tr>
+                <tr>
+                  <td>이메일</td>
+                  <td class="ps-5">
+                    <input
+                      type="text"
+                      name="email"
+                      data-form-field="email"
+                      class="form-control fs-6 py-0 px-4"
+                      :value="info.email"
+                    />
+                  </td>
+                </tr>
+                <tr>
+                  <td>시도</td>
+                  <td class="ps-5">
+                    <select
+                      name="sido"
+                      class="form-control fs-6 py-0 px-4"
+                      data-form-field="sido"
+                      :value="info.sido"
+                    >
+                      <option value="0">시도</option>
+                      <option value="1">대구</option>
+                    </select>
+                  </td>
+                </tr>
+                <tr>
+                  <td>구군</td>
+                  <td class="ps-5">
+                    <select
+                      name="gugun"
+                      class="form-control fs-6 py-0 px-4"
+                      data-form-field="gugun"
+                      :value="info.gugun"
+                    >
+                      <option value="0">구군</option>
+                      <option value="1">수성구</option>
+                      <option value="1">달서구</option>
+                      <option value="3">중구</option>
+                    </select>
+                  </td>
+                </tr>
+                <tr>
+                  <td colspan="2">
+                    <button
+                      class="btn btn-primary display-7 mt-4 py-2 px-4 rounded-3 fs-6 fw-normal"
+                      @click="completeModify"
+                    >
+                      수정 완료
+                    </button>
+                  </td>
+                </tr>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </template>
 
 <style scoped>
-.cid-tJS6uM4N87 {
-  /* padding-top: 12rem; */
-  padding-top: 6rem;
-  padding-bottom: 2rem;
-  background-color: #edefeb;
+.mypage-item {
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.07), 0 2px 4px rgba(0, 0, 0, 0.07),
+    0 4px 8px rgba(0, 0, 0, 0.07), 0 8px 5px rgba(0, 0, 0, 0.07),
+    0 0px 0px rgba(0, 0, 0, 0.07), 0 0 64px rgba(0, 0, 0, 0.07);
 }
-.cid-tJS6uM4N87 .mbr-fallback-image.disabled {
-  display: none;
+table {
+  border-collapse: separate;
+  border-spacing: 0 15px;
+  margin-left: auto;
+  margin-right: auto;
 }
-.cid-tJS6uM4N87 .mbr-fallback-image {
-  display: block;
-  background-size: cover;
-  background-position: center center;
-  width: 100%;
-  height: 100%;
-  position: absolute;
-  bottom: 0;
-}
-.cid-tJS6uM4N87 .topbg {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  height: 30%;
-  background: #2e481a;
-}
-.cid-tJS6uM4N87 .mbr-section-title {
-  color: #000000;
-}
-.cid-tJS6uM4N87 .mbr-text,
-.cid-tJS6uM4N87 .mbr-section-btn {
-  color: #000000;
+input,
+select {
+  max-width: 300px;
 }
 </style>

@@ -3,16 +3,21 @@ import { ref, onMounted } from 'vue';
 import { useRouter } from "vue-router";
 import MenuPadding from "../common/MenuPadding.vue";
 import VSelect from "../common/VSelect.vue";
+import VSearchInput from "@/components/common/VSearchInput.vue";
 import PageNavigation from "../common/PageNavigation.vue";
 import { listArticle } from "@/api/board.js";
 import BoardListItem from "@/components/board/item/BoardListItem.vue";
-const router = useRouter();
+import router from "@/router"
 
 const selectOption = ref([
     { text: "검색조건", value: "" },
     { text: "글번호", value: "article_no" },
     { text: "제목", value: "subject" },
     { text: "작성자명", value: "user_id" },
+]);
+
+const selectClass = ref([
+    'w-50', 'me-2', 'ms-2'
 ]);
 
 const articles = ref([]);
@@ -77,11 +82,12 @@ const getArticleList = () => {
                     </div>
                     <div class="col-md-5 offset-5">
                         <form class="d-flex">
-                            <VSelect :selectOption="selectOption" @onKeySelect="changeKey" />
-                            <div class="input-group input-group-sm">
+                            <VSelect :selectOption="selectOption" :selectClass="selectClass" @onKeySelect="changeKey" />
+                            <!-- <div class="input-group input-group-sm">
                                 <input type="text" class="form-control" v-model="param.word" placeholder="검색어..." />
                                 <button class="btn btn-dark" type="button" @click="getArticleList">검색</button>
-                            </div>
+                            </div> -->
+                            <VSearchInput @click="getArticleList"/>
                         </form>
                     </div>
                 </div>
@@ -107,5 +113,4 @@ const getArticleList = () => {
     </div>
 </template>
 
-<style scoped>
-</style>
+<style scoped></style>

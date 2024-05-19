@@ -1,13 +1,23 @@
 <script setup>
-import { ref } from "vue";
+import { onMounted, ref } from "vue";
+import { useUserStore } from "@/stores/user";
+
+const userStore = useUserStore();
+
+const { getUserInfo, userInfo, updateUserInfo } = userStore;
+
+onMounted(() => {
+  let token = sessionStorage.getItem("accessToken");
+  getUserInfo(token);
+});
 
 const info = ref({
-  userid: "ssafy",
-  username: "싸피",
-  email: "ssafy123@ssafy.com",
-  previewImage: "/src/assets/images/shop3.jpg",
-  sido: 1,
-  gugun: 3,
+  userId: userInfo.userId,
+  username: userInfo.username,
+  email: userInfo.email,
+  image: userInfo.image,
+  sido_code: userInfo.sido_code,
+  gugun_code: userInfo.sido_code,
 });
 
 const previewImage = ref("/src/assets/images/shop5.jpg"); // 기본 이미지
@@ -22,14 +32,12 @@ const uploadImage = (event) => {
     };
     reader.readAsDataURL(file);
 
-    console.log("file name : ", file);
-    info.value.previewImage = file;
-    // 이미지 파일 이름 : file.name
+    info.value.image = file;
   }
 };
 
-const completeModify = () => {
-  console.log(info.value);
+const completeModify = async () => {
+  updateUserInfo(info.value);
 };
 </script>
 
@@ -63,7 +71,7 @@ const completeModify = () => {
                       name="username"
                       data-form-field="username"
                       class="form-control fs-6 py-0 px-4"
-                      :value="info.username"
+                      v-model="info.username"
                     />
                   </td>
                 </tr>
@@ -75,7 +83,7 @@ const completeModify = () => {
                       name="email"
                       data-form-field="email"
                       class="form-control fs-6 py-0 px-4"
-                      :value="info.email"
+                      v-model="info.email"
                     />
                   </td>
                 </tr>
@@ -86,10 +94,10 @@ const completeModify = () => {
                       name="sido"
                       class="form-control fs-6 py-0 px-4"
                       data-form-field="sido"
-                      :value="info.sido"
+                      v-model="info.sido_code"
                     >
                       <option value="0">시도</option>
-                      <option value="1">대구</option>
+                      <option value="1">서울</option>
                     </select>
                   </td>
                 </tr>
@@ -100,12 +108,12 @@ const completeModify = () => {
                       name="gugun"
                       class="form-control fs-6 py-0 px-4"
                       data-form-field="gugun"
-                      :value="info.gugun"
+                      v-model="info.gugun_code"
                     >
                       <option value="0">구군</option>
-                      <option value="1">수성구</option>
-                      <option value="1">달서구</option>
-                      <option value="3">중구</option>
+                      <option value="1">강서</option>
+                      <option value="2">강북</option>
+                      <option value="3">강남</option>
                     </select>
                   </td>
                 </tr>
@@ -126,6 +134,7 @@ const completeModify = () => {
     </div>
   </div>
 
+  <!--
   <!-- 후보2 -->
   <div class="container">
     <div class="p-5">
@@ -178,7 +187,7 @@ const completeModify = () => {
                       name="sido"
                       class="form-control fs-6 py-0 px-4"
                       data-form-field="sido"
-                      :value="info.sido"
+                      :value="info.sido_code"
                     >
                       <option value="0">시도</option>
                       <option value="1">대구</option>
@@ -192,7 +201,7 @@ const completeModify = () => {
                       name="gugun"
                       class="form-control fs-6 py-0 px-4"
                       data-form-field="gugun"
-                      :value="info.gugun"
+                      :value="info.gugun_code"
                     >
                       <option value="0">구군</option>
                       <option value="1">수성구</option>
@@ -270,7 +279,7 @@ const completeModify = () => {
                       name="sido"
                       class="form-control fs-6 py-0 px-4"
                       data-form-field="sido"
-                      :value="info.sido"
+                      :value="info.sido_code"
                     >
                       <option value="0">시도</option>
                       <option value="1">대구</option>
@@ -284,7 +293,7 @@ const completeModify = () => {
                       name="gugun"
                       class="form-control fs-6 py-0 px-4"
                       data-form-field="gugun"
-                      :value="info.gugun"
+                      :value="info.gugun_code"
                     >
                       <option value="0">구군</option>
                       <option value="1">수성구</option>
@@ -363,7 +372,7 @@ const completeModify = () => {
                       name="sido"
                       class="form-control fs-6 py-0 px-4"
                       data-form-field="sido"
-                      :value="info.sido"
+                      :value="info.sido_code"
                     >
                       <option value="0">시도</option>
                       <option value="1">대구</option>
@@ -377,7 +386,7 @@ const completeModify = () => {
                       name="gugun"
                       class="form-control fs-6 py-0 px-4"
                       data-form-field="gugun"
-                      :value="info.gugun"
+                      :value="info.gugun_code"
                     >
                       <option value="0">구군</option>
                       <option value="1">수성구</option>

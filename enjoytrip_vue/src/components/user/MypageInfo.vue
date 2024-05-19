@@ -1,4 +1,16 @@
-<script setup></script>
+<script setup>
+import { onMounted, ref } from "vue";
+import { useUserStore } from "@/stores/user";
+
+const userStore = useUserStore();
+
+const { getUserInfo, userInfo } = userStore;
+
+onMounted(() => {
+  let token = sessionStorage.getItem("accessToken");
+  getUserInfo(token);
+});
+</script>
 
 <template>
   <div class="container">
@@ -17,10 +29,10 @@
           <!-- 프로필 정보 -->
           <div class="col-8 px-5 py-4 d-flex flex-column">
             <div class="border">
-              <p class="h3">유저네임</p>
-              <p>eocndID</p>
-              <p>이메일@domain.com</p>
-              <p>대구시 달서구</p>
+              <p class="h3">{{ userInfo.username }}</p>
+              <p>{{ userInfo.userId }}</p>
+              <p>{{ userInfo.email }}</p>
+              <p>{{ userInfo.sido_code }}시 {{ userInfo.gugun_code }}구</p>
             </div>
             <div class="d-flex justify-content-end my-3">
               <router-link

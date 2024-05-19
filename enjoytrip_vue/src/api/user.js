@@ -19,8 +19,12 @@ async function tokenRegeneration(user, success, fail) {
 }
 
 async function logout(userid, success, fail) {
-  console.log("logout", userid);
   await local.get(`/user/logout/${userid}`).then(success).catch(fail);
 }
 
-export { userConfirm, findById, tokenRegeneration, logout };
+async function update(param, success, fail) {
+  console.log("update param", param.userId);
+  await local.put(`/user/${param.userId}`, param).then(success).catch(fail);
+}
+
+export { userConfirm, findById, tokenRegeneration, logout, update };

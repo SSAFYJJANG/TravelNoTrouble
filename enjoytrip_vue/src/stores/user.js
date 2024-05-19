@@ -3,7 +3,13 @@ import { useRouter } from "vue-router";
 import { defineStore } from "pinia";
 import { jwtDecode } from "jwt-decode";
 
-import { userConfirm, findById, tokenRegeneration, logout } from "@/api/user";
+import {
+  userConfirm,
+  findById,
+  tokenRegeneration,
+  logout,
+  update,
+} from "@/api/user";
 import { httpStatusCode } from "@/util/http-status";
 
 export const useUserStore = defineStore("userStore", () => {
@@ -48,7 +54,6 @@ export const useUserStore = defineStore("userStore", () => {
       (response) => {
         if (response.status === httpStatusCode.OK) {
           userInfo.value = response.data.userInfo;
-          console.log("USERINFO VALUE  = ", userInfo.value);
         } else {
           console.log("유저 정보 없음!!!!");
         }
@@ -105,7 +110,6 @@ export const useUserStore = defineStore("userStore", () => {
   };
 
   const userLogout = async () => {
-    console.log("로그아웃 아이디 : " + userInfo.value.userId);
     await logout(
       userInfo.value.userId,
       (response) => {
@@ -126,6 +130,20 @@ export const useUserStore = defineStore("userStore", () => {
     );
   };
 
+  const updateUserInfo = async (userInfo) => {
+    await update(
+      userInfo,
+      (response) => {
+        if (response.status === httpStatusCode.CREATE) {
+          console.log("업데이트 성공");
+        }
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
+  };
+
   return {
     isLogin,
     isLoginError,
@@ -135,5 +153,6 @@ export const useUserStore = defineStore("userStore", () => {
     getUserInfo,
     tokenRegenerate,
     userLogout,
+    updateUserInfo,
   };
 });

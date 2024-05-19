@@ -76,7 +76,6 @@ export const useUserStore = defineStore("userStore", () => {
         }
       },
       async (error) => {
-        console.log("Logout 시도 ", userInfo.value);
         // HttpStatus.UNAUTHORIZE(401) : RefreshToken 기간 만료 >> 다시 로그인!!!!
         if (error.response.status === httpStatusCode.UNAUTHORIZED) {
           // 다시 로그인 전 DB에 저장된 RefreshToken 제거.

@@ -23,7 +23,7 @@ const clickLogin = async () => {
   console.log("isLogin: " + isLogin.value);
   if (isLogin.value) {
     // await getUserInfo(token);
-    router.replace("/");
+    router.replace({ name: "home" });
   }
 };
 </script>

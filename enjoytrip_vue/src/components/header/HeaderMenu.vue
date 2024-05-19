@@ -1,10 +1,23 @@
 <script setup>
 import { ref, defineProps, defineEmits } from "vue";
+import { useUserStore } from "@/stores/user";
+import { useRouter } from "vue-router";
+import { storeToRefs } from "pinia";
+
+const router = useRouter();
+const userStore = useUserStore();
+const { userLogout } = userStore;
+
 const login = ref({
   id: "",
   name: "",
   isLogin: true,
 });
+
+const clickLogout = () => {
+  userLogout();
+  router.push({ name: "auth-login" });
+};
 </script>
 
 <template>
@@ -107,12 +120,18 @@ const login = ref({
             >
               마이페이지<br />
             </router-link>
-            <router-link
+            <button
+              class="text-black dropdown-item display-4"
+              @click="clickLogout"
+            >
+              로그아웃<br />
+            </button>
+            <!-- <router-link
               class="text-black dropdown-item display-4"
               :to="{ name: 'home' }"
             >
               로그아웃<br />
-            </router-link>
+            </router-link> -->
           </div>
         </li>
       </div>

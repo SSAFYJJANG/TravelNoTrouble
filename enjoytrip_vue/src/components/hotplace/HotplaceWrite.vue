@@ -1,7 +1,22 @@
 <script setup>
 import { ref } from "vue";
+import { useRouter } from "vue-router";
+import { useHotplaceStore } from "@/stores/hotplace";
+
+const router = useRouter();
+const hotplaceStore = useHotplaceStore();
+const { uploadHotplace } = hotplaceStore;
 
 const previewImage = ref("/src/assets/images/gallery06.jpg"); // 기본 이미지
+const info = ref({
+  title: "",
+  type: "",
+  overview: "",
+  image: "/src/assets/images/gallery06.jpg",
+  userId: "ssafy2",
+  sido_code: 1,
+  gugun_code: 3,
+});
 
 const uploadImage = (event) => {
   const files = event.target?.files;
@@ -14,41 +29,21 @@ const uploadImage = (event) => {
     reader.readAsDataURL(file);
 
     console.log(file);
+    info.value.image = file;
     // 이미지 파일 이름 : file.name
   }
 };
 
-const clickSubmit = () => {};
+const clickSubmit = async () => {
+  console.log("hotplace", info.value);
+  await uploadHotplace(info.value);
+  // router.replace({ name: "hotplace-feed" });
+};
 </script>
 
 <template>
-  <!-- <section
-    data-bs-version="5.1"
-    class="gallery1 mbr-gallery cid-uc9Pp8biJG"
-    id="gallery01-2e"
-  >
-    <div class="container-fluid">
-      <div class="row justify-content-center">
-        <div class="col-12 content-head">
-          <div class="mb-5">
-            <h3
-              class="mbr-section-title mbr-fonts-style align-center m-0 display-2"
-            >
-              <strong>Post Feed</strong>
-            </h3>
-            <h4
-              class="mbr-section-subtitle mbr-fonts-style align-center mb-0 mt-4 display-7"
-            >
-              핫플 피드 올리기
-            </h4>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section> -->
-
   <div class="container">
-    핫플레이스 피드 업로드
+    <!-- 핫플레이스 피드 업로드 -->
     <section class="page-section my-5" id="hotplaceupload">
       <div>
         <div class="row">
@@ -69,9 +64,9 @@ const clickSubmit = () => {};
                 <div class="form-floating mb-3">
                   <input
                     class="form-control px-5 hot-input"
-                    id="name"
                     type="text"
                     data-sb-validations="required"
+                    v-model="info.title"
                   />
                   <label for="name" class="mx-4">핫플 이름</label>
                   <div
@@ -82,29 +77,13 @@ const clickSubmit = () => {};
                     핫플 이름이 빈칸입니다.
                   </div>
                 </div>
-                <!-- 다녀온 날짜-->
-                <div class="form-floating mb-3">
-                  <input
-                    class="form-control px-5 hot-input"
-                    id="date"
-                    type="date"
-                    data-sb-validations="required"
-                  />
-                  <label for="date" class="mx-4">다녀온 날짜</label>
-                  <div
-                    class="invalid-feedback"
-                    data-sb-feedback="date:required"
-                  >
-                    날짜가 빈칸입니다.
-                  </div>
-                </div>
                 <!-- 장소 유형-->
                 <div class="form-floating mb-3">
                   <input
                     class="form-control px-5 hot-input"
-                    id="type"
                     type="text"
                     data-sb-validations="required"
+                    v-model="info.type"
                   />
                   <label for="type" class="mx-4">장소 유형</label>
                   <div
@@ -118,10 +97,10 @@ const clickSubmit = () => {};
                 <div class="form-floating mb-3">
                   <textarea
                     class="form-control px-5 hot-input"
-                    id="message"
                     type="text"
                     style="height: 10rem"
                     data-sb-validations="required"
+                    v-model="info.overview"
                   ></textarea>
                   <label for="message" class="mx-4">핫플 상세설명</label>
                   <div
@@ -131,31 +110,13 @@ const clickSubmit = () => {};
                     상세설명이 빈칸입니다.
                   </div>
                 </div>
-                <!-- Submit success message-->
-                <!---->
-                <!-- This is what your users will see when the form-->
-                <!-- has successfully submitted-->
-                <div class="d-none" id="submitSuccessMessage">
-                  <div class="text-center">
-                    <div class="fs-5 fw-bolder">자랑하였습니다!</div>
-                  </div>
-                </div>
-                <!-- Submit error message-->
-                <!---->
-                <!-- This is what your users will see when there is-->
-                <!-- an error submitting the form-->
-                <div class="d-none" id="submitErrorMessage">
-                  <div class="text-center text-danger mb-3">
-                    오류가 발생하였습니다!
-                  </div>
-                </div>
+
                 <!-- Submit Button-->
-                <div class="d-grid" onclick="submitHotPlace(this)">
+                <div class="d-grid">
                   <button
-                    class="btn btn-primary btn-xl fs-6"
-                    id="submitButton"
-                    @click="clickSubmit"
                     type="button"
+                    class="btn btn-primary btn-xl fs-6"
+                    @click.once="clickSubmit"
                   >
                     피드 올리기
                   </button>

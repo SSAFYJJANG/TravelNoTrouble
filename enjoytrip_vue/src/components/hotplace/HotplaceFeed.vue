@@ -1,5 +1,5 @@
 <script setup>
-import { ref } from "vue";
+import { ref, onMounted } from "vue";
 import HotplaceCard from "@/components/hotplace/HotplaceCard.vue";
 import PageNavigation from "../common/PageNavigation.vue";
 import {
@@ -8,6 +8,14 @@ import {
   ListboxOptions,
   ListboxOption,
 } from "@headlessui/vue";
+import { useHotplaceStore } from "@/stores/hotplace";
+
+const hotplaceStore = useHotplaceStore();
+const { getHotplaceFeed, feedList } = hotplaceStore;
+
+onMounted(async () => {
+  await getHotplaceFeed();
+});
 
 const options = [
   { id: 1, name: "최신순", unavailable: true },
@@ -165,7 +173,7 @@ const onPageChange = () => {};
       >
         <div class="">
           <div class="row mt-5">
-            <HotplaceCard v-for="card in hotplace_cards" :card="card" />
+            <HotplaceCard v-for="feed in feedList" :card="feed" />
           </div>
 
           <div class="d-flex justify-content-center mt-5">

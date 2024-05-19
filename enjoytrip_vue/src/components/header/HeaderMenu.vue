@@ -16,7 +16,7 @@ const login = ref({
 
 const clickLogout = () => {
   userLogout();
-  router.push({ name: "auth-login" });
+  router.replace({ name: "auth-login" });
 };
 </script>
 

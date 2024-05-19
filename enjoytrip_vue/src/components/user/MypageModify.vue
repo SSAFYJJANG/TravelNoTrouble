@@ -4,7 +4,7 @@ import { useUserStore } from "@/stores/user";
 
 const userStore = useUserStore();
 
-const { getUserInfo, userInfo, updateUserInfo } = userStore;
+const { getUserInfo, userInfo, updateUserInfo, deleteUserInfo } = userStore;
 
 onMounted(() => {
   let token = sessionStorage.getItem("accessToken");
@@ -38,6 +38,10 @@ const uploadImage = (event) => {
 
 const completeModify = async () => {
   updateUserInfo(info.value);
+};
+
+const deleteAccount = () => {
+  deleteUserInfo(info.value);
 };
 </script>
 
@@ -119,15 +123,21 @@ const completeModify = async () => {
                 </tr>
               </table>
 
-              <div>
+              <div class="">
                 <button
-                  class="btn btn-primary display-7 py-2 px-4 mt-4 mb-5 rounded-3 fs-6 fw-normal"
+                  class="btn btn-primary display-7 py-2 px-4 mt-4 rounded-3 fs-6 fw-normal"
                   @click="completeModify"
                 >
                   수정 완료
                 </button>
               </div>
             </div>
+            <button
+              class="mb-4 fw-light text-primary mb-5"
+              @click="deleteAccount"
+            >
+              회원 탈퇴
+            </button>
           </div>
         </div>
       </div>

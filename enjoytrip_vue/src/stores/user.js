@@ -9,6 +9,7 @@ import {
   tokenRegeneration,
   logout,
   update,
+  leave,
 } from "@/api/user";
 import { httpStatusCode } from "@/util/http-status";
 
@@ -144,6 +145,21 @@ export const useUserStore = defineStore("userStore", () => {
     );
   };
 
+  const deleteUserInfo = async (userInfo) => {
+    console.log("DELE USERINFO", userInfo);
+    await leave(
+      userInfo.userId,
+      (response) => {
+        if (response.status === httpStatusCode.OK) {
+          console.log("탈퇴 성공");
+        }
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
+  };
+
   return {
     isLogin,
     isLoginError,
@@ -154,5 +170,6 @@ export const useUserStore = defineStore("userStore", () => {
     tokenRegenerate,
     userLogout,
     updateUserInfo,
+    deleteUserInfo,
   };
 });

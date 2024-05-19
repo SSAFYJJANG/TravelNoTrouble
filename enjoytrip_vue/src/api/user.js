@@ -27,4 +27,9 @@ async function update(param, success, fail) {
   await local.put(`/user/${param.userId}`, param).then(success).catch(fail);
 }
 
-export { userConfirm, findById, tokenRegeneration, logout, update };
+async function leave(userId, success, fail) {
+  console.log("탈퇴시도", userId);
+  await local.delete(`/user/${userId}`).then(success).catch(fail);
+}
+
+export { userConfirm, findById, tokenRegeneration, logout, update, leave };

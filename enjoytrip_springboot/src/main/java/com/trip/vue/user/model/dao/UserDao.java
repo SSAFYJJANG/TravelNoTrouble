@@ -28,4 +28,7 @@ public interface UserDao {
 	public int updateUserInfo(UserDto userinfo);
 	//탈퇴
 	public int deleteUserInfo(String userId);
+	
+	//비밀번호 찾기
+	public int findUserPassword(String userId);
 }

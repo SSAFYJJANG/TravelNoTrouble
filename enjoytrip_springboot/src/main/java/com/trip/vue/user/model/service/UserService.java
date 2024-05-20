@@ -23,4 +23,6 @@ public interface UserService {
 	public UserDto getUserInfoById(String userId);
 	//유저 수 가져오기 - 메인화면
 	public int getTotalUserCount() throws Exception;
+	//비밀번호 찾기
+	public int findUserPassword(String userId);
 }

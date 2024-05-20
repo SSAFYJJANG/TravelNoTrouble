@@ -58,4 +58,11 @@
 		select count(*)
 		from user
 	</select>
+	
+	<!-- 비밀번호 찾기 -->
+	<select id="findUserPassword" parameterType="string">
+		select password
+		from user
+		where userId=#{userId}
+	</select>
 </mapper>

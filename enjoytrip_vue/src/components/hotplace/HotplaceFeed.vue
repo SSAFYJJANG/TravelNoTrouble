@@ -1,5 +1,5 @@
 <script setup>
-import { ref, onMounted } from "vue";
+import { ref, onMounted, onUpdated, watch } from "vue";
 import HotplaceCard from "@/components/hotplace/HotplaceCard.vue";
 import PageNavigation from "../common/PageNavigation.vue";
 import {
@@ -12,9 +12,14 @@ import { useHotplaceStore } from "@/stores/hotplace";
 
 const hotplaceStore = useHotplaceStore();
 const { getHotplaceFeed, feedList } = hotplaceStore;
+const loading = ref(true);
+const cardList = ref(null);
 
 onMounted(async () => {
+  console.log(loading.value);
   await getHotplaceFeed();
+  loading.value = false;
+  console.log(loading.value);
 });
 
 const options = [
@@ -23,47 +28,6 @@ const options = [
   { id: 3, name: "좋아요순", unavailable: false },
 ];
 const selectedOption = ref(options[0]);
-
-const hotplace_cards = [
-  {
-    id: "0",
-    title: "제목0",
-    cardImg: "/src/assets/images/shop7.jpg",
-  },
-  {
-    id: "1",
-    title: "제목1",
-    cardImg: "/src/assets/images/shop6.jpg",
-  },
-  {
-    id: "2",
-    title: "제목2",
-    cardImg: "/src/assets/images/shop5.jpg",
-  },
-  {
-    id: "3",
-    title: "제목3",
-    cardImg: "/src/assets/images/shop4.jpg",
-  },
-  {
-    id: "4",
-    title: "제목4",
-    cardImg: "/src/assets/images/shop3.jpg",
-  },
-  {
-    id: "5",
-    title: "제목5",
-    cardImg: "/src/assets/images/shop2.jpg",
-  },
-  {
-    id: "6",
-    title: "제목6",
-    cardImg: "/src/assets/images/shop1.jpg",
-  },
-];
-const cardImg = "/src/assets/images/shop7.jpg";
-
-const onPageChange = () => {};
 </script>
 
 <template>
@@ -78,32 +42,6 @@ const onPageChange = () => {};
         </div>
       </router-link>
     </div>
-
-    <section
-      data-bs-version="5.1"
-      class="gallery1 mbr-gallery cid-uc9Pp8biJG"
-      id="gallery01-2e"
-    >
-      <div class="container-fluid">
-        <div class="row justify-content-center">
-          <div class="col-12 content-head">
-            <div class="mb-5">
-              <h3
-                class="mbr-section-title mbr-fonts-style align-center m-0 display-2"
-              >
-                <strong>Hot Place Feed</strong>
-              </h3>
-              <h4
-                class="mbr-section-subtitle mbr-fonts-style align-center mb-0 mt-4 display-7"
-              >
-                여러 사람들 핫플 보기 -&gt; 핫플 글쓰기는 (햄버거 버튼) 왼쪽
-                고정
-              </h4>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
 
     <div class="container">
       <div class="pb-3">
@@ -171,18 +109,18 @@ const onPageChange = () => {};
         class="clients1 cid-uc9Pp8Jzvy"
         id="clients01-2f"
       >
-        <div class="">
-          <div class="row mt-5">
-            <HotplaceCard v-for="feed in feedList" :card="feed" />
-          </div>
+        <div>
+          <div class="mt-5">
+            <div v-if="loading">
+              <p>Loading...</p>
+            </div>
 
-          <div class="d-flex justify-content-center mt-5">
-            <PageNavigation
-              :current-page="currentPage"
-              :total-page="totalPage"
-              @pageChange="onPageChange"
-            >
-            </PageNavigation>
+            <div v-else>
+              <div v-for="feed in feedList">{{ feed.title }}</div>
+              <div>엥</div>
+              <HotplaceCard v-for="feed in feedList" :card="feed" />
+            </div>
+            
           </div>
         </div>
       </section>

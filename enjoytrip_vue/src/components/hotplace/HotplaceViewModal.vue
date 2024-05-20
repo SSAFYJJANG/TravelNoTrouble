@@ -1,7 +1,8 @@
 <script setup>
-import { defineProps } from "vue";
+import { defineProps, onMounted } from "vue";
 
 const props = defineProps(["card"]);
+
 
 console.log(props.card);
 

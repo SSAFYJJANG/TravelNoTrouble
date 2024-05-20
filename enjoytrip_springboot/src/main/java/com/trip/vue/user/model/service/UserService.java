@@ -25,4 +25,6 @@ public interface UserService {
 	public int getTotalUserCount() throws Exception;
 	//비밀번호 찾기
 	public int findUserPassword(String userId);
+	//아이디 중복 검사
+	public int checkIdDuplicate(String userId);
 }

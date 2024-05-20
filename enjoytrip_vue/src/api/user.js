@@ -27,7 +27,6 @@ async function logout(userid, success, fail) {
 }
 
 async function update(param, success, fail) {
-  console.log("update param", param.userId);
   await local.put(`/user/${param.userId}`, param).then(success).catch(fail);
 }
 
@@ -39,4 +38,8 @@ async function findPwd(userId, success, fail) {
   await local.get(`/user/pwd/${userId}`).then(success).catch(fail);
 }
 
-export { signup, userConfirm, findById, tokenRegeneration, logout, update, leave, findPwd };
+async function duplicate(userId, success, fail) {
+  await local.get(`/user/id/${userId}`).then(success).catch(fail);
+}
+
+export { signup, userConfirm, findById, tokenRegeneration, logout, update, leave, findPwd, duplicate};

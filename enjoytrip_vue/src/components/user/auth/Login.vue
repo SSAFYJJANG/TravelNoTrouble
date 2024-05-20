@@ -69,7 +69,7 @@ const clickLogin = async () => {
 
             <div>
               <button
-                class="btn btn-primary display-7 py-2 px-4 mt-3 rounded-pill fs-6 fw-normal"
+                class="btn btn-primary display-7 py-2 px-4 mt-3 rounded-2 fs-6 fw-normal"
                 @click="clickLogin"
               >
                 로그인

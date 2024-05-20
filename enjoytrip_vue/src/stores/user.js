@@ -11,7 +11,8 @@ import {
   logout,
   update,
   leave,
-  findPwd
+  findPwd,
+  duplicate
 } from "@/api/user";
 import { httpStatusCode } from "@/util/http-status";
 
@@ -23,9 +24,9 @@ export const useUserStore = defineStore("userStore", () => {
   const userInfo = ref(null);
   const isValidToken = ref(false);
   const userPwd = ref(null);
+  const isDuplicate = ref(false);
 
-  const userSignup = async (signupUser) => { 
-    console.log("signupUser", signupUser);
+  const userSignup = async (signupUser) => {
     await signup(signupUser,
       (response) => {
         if (response.status === httpStatusCode.CREATE) {
@@ -66,7 +67,6 @@ export const useUserStore = defineStore("userStore", () => {
 
   const getUserInfo = async (token) => {
     let decodeToken = jwtDecode(token);
-    console.log(decodeToken);
     await findById(
       decodeToken.userId,
       (response) => {
@@ -163,7 +163,6 @@ export const useUserStore = defineStore("userStore", () => {
   };
 
   const deleteUserInfo = async (userInfo) => {
-    console.log("DELE USERINFO", userInfo);
     await leave(
       userInfo.userId,
       (response) => {
@@ -192,11 +191,30 @@ export const useUserStore = defineStore("userStore", () => {
     )
   };
 
+  const checkIdDuplicate = async (userId) => {
+    await duplicate(
+      userId,
+      (response) => { 
+        if (response.status === httpStatusCode.OK) {
+          if (response.data > 0) {
+            isDuplicate.value = true;
+          } else {
+            isDuplicate.value = false;
+          }
+        }
+      },
+      async (error) => {
+        console.log(error);
+      }
+    );
+  };
+
   return {
     isLogin,
     isLoginError,
     userInfo,
     isValidToken,
+    isDuplicate,
     userPwd,
     userSignup,
     userLogin,
@@ -205,6 +223,7 @@ export const useUserStore = defineStore("userStore", () => {
     userLogout,
     updateUserInfo,
     deleteUserInfo,
-    findUserPassword
+    findUserPassword,
+    checkIdDuplicate
   };
 });

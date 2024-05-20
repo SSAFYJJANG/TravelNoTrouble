@@ -8,7 +8,7 @@ const router = useRouter();
 const userStore = useUserStore();
 
 const { isLogin, isLoginError } = storeToRefs(userStore);
-const { userSignup } = userStore;
+const { userSignup, checkIdDuplicate, isDuplicate } = userStore;
 
 const signupUser = ref({
   userId: "",
@@ -19,10 +19,32 @@ const signupUser = ref({
   gugun_code: ""
 });
 
+const errorId = ref(false);
+const checkId = async () => {
+  const validateId = /^[A-Za-z0-9]{4,8}$/
+
+  if (!validateId.test(signupUser.value.userId) || !signupUser.value.userId) {
+    errorId.value = true;
+    return;
+  }
+  errorId.value = false;
+
+  await checkIdDuplicate(signupUser.value.userId);
+  console.log("중복?", userStore.isDuplicate);
+};
+
 const clickSignup = () => {
   userSignup(signupUser.value);
   router.replace({ name: "auth-login" });
 };
+
+const validateEmail = (email) => {
+  return String(email)
+    .toLowerCase()
+    .match(
+      /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
+    );
+}
 </script>
 
 <template>
@@ -42,13 +64,29 @@ const clickSignup = () => {
               <tr>
                 <td>아이디</td>
                 <td class="ps-5">
-                  <input
-                    type="text"
-                    name="userid"
-                    data-form-field="userid"
-                    class="form-control fs-6 py-0 px-4"
-                    v-model="signupUser.userId"
-                  />
+                  <div class="d-flex">
+                    <input
+                      type="text"
+                      name="userid"
+                      data-form-field="userid"
+                      class="form-control fs-6 py-0 px-4"
+                      v-model="signupUser.userId"
+                    />
+                    <button 
+                      class="btn btn-primary p-0 m-0 ms-2 fw-light" 
+                      style="font-size: 12px; width:45px"
+                      @click="checkId"
+                    >
+                      중복 확인
+                    </button>
+                  </div>
+
+                  <div :style="[errorId == true ? { display: 'inline-block' } : { display: 'none' }]" colspan="2" style="font-size: 13px; color: red">
+                    아이디는 영문, 숫자를 포함한 4자 이상 20자 이내여야 합니다.
+                  </div>
+                  <div :style="[userStore.isDuplicate == true ? { display: 'inline-block' } : { display: 'none' }]" colspan="2" style="font-size: 13px; color: red">
+                    이미 사용중인 아이디입니다.
+                  </div>
                 </td>
               </tr>
               <tr>
@@ -78,13 +116,23 @@ const clickSignup = () => {
               <tr>
                 <td>이메일</td>
                 <td class="ps-5">
-                  <input
-                    type="email"
-                    name="email"
-                    data-form-field="email"
-                    class="form-control fs-6 py-0 px-4"
-                    v-model="signupUser.email"
-                  />
+                  <div class="d-flex">
+                    <input
+                      type="email"
+                      name="email"
+                      data-form-field="email"
+                      class="form-control fs-6 py-0 px-4"
+                      v-model="signupUser.email"
+                    />
+                    <div class="align-self-center px-1">@</div>
+                    <input
+                      type="email"
+                      name="email"
+                      data-form-field="email"
+                      class="form-control fs-6 py-0 px-4"
+                      v-model="signupUser.email"
+                    />
+                  </div>
                 </td>
               </tr>
               <tr>
@@ -123,7 +171,7 @@ const clickSignup = () => {
 
             <div>
               <button
-                class="btn btn-primary display-7 py-2 px-4 mt-3 fw-light rounded-pill fs-6 fw-normal"
+                class="btn btn-primary display-7 py-2 px-4 mt-3 fw-light rounded-2 fs-6 fw-normal"
                 @click="clickSignup"
               >
                 회원가입

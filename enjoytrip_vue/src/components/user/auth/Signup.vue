@@ -1,81 +1,119 @@
 <script setup></script>
 
 <template>
-  <div>
-    <div class="position-relative h-100">
+  <div
+    data-bs-version="5.1"
+    class="header16 cid-uc9PmWn2MS mbr-fullscreen mbr-parallax-background"
+  >
+    <div class="container-fluid">
       <div
-        class="position-absolute top-50 start-50 translate-middle p-3 border rounded-3 d-flex flex-column align-center"
+        class="container py-2 px-4 bg-white rounded-3 shadow-lg"
+        style="width: 440px"
       >
-        <Strong>로그인</Strong>
-        <div>헤더랑 푸터 빼는게 더 나을듯</div>
+        <h4 class="align-center my-4 fw-light">회원가입</h4>
+        <div class="row align-center">
+          <div class="fw-light">
+            <table>
+              <tr>
+                <td>아이디</td>
+                <td class="ps-5">
+                  <input
+                    type="text"
+                    name="userid"
+                    data-form-field="userid"
+                    class="form-control fs-6 py-0 px-4"
+                  />
+                </td>
+              </tr>
+              <tr>
+                <td>비밀번호</td>
+                <td class="ps-5">
+                  <input
+                    type="password"
+                    name="password"
+                    data-form-field="password"
+                    class="form-control fs-6 py-0 px-4"
+                  />
+                </td>
+              </tr>
+              <tr>
+                <td>닉네임</td>
+                <td class="ps-5">
+                  <input
+                    type="text"
+                    name="username"
+                    data-form-field="username"
+                    class="form-control fs-6 py-0 px-4"
+                  />
+                </td>
+              </tr>
+              <tr>
+                <td>이메일</td>
+                <td class="ps-5">
+                  <input
+                    type="email"
+                    name="email"
+                    data-form-field="email"
+                    class="form-control fs-6 py-0 px-4"
+                  />
+                </td>
+              </tr>
+              <tr>
+                <td>시도</td>
+                <td class="ps-5">
+                  <select
+                    type="text"
+                    name="sido"
+                    data-form-field="sido"
+                    class="form-control fs-6 py-0 px-4"
+                  >
+                    <option value="0">시도</option>
+                    <option value="1">대구</option>
+                  </select>
+                </td>
+              </tr>
+              <tr>
+                <td>구군</td>
+                <td class="ps-5">
+                  <select
+                    type="text"
+                    name="gugun"
+                    data-form-field="gugun"
+                    class="form-control fs-6 py-0 px-4"
+                  >
+                    <option value="0">구군</option>
+                    <option value="1">수성구</option>
+                    <option value="1">달서구</option>
+                    <option value="1">중구</option>
+                  </select>
+                </td>
+              </tr>
+            </table>
 
-        <form action="" method="POST">
-          <div class="" data-for="userid">
-            <input
-              type="text"
-              name="userid"
-              placeholder="ID"
-              class="form-control"
-              data-form-field="userid"
-            />
+            <div>
+              <button
+                class="btn btn-primary display-7 py-2 px-4 mt-3 mb-4 fw-light rounded-pill fs-6 fw-normal"
+                @click="completeModify"
+              >
+                회원가입
+              </button>
+            </div>
           </div>
-          <div class="" data-for="password">
-            <input
-              type="password"
-              name="password"
-              placeholder="Password"
-              class="form-control"
-              data-form-field="password"
-            />
-          </div>
-          <div class="" data-for="username">
-            <input
-              type="text"
-              name="username"
-              placeholder="Name"
-              class="form-control"
-              data-form-field="username"
-            />
-          </div>
-          <div class="" data-for="email">
-            <input
-              type="text"
-              name="email"
-              placeholder="E-mail"
-              class="form-control"
-              data-form-field="email"
-            />
-          </div>
-          <div class="" data-for="sido">
-            <select name="sido" class="form-control" data-form-field="sido">
-              <option>시도</option>
-              <option>서울</option>
-            </select>
-          </div>
-          <div class="" data-for="gugun">
-            <select name="gugun" class="form-control" data-form-field="gugun">
-              <option>구군</option>
-              <option>강남</option>
-            </select>
-          </div>
-
-          <div class="align-center mbr-section-btn">
-            <button type="submit" class="btn btn-primary display-4">
-              회원가입
-            </button>
-          </div>
-        </form>
-
-        <router-link :to="{ name: 'auth-signup' }"> 회원가입 </router-link>
+        </div>
       </div>
     </div>
   </div>
 </template>
 
 <style scoped>
-@media (max-width: 1100px) {
-  .signup-img {
-    display: none;
-  }
+table {
+  border-collapse: separate;
+  border-spacing: 0 15px;
+  margin-left: auto;
+  margin-right: auto;
+}
+input,
+select {
+  max-width: 300px;
 }
 </style>

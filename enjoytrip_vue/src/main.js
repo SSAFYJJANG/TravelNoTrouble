@@ -1,6 +1,8 @@
 import { createApp } from "vue";
+import { createPinia } from "pinia";
 import App from "./App.vue";
 import router from "./router";
+import piniaPluginPersistedstate from "pinia-plugin-persistedstate";
 
 import { QuillEditor } from "@vueup/vue-quill";
 import "@vueup/vue-quill/dist/vue-quill.snow.css";
@@ -16,6 +18,8 @@ import "bootstrap-vue-3/dist/bootstrap-vue-3.css";
 // icon
 import "bootstrap-icons/font/bootstrap-icons.css";
 const app = createApp(App);
+const pinia = createPinia();
+
 app.component("QuillEditor", QuillEditor);
 
 //coreui
@@ -25,6 +29,8 @@ app.component("QuillEditor", QuillEditor);
 import AOS from 'aos';
 import "aos/dist/aos.css";
 app.use(AOS);
+pinia.use(piniaPluginPersistedstate);
+app.use(pinia);
 app.use(router);
 app.use(BootstrapVue3);
 

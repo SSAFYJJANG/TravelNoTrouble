@@ -1,11 +1,24 @@
 <script setup>
-import { ref} from "vue";
+import { ref, defineProps, defineEmits } from "vue";
+import { useUserStore } from "@/stores/user";
+import { useRouter } from "vue-router";
+import { storeToRefs } from "pinia";
+
+const router = useRouter();
+const userStore = useUserStore();
+const { userLogout } = userStore;
+
 const login = ref({
   id: "",
   name: "",
   isLogin: true,
   pofile: ""
 });
+
+const clickLogout = () => {
+  userLogout();
+  router.replace({ name: "auth-login" });
+};
 </script>
 
 <template class="navbar navbar-expand-lg navbar-light bg-light">
@@ -65,19 +78,23 @@ const login = ref({
           <img v-if="login.pofile" src="" alt="">
           <i v-else class="bi bi-person-circle"></i>
         </div>
-        <div class="dropdown-menu" 
-          aria-labelledby="dropdown-694">
-          <router-link class="text-black dropdown-item display-4" 
-          :to="{ name: 'mypage' }">
-            마이페이지<br />
-          </router-link>
-          <router-link 
-            class="text-black dropdown-item display-4" 
-            :to="{ name: 'home' }">
-            로그아웃<br />
-          </router-link>
-        </div>
-      </li>
+          <div class="dropdown-menu" aria-labelledby="dropdown-694">
+            <router-link
+              class="text-black dropdown-item display-4"
+              :to="{ name: 'mypage' }"
+            >
+              마이페이지<br />
+            </router-link>
+            <button
+              class="text-black dropdown-item display-4"
+              @click="clickLogout"
+            >
+              로그아웃<br />
+            </button>
+          </div>
+        </li>
+      </div>
+
     </ul>
   </div>
 </template>

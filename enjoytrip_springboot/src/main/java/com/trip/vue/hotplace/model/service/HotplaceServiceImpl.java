@@ -1,20 +1,27 @@
 package com.trip.vue.hotplace.model.service;
 
+import java.io.InputStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.util.List;
+import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.trip.vue.hotplace.model.HotplaceDto;
 import com.trip.vue.hotplace.model.dao.HotplaceDao;
 
 @Service
 public class HotplaceServiceImpl implements HotplaceService {
-
+	
 	@Autowired
 	private HotplaceDao hotplaceDao;
-
+	
 	@Override
 	public List<HotplaceDto> listBestHotplace() throws Exception {
 		return hotplaceDao.listBestHotplace();
@@ -27,7 +34,23 @@ public class HotplaceServiceImpl implements HotplaceService {
 
 	@Transactional
 	@Override
-	public int insertHotplace(HotplaceDto ob) throws Exception {
+	public int insertHotplace(HotplaceDto ob, MultipartFile file) throws Exception {
+		final String extension = file.getContentType().split("/")[1];
+		final String fileName = UUID.randomUUID() + "." + extension;
+		
+		Path uploadPath = Paths.get("/images/" + ob.getUserId());
+		if (!Files.exists(uploadPath)) {
+			Files.createDirectories(uploadPath);
+			System.out.println("make dir : " + uploadPath.toString());
+		}
+		
+		try (InputStream inputStream = file.getInputStream()) {
+			Path filePath = uploadPath.resolve(fileName);
+			Files.copy(inputStream, filePath, StandardCopyOption.REPLACE_EXISTING);
+		} catch (Exception e) {
+			throw new Exception("Could not save image file: " + fileName, e);
+		}
+		
 		return hotplaceDao.insertHotplace(ob);
 	}
 

@@ -47,6 +47,7 @@ public class HotplaceServiceImpl implements HotplaceService {
 		try (InputStream inputStream = file.getInputStream()) {
 			Path filePath = uploadPath.resolve(fileName);
 			Files.copy(inputStream, filePath, StandardCopyOption.REPLACE_EXISTING);
+			ob.setImage(filePath.toString());
 		} catch (Exception e) {
 			throw new Exception("Could not save image file: " + fileName, e);
 		}

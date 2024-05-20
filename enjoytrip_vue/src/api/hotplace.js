@@ -11,4 +11,8 @@ async function listFeed(param, success, fail) {
   await local.get(`/hotplace`).then(success).catch(fail);
 }
 
-export { upload, listFeed };
+async function viewDetail(feedId, success, fail) {
+  await local.get(`hotplace/${feedId}`).then(success).catch(fail);
+}
+
+export { upload, listFeed, viewDetail };

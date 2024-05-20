@@ -3,11 +3,12 @@ import { useRouter } from "vue-router";
 import { defineStore } from "pinia";
 import { jwtDecode } from "jwt-decode";
 
-import { upload, listFeed } from "@/api/hotplace";
+import { upload, listFeed, viewDetail } from "@/api/hotplace";
 import { httpStatusCode } from "@/util/http-status";
 
 export const useHotplaceStore = defineStore("hotplaceStore", () => {
   const feedList = ref(null);
+  const feedInfo = ref(null);
 
   const router = useRouter();
 
@@ -49,9 +50,22 @@ export const useHotplaceStore = defineStore("hotplaceStore", () => {
     );
   };
 
+  const getHotplaceDetail = async (feedId) => { 
+    await viewDetail(feedId,
+      (response) => {
+        feedInfo.value = response.data;
+      },
+      async (error) => {
+        console.log(error);
+      }
+    );
+  };
+
   return {
     feedList,
+    feedInfo,
     uploadHotplace,
     getHotplaceFeed,
+    getHotplaceDetail
   };
 });

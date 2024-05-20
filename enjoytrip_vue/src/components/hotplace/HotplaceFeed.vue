@@ -1,5 +1,5 @@
 <script setup>
-import { ref, onMounted, onUpdated, watch } from "vue";
+import { ref, onMounted, watch } from "vue";
 import HotplaceCard from "@/components/hotplace/HotplaceCard.vue";
 import PageNavigation from "../common/PageNavigation.vue";
 import {
@@ -12,15 +12,22 @@ import { useHotplaceStore } from "@/stores/hotplace";
 
 const hotplaceStore = useHotplaceStore();
 const { getHotplaceFeed, feedList } = hotplaceStore;
+
 const loading = ref(true);
-const cardList = ref(null);
 
 onMounted(async () => {
-  console.log(loading.value);
   await getHotplaceFeed();
-  loading.value = false;
-  console.log(loading.value);
 });
+
+watch(
+  () => hotplaceStore.feedList,
+  (newFeedList) => {
+    if (newFeedList != null) {
+      loading.value = false;
+    }
+  },
+  { immediate: true }
+);
 
 const options = [
   { id: 1, name: "최신순", unavailable: true },
@@ -109,16 +116,14 @@ const selectedOption = ref(options[0]);
         class="clients1 cid-uc9Pp8Jzvy"
         id="clients01-2f"
       >
-        <div>
+        <div class="">
           <div class="mt-5">
             <div v-if="loading">
               <p>Loading...</p>
             </div>
 
-            <div v-else>
-              <div v-for="feed in feedList">{{ feed.title }}</div>
-              <div>엥</div>
-              <HotplaceCard v-for="feed in feedList" :card="feed" />
+            <div v-else class="row">
+              <HotplaceCard v-for="feed in hotplaceStore.feedList" :card="feed" />
             </div>
             
           </div>

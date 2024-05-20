@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { KakaoMap, KakaoMapMarker, type KakaoMapMarkerListItem } from 'vue3-kakao-maps';
-import {ref} from 'vue';
+import { ref } from 'vue';
 //라이브러리 사용 방법을 반드시 참고하여 주시기 바랍니다.
 const map = ref<kakao.maps.Map>();
 const markerList = ref<KakaoMapMarkerListItem[]>([]);
@@ -20,8 +20,8 @@ const onLoadKakaoMap = (mapRef: kakao.maps.Map) => {
 };
 
 // 키워드 검색 완료 시 호출되는 콜백함수 입니다
-const placesSearchCB = (data: kakao.maps.services.PlacesSearchResult, 
-                        status: kakao.maps.services.Status): void => {
+const placesSearchCB = (data: kakao.maps.services.PlacesSearchResult,
+  status: kakao.maps.services.Status): void => {
   if (status === kakao.maps.services.Status.OK) {
     // 검색된 장소 위치를 기준으로 지도 범위를 재설정하기위해
     // LatLngBounds 객체에 좌표를 추가합니다
@@ -68,18 +68,11 @@ const coordinate = {
 </script>
 
 <template>
-  <KakaoMap width="100%" height="100%"
-    :lat="coordinate.lat" :lng="coordinate.lng" 
+  <KakaoMap style="border-radius: 0;" width="100%" height="100%" :lat="coordinate.lat" :lng="coordinate.lng"
     @onLoadKakaoMap="onLoadKakaoMap">
-    <KakaoMapMarker
-      v-for="(marker, index) in markerList"
-      :key="marker.key === undefined ? index : marker.key"
-      :lat="marker.lat"
-      :lng="marker.lng"
-      :infoWindow="marker.infoWindow"
-      :clickable="true"
-      @onClickKakaoMapMarker="onClickMapMarker(marker)"
-    />
+    <KakaoMapMarker v-for="(marker, index) in markerList" :key="marker.key === undefined ? index : marker.key"
+      :lat="marker.lat" :lng="marker.lng" :infoWindow="marker.infoWindow" :clickable="true"
+      @onClickKakaoMapMarker="onClickMapMarker(marker)" />
   </KakaoMap>
   <button class="reset-button" @click="setBounds">
     <i class="bi bi-crosshair"></i>
@@ -87,14 +80,13 @@ const coordinate = {
 </template>
 
 <style scoped>
-.reset-button{
-    position: fixed;
-    bottom: calc(1%);
-    background-color: rgb(255, 255, 255);
-    right: calc(50%);
-    z-index: 200;
-    border-radius: 20%;
-    border : 1px solid rgb(0, 0, 0, 0.3)
+.reset-button {
+  position: fixed;
+  bottom: calc(1%);
+  background-color: rgb(255, 255, 255);
+  right: calc(50%);
+  z-index: 200;
+  border-radius: 20%;
+  border: 1px solid rgb(0, 0, 0, 0.3)
 }
-
 </style>

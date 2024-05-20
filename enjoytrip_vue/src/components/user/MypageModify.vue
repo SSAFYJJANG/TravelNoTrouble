@@ -1,8 +1,10 @@
 <script setup>
 import { onMounted, ref } from "vue";
+import { useRouter } from "vue-router";
 import { useUserStore } from "@/stores/user";
 
 const userStore = useUserStore();
+const router = useRouter();
 
 const { getUserInfo, userInfo, updateUserInfo, deleteUserInfo } = userStore;
 
@@ -41,7 +43,11 @@ const completeModify = async () => {
 };
 
 const deleteAccount = () => {
-  deleteUserInfo(info.value);
+  const checkDel = confirm("정말 탈퇴하시겠습니까?");
+  if (checkDel) {
+    deleteUserInfo(info.value);
+    router.replace({ name: "auth-login" });
+  }
 };
 </script>
 

@@ -12,10 +12,8 @@ const { userLogin, getUserInfo, findUserPassword, userPwd } = userStore;
 
 const userid = ref(null);
 
-const findPassword = async () => { 
-    console.log("Pw", userStore.userPwd);
-    await findUserPassword(userid.value);
-    console.log("PWD", userStore.userPwd);
+const findPassword = async () => {
+  await findUserPassword(userid.value);
 };
 </script>
 
@@ -51,7 +49,7 @@ const findPassword = async () => {
             <div>
                 <div v-if="userStore.userPwd == null">
                     <button
-                        class="btn btn-primary display-7 py-2 px-4 mt-3 rounded-pill fs-6 fw-normal"
+                        class="btn btn-primary display-7 py-2 px-4 mt-3 rounded-2 fs-6 fw-normal"
                         @click="findPassword"
                     >
                         비밀번호 찾기

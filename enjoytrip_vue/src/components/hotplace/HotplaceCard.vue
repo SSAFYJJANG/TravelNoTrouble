@@ -58,7 +58,7 @@ const toggleViewModal = () => {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  max-width: 1000px;
+  max-width: 600px;
   background: white;
   border-radius: 10px;
   padding: 20px;

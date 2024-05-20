@@ -1,4 +1,29 @@
-<script setup></script>
+<script setup>
+import { ref } from "vue";
+import { storeToRefs } from "pinia";
+import { useRouter } from "vue-router";
+import { useUserStore } from "@/stores/user";
+
+const router = useRouter();
+const userStore = useUserStore();
+
+const { isLogin, isLoginError } = storeToRefs(userStore);
+const { userSignup } = userStore;
+
+const signupUser = ref({
+  userId: "",
+  password: "",
+  username: "",
+  email: "",
+  sido_code: "",
+  gugun_code: ""
+});
+
+const clickSignup = () => {
+  userSignup(signupUser.value);
+  router.replace({ name: "auth-login" });
+};
+</script>
 
 <template>
   <div
@@ -22,6 +47,7 @@
                     name="userid"
                     data-form-field="userid"
                     class="form-control fs-6 py-0 px-4"
+                    v-model="signupUser.userId"
                   />
                 </td>
               </tr>
@@ -33,6 +59,7 @@
                     name="password"
                     data-form-field="password"
                     class="form-control fs-6 py-0 px-4"
+                    v-model="signupUser.password"
                   />
                 </td>
               </tr>
@@ -44,6 +71,7 @@
                     name="username"
                     data-form-field="username"
                     class="form-control fs-6 py-0 px-4"
+                    v-model="signupUser.username"
                   />
                 </td>
               </tr>
@@ -55,6 +83,7 @@
                     name="email"
                     data-form-field="email"
                     class="form-control fs-6 py-0 px-4"
+                    v-model="signupUser.email"
                   />
                 </td>
               </tr>
@@ -66,6 +95,7 @@
                     name="sido"
                     data-form-field="sido"
                     class="form-control fs-6 py-0 px-4"
+                    v-model="signupUser.sido_code"
                   >
                     <option value="0">시도</option>
                     <option value="1">대구</option>
@@ -80,11 +110,12 @@
                     name="gugun"
                     data-form-field="gugun"
                     class="form-control fs-6 py-0 px-4"
+                    v-model="signupUser.gugun_code"
                   >
                     <option value="0">구군</option>
                     <option value="1">수성구</option>
-                    <option value="1">달서구</option>
-                    <option value="1">중구</option>
+                    <option value="2">달서구</option>
+                    <option value="3">중구</option>
                   </select>
                 </td>
               </tr>
@@ -93,7 +124,7 @@
             <div>
               <button
                 class="btn btn-primary display-7 py-2 px-4 mt-3 mb-4 fw-light rounded-pill fs-6 fw-normal"
-                @click="completeModify"
+                @click="clickSignup"
               >
                 회원가입
               </button>

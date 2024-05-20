@@ -1,16 +1,19 @@
 <script setup>
-import { ref, defineProps } from "vue";
+import { ref, defineProps, onMounted, onUpdated } from "vue";
 import HotplaceViewModal from "@/components/hotplace/HotplaceViewModal.vue";
 
 const props = defineProps(["card"]);
 
+
 const hotplace_card = document.querySelector("#hotplace-card");
 
 const viewModalCheck = ref(false);
+
 const toggleViewModal = () => {
   viewModalCheck.value = !viewModalCheck.value;
 };
 console.log("Props", props.card.value);
+
 </script>
 
 <template>

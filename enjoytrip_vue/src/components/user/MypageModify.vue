@@ -17,7 +17,7 @@ const info = ref({
   email: userInfo.email,
   image: userInfo.image,
   sido_code: userInfo.sido_code,
-  gugun_code: userInfo.sido_code,
+  gugun_code: userInfo.gugun_code,
 });
 
 const previewImage = ref("/src/assets/images/shop5.jpg"); // 기본 이미지
@@ -144,7 +144,6 @@ const deleteAccount = () => {
     </div>
   </div>
 
-  <!--
   <!-- 후보2 -->
   <div class="container">
     <div class="p-5">

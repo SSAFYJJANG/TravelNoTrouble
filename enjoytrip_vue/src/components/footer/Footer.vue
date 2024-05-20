@@ -23,5 +23,12 @@
     bottom: 0;
     left: 0;
     width: 100%;
+    /* background-color: #7a8a92; */
+    /* background-color: #8e9ea4; */
+    background-color: #acb4b9;
+    /* background-color: #6f8f9a; */
+    /* background-color: #80a2b3; */
+    /* background-color: #7aa6b0; */
+    /* background-color: #93c4d5; */
 }
 </style>

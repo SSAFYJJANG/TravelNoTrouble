@@ -123,11 +123,16 @@ const clickSignup = () => {
 
             <div>
               <button
-                class="btn btn-primary display-7 py-2 px-4 mt-3 mb-4 fw-light rounded-pill fs-6 fw-normal"
+                class="btn btn-primary display-7 py-2 px-4 mt-3 fw-light rounded-pill fs-6 fw-normal"
                 @click="clickSignup"
               >
                 회원가입
               </button>
+              <div class="mb-4">
+                <router-link :to="{ name: 'auth-login' }" class="fw-light">
+                  로그인 화면으로
+                </router-link>
+              </div>
             </div>
           </div>
         </div>

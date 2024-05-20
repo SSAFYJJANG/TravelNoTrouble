@@ -51,7 +51,7 @@ const findPassword = async () => {
             <div>
                 <div v-if="userStore.userPwd == null">
                     <button
-                        class="btn btn-primary display-7 py-2 px-4 mt-3 mb-4 rounded-pill fs-6 fw-normal"
+                        class="btn btn-primary display-7 py-2 px-4 mt-3 rounded-pill fs-6 fw-normal"
                         @click="findPassword"
                     >
                         비밀번호 찾기
@@ -59,10 +59,16 @@ const findPassword = async () => {
                 </div>
                 
                 <div v-else>
-                    <div class="display-7 py-2 px-4 mt-3 mb-4 fs-6 fw-light text-primary">
+                    <div class="display-7 py-2 px-4 mt-3 fs-6 fw-light text-primary">
                         비밀번호 : {{ userStore.userPwd }}
                     </div>
                 </div>
+            </div>
+
+            <div class="mb-4">
+              <router-link :to="{ name: 'auth-login' }" class="fw-light">
+                로그인 화면으로
+              </router-link>
             </div>
           </div>
         </div>

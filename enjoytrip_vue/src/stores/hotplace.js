@@ -17,11 +17,9 @@ export const useHotplaceStore = defineStore("hotplaceStore", () => {
   const userInfo = ref(null);
   const isValidToken = ref(false);
 
-
-  const uploadHotplace = async (info) => {
-    console.log("핫플 업로드 시도");
+  const uploadHotplace = async (data) => {
     await upload(
-      info,
+      data,
       (response) => {
         if (response.status === httpStatusCode.CREATE) {
           console.log("response", response);
@@ -48,8 +46,9 @@ export const useHotplaceStore = defineStore("hotplaceStore", () => {
     );
   };
 
-  const getHotplaceDetail = async (feedId) => { 
-    await viewDetail(feedId,
+  const getHotplaceDetail = async (feedId) => {
+    await viewDetail(
+      feedId,
       (response) => {
         if (response.status === httpStatusCode.OK) {
           feedInfo.value = response.data;
@@ -61,9 +60,10 @@ export const useHotplaceStore = defineStore("hotplaceStore", () => {
     );
   };
 
-  const likeHotplaceFeed = async (feedId) => { 
-    await likeFeed(feedId,
-      (response) => { 
+  const likeHotplaceFeed = async (feedId) => {
+    await likeFeed(
+      feedId,
+      (response) => {
         if (response.status === httpStatusCode.OK) {
           console.log("좋아요 성공!!!");
         }
@@ -80,6 +80,6 @@ export const useHotplaceStore = defineStore("hotplaceStore", () => {
     uploadHotplace,
     getHotplaceFeed,
     getHotplaceDetail,
-    likeHotplaceFeed
+    likeHotplaceFeed,
   };
 });

@@ -24,7 +24,6 @@ const visibleOffCanvas = ref(false);
             <hr>
             <COffcanvasBody>
                 <AttractionSearch />
-                <AttractionCardList />
             </COffcanvasBody>
         </COffcanvas>
 

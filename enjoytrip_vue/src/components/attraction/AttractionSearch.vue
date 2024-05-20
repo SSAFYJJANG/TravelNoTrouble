@@ -25,6 +25,7 @@ const changeKey = (val) => {
 };
 
 const content_types = ref([
+    { text: '전체', value: '0' },
     { text: '관광지', value: '1' },
     { text: '문화시설', value: '2' },
     { text: '축제공연행사', value: '3' },
@@ -47,19 +48,50 @@ const picked = ref('1');
         </div>
         <VSearchInput class="mb-3" />
         <div>
-            <p>분류 선택</p>
+            <div class="line">분류 선택</div>
             <div class="d-flex align-content-around flex-wrap">
                 <CFormCheck v-for="(content_type, index) in content_types" :key="content_type.text" type="radio" inline
                     :label="content_type.text" :value="content_type.value" :id="`content-type-${index}`"
                     v-model="picked" />
-                {{ picked }}
-            </div>
+                </div>
+                <hr>
+                <CFormCheck :button="{ color: 'danger', variant: 'outline', class: 'save-load-button' }"
+                    id="btn-check-outlined" autocomplete="off" label="찜 목록 보기" />
             <AttractionCardList />
         </div>
     </div>
 </template>
 
-<style scoped></style>
+<style scoped>
+.line {
+    display: flex;
+    flex-basis: 100%;
+    align-items: center;
+    color: rgba(0, 0, 0, 0.35);
+    font-size: 14px;
+    margin: 8px 0px;
+}
+
+.line::before {
+    content: "";
+    flex-grow: 1;
+    margin: 0px 16px;
+    background: rgba(0, 0, 0, 0.35);
+    height: 1px;
+    font-size: 0px;
+    line-height: 0px;
+}
+
+.line::after {
+    content: "";
+    flex-grow: 1;
+    margin: 0px 16px;
+    background: rgba(0, 0, 0, 0.35);
+    height: 1px;
+    font-size: 0px;
+    line-height: 0px;
+}
+</style>
 <!-- ㄴ 검색창 -->
 <!-- ㄴ 검색 선택 select 칸 (시/도 , 구/군)-->
 <!-- ㄴ 검색 창 -->

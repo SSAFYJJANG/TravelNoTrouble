@@ -8122,3 +8122,21 @@ a {
     text-align: center;
   }
 }
+.save-load-button{
+  padding : 0.25rem;
+  width: 100%;
+  margin :  .25rem auto !important;
+  align-self: self-end;
+  border-radius: 35px;
+  font-size: small;
+  font-weight: normal !important;
+}
+.form-check-label{
+  font-size: small;
+}
+.form-check {
+  margin-right: 8px;
+}
+.accordion-button{
+  padding: .25rem 1rem;
+}

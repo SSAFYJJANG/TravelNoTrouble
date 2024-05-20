@@ -3,7 +3,7 @@ import { useRouter } from "vue-router";
 import { defineStore } from "pinia";
 import { jwtDecode } from "jwt-decode";
 
-import { upload, listFeed, viewDetail } from "@/api/hotplace";
+import { upload, listFeed, viewDetail, likeFeed } from "@/api/hotplace";
 import { httpStatusCode } from "@/util/http-status";
 
 export const useHotplaceStore = defineStore("hotplaceStore", () => {
@@ -25,8 +25,6 @@ export const useHotplaceStore = defineStore("hotplaceStore", () => {
       (response) => {
         if (response.status === httpStatusCode.CREATE) {
           console.log("response", response);
-        } else {
-          console.log("핫플 업로드 response bad");
         }
       },
       async (error) => {
@@ -53,7 +51,22 @@ export const useHotplaceStore = defineStore("hotplaceStore", () => {
   const getHotplaceDetail = async (feedId) => { 
     await viewDetail(feedId,
       (response) => {
-        feedInfo.value = response.data;
+        if (response.status === httpStatusCode.OK) {
+          feedInfo.value = response.data;
+        }
+      },
+      async (error) => {
+        console.log(error);
+      }
+    );
+  };
+
+  const likeHotplaceFeed = async (feedId) => { 
+    await likeFeed(feedId,
+      (response) => { 
+        if (response.status === httpStatusCode.OK) {
+          console.log("좋아요 성공!!!");
+        }
       },
       async (error) => {
         console.log(error);
@@ -66,6 +79,7 @@ export const useHotplaceStore = defineStore("hotplaceStore", () => {
     feedInfo,
     uploadHotplace,
     getHotplaceFeed,
-    getHotplaceDetail
+    getHotplaceDetail,
+    likeHotplaceFeed
   };
 });

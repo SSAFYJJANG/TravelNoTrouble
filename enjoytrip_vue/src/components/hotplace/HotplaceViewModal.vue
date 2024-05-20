@@ -3,7 +3,7 @@ import { ref, defineProps, onMounted } from "vue";
 import { useHotplaceStore } from "@/stores/hotplace";
 
 const hotplaceStore = useHotplaceStore();
-const { getHotplaceDetail, feedInfo } = hotplaceStore;
+const { getHotplaceDetail, feedInfo, likeHotplaceFeed } = hotplaceStore;
 
 const props = defineProps(["card"]);
 const info = ref(null);
@@ -13,11 +13,11 @@ onMounted(async () => {
   await getHotplaceDetail(props.card.hotplace_id);
   info.value = hotplaceStore.feedInfo;
   loading.value = false;
-  console.log("INFO", info.value);
 });
 
 const likeFeed = () => { 
-  console.log("click Like");
+  likeHotplaceFeed(info.value.hotplace_id);
+  info.value.like++;
 };
 </script>
 

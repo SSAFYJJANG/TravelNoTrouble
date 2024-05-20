@@ -15,4 +15,8 @@ async function viewDetail(feedId, success, fail) {
   await local.get(`hotplace/${feedId}`).then(success).catch(fail);
 }
 
-export { upload, listFeed, viewDetail };
+async function likeFeed(feedId, success, fail) {
+  await local.put(`hotplace/like/${feedId}`).then(success).catch(fail);
+}
+
+export { upload, listFeed, viewDetail, likeFeed };

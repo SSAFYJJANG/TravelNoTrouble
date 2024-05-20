@@ -3,7 +3,6 @@ import { ref } from "vue";
 import { storeToRefs } from "pinia";
 import { useRouter } from "vue-router";
 import { useUserStore } from "@/stores/user";
-import axios from "axios";
 
 const router = useRouter();
 const userStore = useUserStore();

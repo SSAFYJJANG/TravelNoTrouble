@@ -4,6 +4,7 @@ import { defineStore } from "pinia";
 import { jwtDecode } from "jwt-decode";
 
 import {
+  signup,
   userConfirm,
   findById,
   tokenRegeneration,
@@ -20,6 +21,20 @@ export const useUserStore = defineStore("userStore", () => {
   const isLoginError = ref(false);
   const userInfo = ref(null);
   const isValidToken = ref(false);
+
+  const userSignup = async (signupUser) => { 
+    console.log("signupUser", signupUser);
+    await signup(signupUser,
+      (response) => {
+        if (response.status === httpStatusCode.CREATE) {
+          console.log("회원가입 성공!!!");
+          console.log("res", response);
+        }
+       },
+      (error) => { 
+        console.log(error);
+      });
+  };
 
   const userLogin = async (loginUser) => {
     await userConfirm(
@@ -165,6 +180,7 @@ export const useUserStore = defineStore("userStore", () => {
     isLoginError,
     userInfo,
     isValidToken,
+    userSignup,
     userLogin,
     getUserInfo,
     tokenRegenerate,

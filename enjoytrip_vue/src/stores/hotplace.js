@@ -44,9 +44,6 @@ export const useHotplaceStore = defineStore("hotplaceStore", () => {
         console.log("list hotplace feed", error);
       }
     );
-    // .then((response) => {
-    //   console.log("LIST", response);
-    // });
   };
 
   return {

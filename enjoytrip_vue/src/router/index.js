@@ -18,6 +18,27 @@ import MyTripPlanWrite from "@/components/myTripPlan/MyTripPlanWrite.vue";
 import AuthView from "@/views/AuthView.vue";
 import Login from "@/components/user/auth/Login.vue";
 import Signup from "@/components/user/auth/Signup.vue";
+import { useUserStore } from "@/stores/user";
+import { storeToRefs } from "pinia";
+
+const checkLoginUser = async (to, from, next) => {
+  console.log("checkLoginUser");
+  const userStore = useUserStore();
+  const { userInfo, isValidToken } = storeToRefs(userStore);
+  const { getUserInfo } = userStore;
+
+  let token = sessionStorage.getItem("accessToken");
+  console.log("USERINFO", userInfo.value);
+
+  if (token) {
+    console.log("getInfo");
+    await getUserInfo(token);
+    next();
+  } else {
+    console.log("로그인 필요");
+    next({ name: "auth-login" });
+  }
+};
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -31,6 +52,7 @@ const router = createRouter({
     {
       path: "/board",
       name: "board",
+      beforeEnter: checkLoginUser,
       component: BoardView,
       children: [
         {
@@ -58,6 +80,7 @@ const router = createRouter({
     {
       path: "/mypage",
       name: "mypage",
+      beforeEnter: checkLoginUser,
       component: MypageView,
       redirect: { name: "mypage-info" },
       children: [
@@ -76,6 +99,7 @@ const router = createRouter({
     {
       path: "/hotplace",
       name: "hotplace",
+      beforeEnter: checkLoginUser,
       component: HotplaceView,
       redirect: { name: "hotplace-feed" },
       children: [
@@ -94,11 +118,13 @@ const router = createRouter({
     {
       path: "/spot",
       name: "spot",
+      beforeEnter: checkLoginUser,
       component: SpotView,
     },
     {
       path: "/plan",
       name: "plan",
+      beforeEnter: checkLoginUser,
       component: MyTripPlanView,
       redirect: { name: "plan-list" },
       children: [
@@ -120,7 +146,7 @@ const router = createRouter({
       component: AuthView,
       children: [
         {
-          path: "",
+          path: "login",
           name: "auth-login",
           component: Login,
         },
@@ -136,13 +162,5 @@ const router = createRouter({
     return { top: 0 };
   },
 });
-
-function checkLoginUser(to, from) {
-  const isLogin = false;
-  if (!isLogin) {
-    console.log("로그인이 필요합니다");
-    return { name: "auth-login" };
-  }
-}
 
 export default router;

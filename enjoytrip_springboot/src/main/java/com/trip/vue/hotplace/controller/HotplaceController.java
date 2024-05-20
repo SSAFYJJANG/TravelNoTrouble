@@ -58,6 +58,9 @@ public class HotplaceController {
 	//post 글쓰기 ""
 	@PostMapping("")
 	public ResponseEntity<?> insertHotplace(@RequestBody HotplaceDto ob) throws Exception{
+		System.out.println(ob.getTitle());
+		System.out.println(ob.getImage());
+		System.out.println(ob.getGugun_code());
 		log.info("insertHotplace access = {}", ob);
 		try {
 			return new ResponseEntity<Integer>(service.insertHotplace(ob), HttpStatus.OK);

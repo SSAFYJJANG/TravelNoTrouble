@@ -10,12 +10,13 @@ const viewModalCheck = ref(false);
 const toggleViewModal = () => {
   viewModalCheck.value = !viewModalCheck.value;
 };
+console.log("Props", props.card.value);
 </script>
 
 <template>
   <div class="col-sm-6 card col-md-4 col-lg-3">
     <div
-      :style="{ backgroundImage: `url(${props.card.cardImg})` }"
+      :style="{ backgroundImage: `url(${props.card.image})` }"
       class="card-wrap hoptplace-card"
     >
       <div class="content-wrap card">
@@ -35,7 +36,7 @@ const toggleViewModal = () => {
       <div class="modal-btn d-flex justify-content-end">
         <button @click="toggleViewModal" class="display-4">✖</button>
       </div>
-      <HotplaceViewModal :hotplace_id="props.card.id" />
+      <HotplaceViewModal :card="props.card" />
     </div>
   </div>
 </template>

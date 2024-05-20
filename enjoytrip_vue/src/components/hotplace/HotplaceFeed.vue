@@ -1,5 +1,5 @@
 <script setup>
-import { ref } from "vue";
+import { ref, onMounted } from "vue";
 import HotplaceCard from "@/components/hotplace/HotplaceCard.vue";
 import PageNavigation from "../common/PageNavigation.vue";
 import {
@@ -8,6 +8,14 @@ import {
   ListboxOptions,
   ListboxOption,
 } from "@headlessui/vue";
+import { useHotplaceStore } from "@/stores/hotplace";
+
+const hotplaceStore = useHotplaceStore();
+const { getHotplaceFeed, feedList } = hotplaceStore;
+
+onMounted(async () => {
+  await getHotplaceFeed();
+});
 
 const options = [
   { id: 1, name: "최신순", unavailable: true },
@@ -61,16 +69,14 @@ const onPageChange = () => {};
 <template>
   <div>
     <div id="sidebar">
-      <router-link
-        id="btn-post"
-        class="btn btn-primary rounded-circle text-white"
-        :to="{ name: 'hotplace-write' }"
-      >
-        <i class="fa-solid fa-pen fa-2x"></i>
+      <router-link :to="{ name: 'hotplace-write' }">
+        <div
+          id="btn-post"
+          class="btn btn-primary rounded-circle bg-primary text-white fs-2"
+        >
+          <i class="fa-solid fa-plus"></i>
+        </div>
       </router-link>
-      <!-- <button id="btn-post" class="btn btn-primary rounded-circle text-white">
-        <i class="fa-solid fa-pen fa-2x"></i>
-      </button> -->
     </div>
 
     <section
@@ -167,7 +173,7 @@ const onPageChange = () => {};
       >
         <div class="">
           <div class="row mt-5">
-            <HotplaceCard v-for="card in hotplace_cards" :card="card" />
+            <HotplaceCard v-for="feed in feedList" :card="feed" />
           </div>
 
           <div class="d-flex justify-content-center mt-5">
@@ -192,11 +198,7 @@ const onPageChange = () => {};
   z-index: 10;
 }
 #btn-post {
-  width: 75px;
-  height: 75px;
-}
-#btn-post:hover {
-  /* background-color: btn-primary-emphasis; */
-  background-color: red;
+  width: 66px;
+  height: 66px;
 }
 </style>

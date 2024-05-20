@@ -6,6 +6,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -33,6 +34,7 @@ import lombok.extern.slf4j.Slf4j;
 @RestController
 @RequestMapping("/user")
 @Slf4j
+@CrossOrigin(origins="http://localhost:8080/trip")
 public class UserController {
 	@Autowired
 	private UserService service;
@@ -218,7 +220,6 @@ public class UserController {
 		System.out.println("HEADER:" + request.getHeader("Authorization")); //
 		if (jwtUtil.checkToken(request.getHeader("Authorization"))) {
 			log.info("사용 가능한 토큰!!!");
-			System.out.println("ttStST");
 			try {
 //					로그인 사용자 정보.
 				UserDto userDto = service.getUserInfoById(userId);

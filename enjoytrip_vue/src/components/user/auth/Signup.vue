@@ -19,8 +19,8 @@ const signupUser = ref({
   gugun_code: ""
 });
 
-const clickSignup = async () => {
-  await userSignup(signupUser.value);
+const clickSignup = () => {
+  userSignup(signupUser.value);
   router.replace({ name: "auth-login" });
 };
 </script>

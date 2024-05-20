@@ -35,7 +35,7 @@ const toggleViewModal = () => {
       <div class="modal-btn d-flex justify-content-end">
         <button @click="toggleViewModal" class="display-4">✖</button>
       </div>
-      <HotplaceViewModal :card="props.card" />
+      <HotplaceViewModal :card="props.card" class="mt-2" />
     </div>
   </div>
 </template>

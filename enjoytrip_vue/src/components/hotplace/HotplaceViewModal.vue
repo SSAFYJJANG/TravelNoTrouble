@@ -33,11 +33,9 @@ const likeFeed = () => {
       </div>
 
       <div class="my-4 mx-5">
-        <!-- <p>ID: {{ props.card.hotplace_id }}</p> -->
         <h4>{{ info.title }}</h4>
         <div class="d-flex justify-content-between">
           <div>{{ info.userId }} | {{ info.regist_time }}</div>
-          <!-- <p>마지막 수정 : {{ info.modified_time }}</p> -->
           <button @click="likeFeed">
             <i class="bi bi-heart-fill"></i>
             좋아요 {{ info.like }}</button>  

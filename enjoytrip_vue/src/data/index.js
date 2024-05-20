@@ -1,3 +1,6 @@
+let id = 1;
+const imgsrc = "/src/assets/images/trip2.jpeg";
+
 export default {
   article: [
     {
@@ -49,6 +52,45 @@ export default {
       registerTime: "2018-09-11",
       updated_at: null,
       hit: 5,
+    },
+  ],
+
+  sidoList: [
+    {
+      no: id,
+      name: "서울",
+      imgSrc: imgsrc,
+      alt: "",
+      slogan: "SEOUL, MY SOUL",
+      dataSlideTo: id,
+      dataBsSlideTo: id++,
+    },
+    {
+      no: id,
+      name: "인천",
+      imgSrc: imgsrc,
+      alt: "",
+      slogan: "SEOUL, MY SOUL",
+      dataSlideTo: id,
+      dataBsSlideTo: id++,
+    },
+    {
+      no: id,
+      name: "대전",
+      imgSrc: imgsrc,
+      alt: "",
+      slogan: "SEOUL, MY SOUL",
+      dataSlideTo: id,
+      dataBsSlideTo: id++,
+    },
+    {
+      no: id,
+      name: "대구",
+      imgSrc: imgsrc,
+      alt: "",
+      slogan: "SEOUL, MY SOUL",
+      dataSlideTo: id,
+      dataBsSlideTo: id++,
     },
   ],
 };

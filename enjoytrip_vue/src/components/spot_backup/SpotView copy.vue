@@ -2,8 +2,8 @@
 import MenuPadding from "@/components/common/MenuPadding.vue";
 import SpotInput from "@/components/spot/SpotInput.vue"
 import SpotType from "@/components/spot/SpotType.vue"
-import SpotMap from "@/components/spot/SpotMap.vue"
-import SpotCardList from "@/components/spot/SpotCardList.vue"
+import SpotMap from "@/components/spot/AttractionMap.vue"
+import SpotCardList from "@/components/spot/AttractionCardList.vue"
 // 지도 검색 호출 -> 시도/구군 값 변경 -> 검색 카드에 값 반환 (?)
 </script>
 

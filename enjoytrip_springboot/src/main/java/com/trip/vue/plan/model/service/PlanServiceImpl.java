@@ -1,6 +1,7 @@
 package com.trip.vue.plan.model.service;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -30,8 +31,10 @@ public class PlanServiceImpl implements PlanService {
 
 	@Transactional
 	@Override
-	public int deletePlan(int plan_id) throws Exception {
-		return planDao.deletePlan(plan_id);
+	public int deletePlan(Map<String, Object> map) throws Exception {
+		planDao.deleteAllPlanDays(String.valueOf(map.get("userId")));
+		planDetailDao.deleteAllPlanDetail(String.valueOf(map.get("userId")));
+		return planDao.deletePlan(map);
 	}
 
 	@Transactional

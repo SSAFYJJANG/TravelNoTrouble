@@ -9,7 +9,7 @@
 	<select id="listPlan" parameterType="string" resultType="planDto">
 		select *
 		from plan
-		where userId = {userId}
+		where userId = #{userId}
 	</select>
 
 	<insert id="insertPlan" parameterType="planDto">
@@ -23,7 +23,7 @@
 		where plan_id=#{plan_id}
 	</update>
 	
-	<delete id="deletePlan" parameterType="integer">
+	<delete id="deletePlan" parameterType="map">
 		delete
 		from plan
 		where plan_id=#{plan_id}

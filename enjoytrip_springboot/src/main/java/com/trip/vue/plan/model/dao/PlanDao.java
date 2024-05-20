@@ -1,6 +1,7 @@
 package com.trip.vue.plan.model.dao;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
 
@@ -12,7 +13,7 @@ public interface PlanDao {
 	//일정 쓰기
 	public int insertPlan(PlanDto ob) throws Exception;
 	//일정 삭제
-	public int deletePlan(int plan_id) throws Exception;
+	public int deletePlan(Map<String, Object> map) throws Exception;
 	//일정 메모 수정
 	public int modifyPlan(PlanDto ob) throws Exception;
 	// user 탈퇴시 동작

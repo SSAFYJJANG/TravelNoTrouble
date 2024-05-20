@@ -1,23 +1,30 @@
 <script setup>
 import { ref } from "vue";
-defineProps({ selectOption: Array });
+import { CFormSelect } from '@coreui/vue';
+
+defineProps({ 
+  selectOption: Array,
+  selectClass : Array
+ });
 
 const emit = defineEmits(["onKeySelect"]);
 
 const key = ref("");
 
 const onSelect = () => {
+  console.log(key.value);
   emit("onKeySelect", key.value);
 };
 </script>
 
 <template>
-  <select v-model="key" class="form-select form-select-sm ms-5 me-1 w-50" @change="onSelect">
+  <CFormSelect v-model="key" size="sm" class="h-100" :class="selectClass" aria-label="Small select example" @change="onSelect">
     <option v-for="option in selectOption" :key="option.value" :value="option.value"
-      :disabled="option.value === '' ? true : false">
+      :disabled="option.value === '' ? true : false" :selected="option.value === '' ? true : false">
       {{ option.text }}
     </option>
-  </select>
+  </CFormSelect>
+
 </template>
 
 <style scoped></style>

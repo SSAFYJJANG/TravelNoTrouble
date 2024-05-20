@@ -9,7 +9,7 @@ import "@vueup/vue-quill/dist/vue-quill.snow.css";
 
 // 카카오 지도
 import { useKakao } from "vue3-kakao-maps/@utils";
-useKakao("ff56269720c5ea3e30bdf3c3ad4fcb6d");
+useKakao('api-key', ['clusterer', 'services', 'drawing']); // 각 라이브러리는 ',(콤마)'로 구분합니다.
 
 // bootstrap vue
 import { BootstrapVue3 } from "bootstrap-vue-3";
@@ -22,6 +22,13 @@ const pinia = createPinia();
 
 app.component("QuillEditor", QuillEditor);
 
+//coreui
+// import '@coreui/coreui/dist/css/coreui.min.css'
+
+//AOS
+import AOS from 'aos';
+import "aos/dist/aos.css";
+app.use(AOS);
 pinia.use(piniaPluginPersistedstate);
 app.use(pinia);
 app.use(router);

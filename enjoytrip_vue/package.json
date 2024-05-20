@@ -10,8 +10,11 @@
     "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs --fix --ignore-path .gitignore"
   },
   "dependencies": {
+    "@coreui/coreui": "^5.0.1",
+    "@coreui/vue": "^5.0.0",
     "@headlessui/vue": "^1.7.22",
     "@vueup/vue-quill": "^1.2.0",
+    "aos": "^3.0.0-beta.6",
     "axios": "^1.6.8",
     "bootstrap": "^5.3.3",
     "bootstrap-icons": "^1.11.3",

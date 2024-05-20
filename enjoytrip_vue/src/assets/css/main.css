@@ -7358,7 +7358,8 @@ a {
 .cid-uc9QV5XEuk {
   padding-top: 2rem;
   padding-bottom: 2rem;
-  background-color: #2e481a;
+  /* background-color: #2e481a; */
+  background-color: #336e85;
 }
 .cid-uc9QV5XEuk .mbr-fallback-image.disabled {
   display: none;

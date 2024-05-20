@@ -25,14 +25,14 @@ const changeKey = (val) => {
 };
 
 const content_types = ref([
-        { text: '관광지', value: '1' } ,
-        { text: '문화시설', value: '2' },
-        { text: '축제공연행사', value: '3' },
-        { text: '여행코스', value: '4' },
-        { text: '레포츠', value: '5' },
-        { text: '숙박', value: '6' },
-        { text: '쇼핑', value: '7' },
-        { text: '식당', value: '8' }
+    { text: '관광지', value: '1' },
+    { text: '문화시설', value: '2' },
+    { text: '축제공연행사', value: '3' },
+    { text: '여행코스', value: '4' },
+    { text: '레포츠', value: '5' },
+    { text: '숙박', value: '6' },
+    { text: '쇼핑', value: '7' },
+    { text: '식당', value: '8' }
 ]);
 
 const picked = ref('1');
@@ -49,16 +49,9 @@ const picked = ref('1');
         <div>
             <p>분류 선택</p>
             <div class="d-flex align-content-around flex-wrap">
-                <CFormCheck 
-                    v-for="(content_type, index) in content_types" 
-                    :key="content_type.text"
-                    type="radio" 
-                    inline 
-                    :label="content_type.text" 
-                    :value="content_type.value" 
-                    :id="`content-type-${index}`"
-                    v-model="picked"
-                />
+                <CFormCheck v-for="(content_type, index) in content_types" :key="content_type.text" type="radio" inline
+                    :label="content_type.text" :value="content_type.value" :id="`content-type-${index}`"
+                    v-model="picked" />
                 {{ picked }}
             </div>
             <AttractionCardList />

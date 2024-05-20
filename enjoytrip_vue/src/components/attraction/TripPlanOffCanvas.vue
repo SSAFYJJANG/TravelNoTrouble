@@ -1,7 +1,7 @@
 <script setup>
 import { ref } from 'vue';
 import { COffcanvas, CButton, CCloseButton, COffcanvasHeader, COffcanvasTitle, COffcanvasBody, } from '@coreui/vue';
-import PlanDaysDetails from "@/components/attraction/PlanDaysDetails.vue";
+import PlanDaysDetailList from "@/components/attraction/PlanDaysDetailList.vue";
 const visibleOffCanvas = ref(false);
 </script>
 
@@ -19,7 +19,7 @@ const visibleOffCanvas = ref(false);
             </COffcanvasHeader>
             <hr>
             <COffcanvasBody>
-                <PlanDaysDetails />
+                <PlanDaysDetailList />
             </COffcanvasBody>
         </COffcanvas>
 

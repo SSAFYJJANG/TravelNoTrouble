@@ -1,6 +1,5 @@
 <template>
     <div class="card-scene">
-
         <Container orientation="horizontal" @drop="onColumnDrop" drag-handle-selector=".column-drag-handle"
             :drop-placeholder="upperDropPlaceholderOptions">
             <Draggable v-for="(column, index) in scene.children" :key="column.id">
@@ -14,8 +13,11 @@
                         drop-class="card-ghost-drop" :drop-placeholder="dropPlaceholderOptions">
 
                         <Draggable v-for="card in column.children" :key="card.id">
-                            <PlanDaysDetail :class="card.props.className" :style="card.props.style">
+                            <div :class="card.props.className" :style="card.props.style" >
+                                <!-- {{ attraction }} -->
+                            <PlanDaysDetail :attraction="attraction">
                             </PlanDaysDetail>
+                            </div>
                         </Draggable>
 
                     </Container>
@@ -33,7 +35,12 @@
 import { ref } from 'vue';
 import { CFormCheck } from '@coreui/vue';
 import { Container, Draggable } from 'vue3-smooth-dnd';
-import PlanDaysDetail from "@/components/attraction/PlanDaysDetail.vue"
+import PlanDaysDetail from "@/components/attraction/PlanDaysDetailItem.vue"
+import data from "@/data/index.js";
+const attraction = ref({});
+attraction.value = data.attractionList[0];
+console.log(attraction.value);
+
 const applyDrag = (arr, dragResult) => {
     const { removedIndex, addedIndex, payload } = dragResult
     if (removedIndex === null && addedIndex === null) return arr
@@ -132,7 +139,6 @@ const removeColumn = (columnId) => {
     /* background-color: salmon; */
     width: 360px;
 }
-
 .column-drag-handle,
 .column-add-button {
     width: 50px;
@@ -148,7 +154,10 @@ const removeColumn = (columnId) => {
 .smooth-dnd-draggable-wrapper .smooth-dnd-container {
     position: absolute;
     left: 0;
+    /* background-color: rgba(255, 230, 227, 0.151); */
     background-color: salmon;
+    border-bottom-right-radius: 10px;
+    border-bottom-left-radius: 10px;
 }
 
 .card-container {

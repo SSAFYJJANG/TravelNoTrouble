@@ -38,7 +38,7 @@ public class HotplaceServiceImpl implements HotplaceService {
 		final String extension = file.getContentType().split("/")[1];
 		final String fileName = UUID.randomUUID() + "." + extension;
 		
-		Path uploadPath = Paths.get("/images/" + ob.getUserId());
+		Path uploadPath = Paths.get("/uploadimg/" + ob.getUserId());
 		if (!Files.exists(uploadPath)) {
 			Files.createDirectories(uploadPath);
 			System.out.println("make dir : " + uploadPath.toString());

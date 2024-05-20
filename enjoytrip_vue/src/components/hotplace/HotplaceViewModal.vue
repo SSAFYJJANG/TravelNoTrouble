@@ -38,7 +38,9 @@ const likeFeed = () => {
         <div class="d-flex justify-content-between">
           <div>{{ info.userId }} | {{ info.regist_time }}</div>
           <!-- <p>마지막 수정 : {{ info.modified_time }}</p> -->
-          <button @click="likeFeed">❤ 좋아요 {{ info.like }}</button>  
+          <button @click="likeFeed">
+            <i class="bi bi-heart-fill"></i>
+            좋아요 {{ info.like }}</button>  
         </div>
         
         <hr class="mt-3 mb-3" />

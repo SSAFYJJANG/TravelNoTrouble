@@ -99,8 +99,8 @@ public class HotplaceController {
 		}
 	}
 	//put 글 세부사항 좋아요 올리기 "/like"
-	@PutMapping("/like")
-	public ResponseEntity<?> updateLike(@RequestParam int hotplace_id) throws Exception{
+	@PutMapping("/like/{hotplace_id}")
+	public ResponseEntity<?> updateLike(@PathVariable("hotplace_id") int hotplace_id) throws Exception{
 		log.info("updateLike access = {}", hotplace_id);
 		try {
 			service.updateLike(hotplace_id);

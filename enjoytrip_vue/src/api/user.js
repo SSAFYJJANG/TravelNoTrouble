@@ -27,13 +27,19 @@ async function logout(userid, success, fail) {
 }
 
 async function update(param, success, fail) {
-  console.log("update param", param.userId);
   await local.put(`/user/${param.userId}`, param).then(success).catch(fail);
 }
 
 async function leave(userId, success, fail) {
-  console.log("탈퇴시도", userId);
   await local.delete(`/user/${userId}`).then(success).catch(fail);
 }
 
-export { signup, userConfirm, findById, tokenRegeneration, logout, update, leave };
+async function findPwd(userId, success, fail) {
+  await local.get(`/user/pwd/${userId}`).then(success).catch(fail);
+}
+
+async function duplicate(userId, success, fail) {
+  await local.get(`/user/id/${userId}`).then(success).catch(fail);
+}
+
+export { signup, userConfirm, findById, tokenRegeneration, logout, update, leave, findPwd, duplicate};

@@ -240,9 +240,30 @@ public class UserController {
 	//get 유저 수 가져오기 - 메인화면 "/cnt"
 	@GetMapping("/cnt")
 	public ResponseEntity<?> getTotalUserCount() throws Exception{
-		System.out.println("HAHAHAHA");
 		try {
 			return new ResponseEntity<Integer>(service.getTotalUserCount(), HttpStatus.OK);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return new ResponseEntity<String>("서버 오류", HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
+	
+	//get 비밀번호 찾기 - "/pwd/{id}"
+	@GetMapping("/pwd/{id}")
+	public ResponseEntity<?> findUserPassword(@PathVariable("id") String userId) throws Exception{
+		try {
+			return new ResponseEntity<Integer>(service.findUserPassword(userId), HttpStatus.OK);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return new ResponseEntity<String>("서버 오류", HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
+	
+	//get 아이디 중복검사 - "/id/{id}"
+	@GetMapping("/id/{id}")
+	public ResponseEntity<?> checkIdDuplicate(@PathVariable("id") String userId) throws Exception{
+		try {
+			return new ResponseEntity<Integer>(service.checkIdDuplicate(userId), HttpStatus.OK);
 		} catch (Exception e) {
 			e.printStackTrace();
 			return new ResponseEntity<String>("서버 오류", HttpStatus.INTERNAL_SERVER_ERROR);

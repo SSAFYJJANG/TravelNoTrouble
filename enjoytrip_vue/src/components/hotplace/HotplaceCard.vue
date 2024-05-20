@@ -9,7 +9,6 @@ const viewModalCheck = ref(false);
 const toggleViewModal = () => {
   viewModalCheck.value = !viewModalCheck.value;
 };
-
 </script>
 
 <template>
@@ -63,10 +62,5 @@ const toggleViewModal = () => {
   border-radius: 10px;
   padding: 20px;
   box-sizing: border-box;
-}
-@media (max-width: 1100px) {
-  .modal-container {
-    max-width: 90%;
-  }
 }
 </style>

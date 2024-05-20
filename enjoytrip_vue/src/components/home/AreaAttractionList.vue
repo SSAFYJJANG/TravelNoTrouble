@@ -1,94 +1,13 @@
 <script setup>
 import { ref, computed, watch } from 'vue';
 import AreaAttraction from './AreaAttraction.vue';
-let id = 1;
-const imgsrc = "/src/assets/images/trip2.jpeg"
-// TODO : dataSlideTo, dataBsSlideTo은 객체마다 숫자가 달라야하는지, 
-// 숫자는 순차적으로 나와야하는지 확인
-const popularHotPlaces = ref([
-    {
-        no: id,
-        sido : "서울",
-        imgSrc: imgsrc,
-        alt: "",
-        title: "",
-        dataSlideTo: id,
-        dataBsSlideTo: id++,
-    },
-    {
-        no: id,
-        sido : "서울",
-        imgSrc: imgsrc,
-        alt: "",
-        title: "",
-        dataSlideTo: id,
-        dataBsSlideTo: id++,
-    },
-    {
-        no: id,
-        sido : "서울",
-        imgSrc: imgsrc,
-        alt: "",
-        title: "",
-        dataSlideTo: id,
-        dataBsSlideTo: id++,
-    },
-    {
-        no: id,
-        sido : "서울",
-        imgSrc: imgsrc,
-        alt: "",
-        title: "",
-        dataSlideTo: id,
-        dataBsSlideTo: id++,
-    },
-    {
-        no: id,
-        sido : "서울",
-        imgSrc: imgsrc,
-        alt: "",
-        title: "",
-        dataSlideTo: id,
-        dataBsSlideTo: id++,
-    },
-    {
-        no: id,
-        sido : "서울",
-        imgSrc: imgsrc,
-        alt: "",
-        title: "",
-        dataSlideTo: id,
-        dataBsSlideTo: id++,
-    },
-    {
-        no: id,
-        sido : "서울",
-        imgSrc: imgsrc,
-        alt: "",
-        title: "",
-        dataSlideTo: id,
-        dataBsSlideTo: id++,
-    },
-    {
-        no: id,
-        sido : "서울",
-        imgSrc: imgsrc,
-        alt: "",
-        title: "",
-        dataSlideTo: id,
-        dataBsSlideTo: id++,
-    },
-]);
-
-const lengthOfPopularHotPlaces = computed(() => {
-    return popularHotPlaces.value.length;
-})
-
+import data from "@/data/index.js";
+const sidoList = ref([]);
+sidoList.value = data.sidoList;
 </script>
 
 <template>
-    <section data-bs-version="5.1" 
-        class="features017 mbr-embla cid-uc9PmWNUs6" id="features017-2n">
+    <section data-bs-version="5.1" class="features017 mbr-embla cid-uc9PmWNUs6" id="features017-2n">
         <div class="position-relative">
             <div class="container-fluid">
                 <div class="row">
@@ -103,20 +22,14 @@ const lengthOfPopularHotPlaces = computed(() => {
                 </div>
             </div>
 
-            <div v-if="lengthOfPopularHotPlaces" 
-                class="embla" 
-                data-skip-snaps="true" 
-                data-align="center"
-                data-contain-scroll="trimSnaps" 
-                data-loop="true" 
-                data-auto-play="true" 
-                data-auto-play-interval="2.5"
+            <div v-if="sidoList.length > 0" class="embla" data-skip-snaps="true" data-align="center"
+                data-contain-scroll="trimSnaps" data-loop="true" data-auto-play="true" data-auto-play-interval="2.5"
                 data-draggable="true">
-                
+
                 <div class="embla__viewport container-fluid">
                     <div class="embla__container">
-                        <AreaAttraction v-for="popularHotPlace
-                            in popularHotPlaces" :key="popularHotPlace.no" :popular-hot-place="popularHotPlace" />
+                        <AreaAttraction v-for="sido
+                            in sidoList" :key="sido.no" :sido="sido" />
                     </div>
                 </div>
 
@@ -126,7 +39,7 @@ const lengthOfPopularHotPlaces = computed(() => {
                     </span>
                     <span class="sr-only visually-hidden visually-hidden visually-hidden">Previous</span>
                 </button>
-                <button class="embla__button embla__button--next"  style="display: none;">
+                <button class="embla__button embla__button--next" style="display: none;">
                     <span class="mobi-mbri mobi-mbri-arrow-next mbr-iconfont" aria-hidden="true">
                         <i class="bi bi-caret-right-fill"></i>
                     </span>
@@ -137,6 +50,4 @@ const lengthOfPopularHotPlaces = computed(() => {
     </section>
 </template>
 
-<style scoped>
-
-</style>
+<style scoped></style>

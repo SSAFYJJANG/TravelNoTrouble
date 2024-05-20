@@ -61,7 +61,11 @@ const clickSubmit = async () => {
               @change="uploadImage"
             />
             <label for="upfile">
-              <img class="border rounded-2" :src="previewImage" />
+              <img
+                class="border rounded-2"
+                style="object-fit: cover; width: 516px; height: 516px"
+                :src="previewImage"
+              />
             </label>
           </div>
 

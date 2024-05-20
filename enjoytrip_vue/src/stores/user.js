@@ -11,6 +11,7 @@ import {
   logout,
   update,
   leave,
+  findPwd
 } from "@/api/user";
 import { httpStatusCode } from "@/util/http-status";
 
@@ -21,6 +22,7 @@ export const useUserStore = defineStore("userStore", () => {
   const isLoginError = ref(false);
   const userInfo = ref(null);
   const isValidToken = ref(false);
+  const userPwd = ref(null);
 
   const userSignup = async (signupUser) => { 
     console.log("signupUser", signupUser);
@@ -175,11 +177,27 @@ export const useUserStore = defineStore("userStore", () => {
     );
   };
 
+  const findUserPassword = async (userId) => {
+    await findPwd(
+      userId,
+      (response) => { 
+        if (response.status === httpStatusCode.OK) {
+          console.log(userId, "비밀번호:", response.data);
+          userPwd.value = response.data;
+        }
+      },
+      async (error) => {
+        console.log(error);
+      }
+    )
+  };
+
   return {
     isLogin,
     isLoginError,
     userInfo,
     isValidToken,
+    userPwd,
     userSignup,
     userLogin,
     getUserInfo,
@@ -187,5 +205,6 @@ export const useUserStore = defineStore("userStore", () => {
     userLogout,
     updateUserInfo,
     deleteUserInfo,
+    findUserPassword
   };
 });

@@ -74,7 +74,7 @@ const clickSubmit = async () => {
               />
             </label>
             <i
-              class="position-absolute bottom-0 end-0 fa-solid fa-square-pen fs-4"
+              class="position-absolute fa-solid fa-square-pen fs-4"
               style="color: #acb4b9"
             ></i>
           </div>
@@ -193,5 +193,9 @@ const clickSubmit = async () => {
   box-shadow: rgba(0, 0, 0, 0.07) 0px 1px 1px 0px,
     rgba(0, 0, 0, 0.07) 0px 1px 3px 0px, rgba(0, 0, 0, 0.03) 0px 0px 0px 1px;
   border-color: #49a078;
+}
+i {
+  bottom: 10px;
+  right: 20px;
 }
 </style>

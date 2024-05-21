@@ -14,14 +14,22 @@ const toggleViewModal = () => {
 <template>
   <div class="col-sm-6 card col-md-4 col-lg-3">
     <div
-      :style="{ backgroundImage: `url(${VITE_VUE_API_URL}/img/${props.card.image})` }"
-      class="card-wrap hoptplace-card"
+      :style="{
+        backgroundImage: `url(${VITE_VUE_API_URL}/img/${props.card.image})`,
+      }"
+      class="card-wrap hoptplace-card rounded-4 shadow-sm"
     >
       <div class="content-wrap card">
         <div id="card-behind" class="content-wrap">
           <div class="mbr-section-btn card-btn align-center">
-            <a class="btn btn-white display-7" @click="toggleViewModal">
-              Read More
+            <div class="btn text-white fw-light fs-5">
+              <p>{{ props.card.title }}</p>
+            </div>
+            <a
+              class="btn btn-white px-4 py-3 display-7"
+              @click="toggleViewModal"
+            >
+              자세히 보기
             </a>
           </div>
         </div>

@@ -61,21 +61,25 @@ const router = createRouter({
         {
           path: "",
           name: "board-list",
+          beforeEnter: checkLoginUser,
           component: BoardList,
         },
         {
           path: "write",
           name: "article-write",
+          beforeEnter: checkLoginUser,
           component: BoardWrite,
         },
         {
           path: "view/:articleno",
           name: "article-view",
+          beforeEnter: checkLoginUser,
           component: BoardDetail,
         },
         {
           path: "modify/:articleno",
           name: "article-modify",
+          beforeEnter: checkLoginUser,
           component: BoardModify,
         },
       ],
@@ -90,11 +94,13 @@ const router = createRouter({
         {
           path: "info",
           name: "mypage-info",
+          beforeEnter: checkLoginUser,
           component: MypageInfo,
         },
         {
           path: "modify",
           name: "mypage-modify",
+          beforeEnter: checkLoginUser,
           component: MypageModify,
         },
       ],
@@ -109,11 +115,13 @@ const router = createRouter({
         {
           path: "feed",
           name: "hotplace-feed",
+          beforeEnter: checkLoginUser,
           component: HotplaceFeed,
         },
         {
           path: "write",
           name: "hotplace-write",
+          beforeEnter: checkLoginUser,
           component: HotplaceWrite,
         },
       ],
@@ -134,11 +142,13 @@ const router = createRouter({
         {
           path: "",
           name: "plan-list",
+          beforeEnter: checkLoginUser,
           component: MyTripPlanList,
         },
         {
           path: "write",
           name: "plan-write",
+          beforeEnter: checkLoginUser,
           component: MyTripPlanWrite,
         },
       ],

@@ -1,42 +1,67 @@
 <script setup>
-import { CAccordion, CAccordionItem, CButton, CAccordionHeader, CAccordionBody } from '@coreui/vue';
+import { ref } from 'vue'
+import { CFormTextarea, CInputGroup, CCard, CRow, CCol, CCardImage, CCardBody, CCardTitle, CCardText, CAccordion, CAccordionItem, CAccordionHeader, CAccordionBody } from '@coreui/vue';
 
 defineProps({ attraction: Object });
 
+const planDetailMemo = ref("");
 </script>
 
 <template>
-    <div class="card" style="width: 100%">
-        <img class="card-img-top" :src="attraction.first_image2" alt="Card image cap">
-        <div class="card-body">
-            <div class="card-btn d-flex flex-nowrap align-items-center justify-content-between">
-                <h5 class="card-title">{{ attraction.title }}</h5>
-                <div class="card-btn">
-                    <i class="bi bi-patch-plus"></i>
-                    <i class="bi bi-heart"></i>
-                </div>
-            </div>
-            <p class="card-text">{{ attraction.add1 }}</p>
-        </div>
-        <CAccordion flush>
-            <CAccordionItem>
-                <CAccordionHeader>
-                    <strong>자세히 보기</strong>
-                </CAccordionHeader>
-                <CAccordionBody>
-                    {{ attraction.overview }}
-                </CAccordionBody>
-            </CAccordionItem>
-        </CAccordion>
-    </div>
+    <CCard class="plan-detail-card">
+        <CRow class="g-0">
+            <CCol :md="4">
+                <CCardImage class="rounded-0 card-img" :src="attraction.first_image1" />
+            </CCol>
+            <CCol :md="8">
+                <CCardBody class="card-content">
+                    <CCardTitle class="card-title">{{ attraction.title }}</CCardTitle>
+                    <CCardText class="card-text">{{ attraction.add1 }}</CCardText>
+                    <CCardText class="card-text card-btn d-flex justify-content-end">
+                        <i class="fa-solid fa-square-plus"></i>
+                        <i class="fa-regular fa-heart"></i>
+                    </CCardText>
+                </CCardBody>
+            </CCol>
+            <CAccordion flush>
+                <CAccordionItem>
+                    <CAccordionHeader>
+                        <strong>메모작성</strong>
+                    </CAccordionHeader>
+                    <CAccordionBody class="accodion-body-memo">
+                        <CInputGroup>
+                            <CFormTextarea class="memo" id="detail-memo" aria-label="With textarea" rows="5"
+                                placeholder="장소에 대해 간단히 메모해보세요" style="resize: none;" maxlength="100"
+                                v-model="planDetailMemo">
+                            </CFormTextarea>
+                            <span class="countTextLen">{{ planDetailMemo.length }}/100</span>
+                        </CInputGroup>
+                    </CAccordionBody>
+                </CAccordionItem>
+                <CAccordionItem>
+                    <CAccordionHeader>
+                        <strong>자세히 보기</strong>
+                    </CAccordionHeader>
+                    <CAccordionBody>
+                        {{ attraction.overview }}
+                    </CAccordionBody>
+                </CAccordionItem>
+            </CAccordion>
+        </CRow>
+    </CCard>
 </template>
 
 <style scoped>
-.card {
+.plan-detail-card {
     /* border: 1px solid black; */
     border-radius: 2%;
     padding: 0.25rem;
-    margin : 1rem auto;
+    margin: .2rem auto;
+}
+
+.card-content {
+    text-align: left;
+    padding: .5rem .8rem;
 }
 
 .card-title {
@@ -47,13 +72,25 @@ defineProps({ attraction: Object });
     color: #485664;
 }
 
-.card-img-top {
-    height: 200px;
-    width: 350px;
+.card-img {
+    height: 100px;
+    width: 120px;
     object-fit: cover;
     align-self: center;
 }
-.card-btn i{
-    margin-left : 1rem;
+
+
+.card-btn i {
+    margin-left: .5rem;
+    margin-bottom: .5rem;
+    margin-right: 0;
+}
+
+.countTextLen {
+    color: #8181817a;
+    z-index: 6;
+    position: absolute;
+    bottom: 5px;
+    right: 0;
 }
 </style>

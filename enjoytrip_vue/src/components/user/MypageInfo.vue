@@ -19,35 +19,53 @@ onMounted(() => {
     <div class="p-5">
       <div class="d-flex flex-column">
         <!-- 프로필 카드 -->
-        <div class="mypage-item row justify-content-center rounded-4 mt-5">
+        <div class="mypage-item row justify-content-center rounded-4 mt-5 px-5">
           <!-- 프로필 이미지 -->
-          <div class="col-4 px-5 py-4 d-flex justify-content-center">
-            <img v-if="userInfo.image != null"
+          <div class="col-lg-4 px-4 py-4 d-flex justify-content-center">
+            <img
+              v-if="userInfo.image != null"
               :src="`${VITE_VUE_API_URL}/profile/${userInfo.image}`"
-              style="width: 200px; height: 200px"
+              style="width: 160px; height: 160px"
               class="rounded-pill align-self-center border"
             />
-            <img v-else
+            <img
+              v-else
               :src="defaultProfile"
-              style="width: 200px; height: 200px"
+              style="width: 160px; height: 160px"
               class="rounded-pill align-self-center border"
             />
           </div>
           <!-- 프로필 정보 -->
-          <div class="col-8 px-5 py-4 d-flex flex-column">
-            <div class="border">
-              <p class="h3">{{ userInfo.username }}</p>
-              <p>{{ userInfo.userId }}</p>
-              <p>{{ userInfo.email }}</p>
-              <p>{{ userInfo.sido_code }}시 {{ userInfo.gugun_code }}구</p>
-            </div>
-            <div class="d-flex justify-content-end my-3">
-              <router-link
-                class="btn btn-primary display-7 p-2 rounded-2 fs-6 fw-normal"
-                :to="{ name: 'mypage-modify' }"
-              >
-                수정
-              </router-link>
+          <div class="col-lg-8 px-5 py-4 d-flex flex-column align-self-center">
+            <div>
+              <div class="mb-3 d-flex justify-content-between">
+                <div class="d-flex align-items-center">
+                  <div class="fs-4 fw-bold">
+                    {{ userInfo.username }}
+                  </div>
+                  <div class="fs-5 ps-1 fw-light">({{ userInfo.userId }})</div>
+                </div>
+
+                <router-link
+                  class="btn btn-primary display-7 px-2 py-1 m-0 rounded-2 fs-6 fw-normal"
+                  :to="{ name: 'mypage-modify' }"
+                >
+                  수정
+                </router-link>
+              </div>
+
+              <div class="row border rounded-3 px-3 align-center">
+                <div class="col-lg-6 my-3">
+                  <p class="mb-3 fw-light">이메일</p>
+                  <p class="mb-0 fw-bold">{{ userInfo.email }}</p>
+                </div>
+                <div class="col-lg-6 my-3">
+                  <p class="fw-light">주소</p>
+                  <p class="mb-0 fw-bold">
+                    {{ userInfo.sido_code }}시 {{ userInfo.gugun_code }}구
+                  </p>
+                </div>
+              </div>
             </div>
           </div>
         </div>

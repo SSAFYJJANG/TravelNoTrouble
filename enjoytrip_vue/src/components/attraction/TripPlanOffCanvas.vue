@@ -1,7 +1,8 @@
 <script setup>
 import { ref } from 'vue';
 import { COffcanvas, CButton, CCloseButton, COffcanvasHeader, COffcanvasTitle, COffcanvasBody, } from '@coreui/vue';
-import PlanDaysDetails from "@/components/attraction/PlanDaysDetails.vue";
+import PlanDaysDetailList from "@/components/attraction/PlanDaysDetailList.vue";
+import PlanCalendar from '@/components/attraction/PlanCalendar.vue';
 const visibleOffCanvas = ref(false);
 </script>
 
@@ -19,7 +20,9 @@ const visibleOffCanvas = ref(false);
             </COffcanvasHeader>
             <hr>
             <COffcanvasBody>
-                <PlanDaysDetails />
+                <PlanCalendar/>
+                <CButton color="danger" variant="outline" class="save-load-button">저장하기</CButton>
+                <PlanDaysDetailList />
             </COffcanvasBody>
         </COffcanvas>
 
@@ -48,6 +51,10 @@ hr {
 
 .open {
     transform: none;
+}
+.save-load-button{
+    margin : .5rem auto 1rem !important;
+    border-radius: 5px;
 }
 </style>
 <!--ㄴ 여행 계획 off canvas -->

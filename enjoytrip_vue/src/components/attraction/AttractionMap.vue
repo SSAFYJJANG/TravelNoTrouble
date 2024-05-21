@@ -6,7 +6,7 @@ const map = ref<kakao.maps.Map>();
 const markerList = ref<KakaoMapMarkerListItem[]>([]);
 
 // 검색 키워드
-const keyword = ref("서울 관광지");
+const keyword = ref("서울");
 
 // 지도를 재설정할 범위정보를 가지고 있을 LatLngBounds 객체를 생성합니다
 let bounds: kakao.maps.LatLngBounds;

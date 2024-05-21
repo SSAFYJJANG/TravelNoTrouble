@@ -2,6 +2,7 @@
 import { CAccordion, CAccordionItem, CButton, CAccordionHeader, CAccordionBody } from '@coreui/vue';
 
 defineProps({ attraction: Object });
+
 </script>
 
 <template>

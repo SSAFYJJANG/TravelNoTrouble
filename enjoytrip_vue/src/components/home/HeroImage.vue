@@ -12,7 +12,7 @@ const subtitle = ref("Good Travel No Trouble");
 		id="header17-1l">
 		<div class="container-fluid">
 			<div class="row">
-				<div class="content-wrap col-12 col-md-12" >
+				<div class="content-wrap col-12 col-md-12" data-aos="fade-down" data-aos-duration="1000">
 					<h1 class="mbr-section-title mbr-fonts-style mbr-white mb-4 display-1">
 						<strong>{{ maintitle }}</strong>
 					</h1>

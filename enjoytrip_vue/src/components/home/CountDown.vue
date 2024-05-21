@@ -1,6 +1,12 @@
 <script setup>
 import { ref, } from 'vue';
-const dataDueDate = ref("2025/01/01");
+// auto count
+import Vue3Autocounter from "vue3-autocounter";
+const hotPlaceCnt = ref(231);
+const attractionCnt = ref(571);
+const userCnt = ref(57);
+
+
 </script>
 
 <template>
@@ -12,7 +18,9 @@ const dataDueDate = ref("2025/01/01");
 						<div class="col-4">
 							<div class="number-wrap">
 								<span class="number display-2">
-									<b>231</b>
+									<vue3-autocounter ref='counter' class="number display-2" :startAmount='0'
+										:endAmount='hotPlaceCnt' :duration='4' prefix='' suffix='' :decimals='0'
+										:autoinit='true' style="font-weight: bold;" />
 								</span>
 								<span mbr-text="" class="period display-7">
 									Hotplaces
@@ -22,7 +30,9 @@ const dataDueDate = ref("2025/01/01");
 						<div class="col-4">
 							<div class="number-wrap">
 								<span class="number display-2">
-									<b>22</b>
+									<vue3-autocounter ref='counter' class="number display-2" :startAmount='0'
+										:endAmount='attractionCnt' :duration='4' prefix='' suffix='' :decimals='0'
+										:autoinit='true' style="font-weight: bold;" />
 								</span>
 								<span mbr-text="" class="period display-7">
 									Tour Attractions
@@ -32,7 +42,9 @@ const dataDueDate = ref("2025/01/01");
 						<div class="col-4">
 							<div class="number-wrap">
 								<span class="number display-2">
-									<b>56</b>
+									<vue3-autocounter ref='counter' class="number display-2" :startAmount='0'
+										:endAmount='userCnt' :duration='4' prefix='' suffix='' :decimals='0'
+										:autoinit='true' style="font-weight: bold;" />
 								</span>
 								<span mbr-text="" class="period display-7">
 									Users

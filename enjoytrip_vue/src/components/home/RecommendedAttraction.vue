@@ -1,37 +1,39 @@
 <template>
-    <section id="cta" class="cta" v-if="monthInfo">
-        <div class="container" data-aos="zoom-out">
-            <div class="row">
-                <div class="col-lg-7 content d-flex flex-column justify-content-center order-last  order-lg-first">
-                    <h3 >
-                        이달의 추천 여행지
-                    </h3>
-                    <hr/>
-                    <h4>
-                        <em>
-                            {{ monthInfo.title }}
-                        </em>
-                    </h4>
-                    <p>{{ monthInfo.address }}</p>
-                    <p class="description">{{ monthInfo.desc }}</p>
-                    <router-link :to="{ name: 'place' }" class="cta-btn align-self-start">여행 계획 짜러가기</router-link>
-                </div>
-                <div class="col-lg-5 order-first order-lg-last d-flex align-items-center img-area">
-                    <div class="img">
-                        <img :src="monthInfo.image" alt="" class="img-fluid" />
-                    </div>
-                </div>
-            </div>
+  <section id="cta" class="cta" v-if="monthInfo">
+    <div class="container" data-aos="zoom-out">
+      <div class="title">
+        <h3 style="font-weight: 700;">
+          이달의 추천 여행지
+        </h3>
+        <hr />
+      </div>
+      <div class="row">
+        <div class="col-lg-7 content d-flex flex-column justify-content-center order-last ">
+          <h4>
+            <em>
+              {{ monthInfo.title }}
+            </em>
+          </h4>
+          <p>{{ monthInfo.address }}</p>
+          <p class="description">{{ monthInfo.desc }}</p>
+          <router-link :to="{ name: 'place' }" class="cta-btn align-self-start">여행 계획 짜러가기</router-link>
         </div>
-    </section>
+        <div class="col-lg-5 order-first d-flex align-items-center img-area">
+          <div class="img">
+            <img :src="monthInfo.image" alt="" class="img-fluid" />
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
 </template>
 
 <script setup>
 const monthInfo = {
-    title : "가나다라마바사",
-    address : "울릉도 동남쪽 뱃길따라 200리",
-    desc : "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
-    image : "/src/assets/images/main.jpg"
+  title: "가나다라마바사",
+  address: "울릉도 동남쪽 뱃길따라 200리",
+  desc: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
+  image: "/src/assets/images/main.jpg"
 }
 </script>
 
@@ -41,7 +43,7 @@ const monthInfo = {
 <style scoped>
 .cta {
   padding: 0;
-  margin : 5rem auto 1rem;
+  margin: 5rem auto 1rem;
 }
 
 .cta .container {
@@ -85,8 +87,8 @@ const monthInfo = {
   line-height: 1.8rem
 }
 
-.description{
-    margin : 1rem 0 2rem;
+.description {
+  margin: 1rem 0 2rem;
 }
 
 .cta .content .cta-btn {
@@ -98,7 +100,7 @@ const monthInfo = {
   border-radius: 5px;
   transition: 0.5s;
   margin-top: 10px;
-  background: rgba( 1, 137, 161, 0.9);
+  background: rgba(1, 137, 161, 0.9);
 }
 
 .cta .content .cta-btn:hover {
@@ -115,7 +117,7 @@ const monthInfo = {
   inset: 0;
   background: rgba(255, 255, 255, 0.5);
   border-radius: 15px;
-  transform: rotate(12deg);
+  transform: rotate(355deg);
 }
 
 .cta .img:after {
@@ -134,9 +136,10 @@ const monthInfo = {
 }
 
 .img-area {
-    padding: 1.5rem;
+  padding: 1.5rem;
 }
-hr{
-    margin : 0.5rem, 0 2rem;
+
+hr {
+  margin: 0.5rem, 0 2rem;
 }
 </style>

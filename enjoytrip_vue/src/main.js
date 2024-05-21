@@ -28,6 +28,13 @@ app.component("QuillEditor", QuillEditor);
 //AOS
 import AOS from 'aos';
 import "aos/dist/aos.css";
+
+//V-Calendar
+import VCalendar from 'v-calendar';
+import 'v-calendar/style.css';
+// Use plugin with optional defaults
+app.use(VCalendar, {})
+
 app.use(AOS);
 pinia.use(piniaPluginPersistedstate);
 app.use(pinia);

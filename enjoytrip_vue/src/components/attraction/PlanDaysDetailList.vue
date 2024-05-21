@@ -1,71 +1,64 @@
 <template>
     <div class="card-scene">
-
         <Container orientation="horizontal" @drop="onColumnDrop" drag-handle-selector=".column-drag-handle"
-            @drag-start="dragStart" :drop-placeholder="upperDropPlaceholderOptions">
-            <Draggable v-for="column in scene.children" :key="column.id">
+            :drop-placeholder="upperDropPlaceholderOptions">
+            <Draggable v-for="(column, index) in scene.children" :key="column.id">
                 <div :class="column.props.className">
-                    <button class="column-drag-handle">&#x2630;</button>
-                    <!-- <div class="card-column-header"> {{ column.name }} </div> -->
+                    <button class="column-drag-handle">
+                        <span @click="addRow(column)"> {{ index }}</span>
+                        <i class="bi bi-x remove-column-button" @click="removeColumn(column.id)"></i>
+                    </button>
                     <Container group-name="col" @drop="e => onCardDrop(column.id, e)"
-                        @drag-start="e => log('drag start', e)" @drag-end="e => log('drag end', e)"
                         :get-child-payload="getCardPayload(column.id)" drag-class="card-ghost"
                         drop-class="card-ghost-drop" :drop-placeholder="dropPlaceholderOptions">
 
-
                         <Draggable v-for="card in column.children" :key="card.id">
-                            <div :class="card.props.className" :style="card.props.style">
-                                <p>{{ card.data }}</p>
+                            <div :class="card.props.className" :style="card.props.style" >
+                                <!-- {{ attraction }} -->
+                            <PlanDaysDetail :attraction="attraction">
+                            </PlanDaysDetail>
                             </div>
                         </Draggable>
 
                     </Container>
+
                 </div>
             </Draggable>
-            <button class="column-add-button">+</button>
+
+            <button class="column-add-button" @click="addColumn">+</button>
+
         </Container>
     </div>
 </template>
 
 <script setup>
 import { ref } from 'vue';
+import { CFormCheck } from '@coreui/vue';
 import { Container, Draggable } from 'vue3-smooth-dnd';
+import PlanDaysDetail from "@/components/attraction/PlanDaysDetailItem.vue"
+import data from "@/data/index.js";
+const attraction = ref({});
+attraction.value = data.attractionList[0];
+console.log(attraction.value);
 
 const applyDrag = (arr, dragResult) => {
     const { removedIndex, addedIndex, payload } = dragResult
     if (removedIndex === null && addedIndex === null) return arr
-
     const result = [...arr]
     let itemToAdd = payload
-
     if (removedIndex !== null) {
         itemToAdd = result.splice(removedIndex, 1)[0]
     }
-
     if (addedIndex !== null) {
         result.splice(addedIndex, 0, itemToAdd)
     }
-
     return result
 }
-
-const generateItems = (count, creator) => {
-    const result = []
-    for (let i = 0; i < count; i++) {
-        result.push(creator(i))
-    }
-    return result
-}
-
-const lorem = `Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. 
-  Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. 
-  Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.`;
-
-const columnNames = ['Lorem', 'Ipsum', 'Consectetur'];
 
 const cardColors = [
-    'azure', 'beige', 'bisque', 'blanchedalmond', 'burlywood',
-    'cornsilk', 'gainsboro', 'ghostwhite', 'ivory', 'khaki'
+    'azure', 'beige', 'bisque', 'blanchedalmond',
+    'cornsilk', 'gainsboro', 'ghostwhite', 'ivory',
+    'lightCyan', 'palegreen', 'ivory', 'linen', 'whitesmoke'
 ];
 
 const pickColor = () => {
@@ -76,19 +69,28 @@ const pickColor = () => {
 const scene = ref({
     type: 'container',
     props: { orientation: 'horizontal' },
-    children: generateItems(2, i => ({
-        id: `column${i}`,
-        type: 'container',
-        name: columnNames[i],
-        props: { orientation: 'vertical', className: 'card-container' },
-        children: generateItems(+(1).toFixed() + 5, j => ({
-            type: 'draggable',
-            id: `${i}${j}`,
-            props: { className: 'card', style: { backgroundColor: pickColor() } },
-            data: lorem.slice(0, Math.floor(Math.random() * 150) + 30)
-        }))
-    }))
+    children: []
 });
+
+const addRow = (parent) => {
+    const newRow = {
+        type: 'draggable',
+        id: `${scene.value.children.length}${scene.value.children.children && scene.value.children.children.length ? scene.value.children.children.length : 0}`,
+        props: { className: 'card', style: { backgroundColor: pickColor() } },
+    };
+    parent.children.push(newRow);
+}
+
+const addColumn = () => {
+    const newColumn = {
+        id: `${scene.value.children.length}`,
+        type: 'container',
+        name: 'New Column',
+        props: { orientation: 'vertical', className: 'card-container' },
+        children: []
+    };
+    scene.value.children.push(newColumn);
+};
 
 const upperDropPlaceholderOptions = {
     className: 'cards-drop-preview',
@@ -125,27 +127,23 @@ const onCardDrop = (columnId, dropResult) => {
 const getCardPayload = (columnId) => (index) => {
     return scene.value.children.find(p => p.id === columnId).children[index];
 };
-
-const dragStart = () => {
-    console.log('drag started');
+// 열 삭제 함수
+const removeColumn = (columnId) => {
+    scene.value.children = scene.value.children.filter(column => column.id !== columnId);
 };
 
-const log = (...params) => {
-    console.log(...params);
-};
 </script>
 
 <style>
 .smooth-dnd-container {
-    background-color: red;
+    /* background-color: salmon; */
     width: 360px;
 }
-
 .column-drag-handle,
 .column-add-button {
     width: 50px;
-    background-color: blue;
-    border: 1px solid green;
+    background-color: white;
+    border: 1.5px solid salmon;
     border-radius: 10px 10px 0px 0px;
 }
 
@@ -156,6 +154,10 @@ const log = (...params) => {
 .smooth-dnd-draggable-wrapper .smooth-dnd-container {
     position: absolute;
     left: 0;
+    /* background-color: rgba(255, 230, 227, 0.151); */
+    background-color: salmon;
+    border-bottom-right-radius: 10px;
+    border-bottom-left-radius: 10px;
 }
 
 .card-container {
@@ -164,6 +166,18 @@ const log = (...params) => {
 }
 
 .smooth-dnd-container.horizontal>.smooth-dnd-draggable-wrapper {
-    width: calc(52px);
+    width: calc(51px);
+}
+
+.vertical {
+    min-height: calc(70vh) !important;
+}
+
+.card {
+    margin: 0.25rem;
+}
+
+.selectCol {
+    background-color: salmon;
 }
 </style>

@@ -7358,7 +7358,8 @@ a {
 .cid-uc9QV5XEuk {
   padding-top: 2rem;
   padding-bottom: 2rem;
-  background-color: #2e481a;
+  /* background-color: #2e481a; */
+  background-color: #336e85;
 }
 .cid-uc9QV5XEuk .mbr-fallback-image.disabled {
   display: none;
@@ -8120,4 +8121,22 @@ a {
   .cid-uc9R2VvaIt .copyright {
     text-align: center;
   }
+}
+.save-load-button{
+  padding : 0.25rem;
+  width: 100%;
+  margin :  .25rem auto !important;
+  align-self: self-end;
+  border-radius: 35px;
+  font-size: small;
+  font-weight: normal !important;
+}
+.form-check-label{
+  font-size: small;
+}
+.form-check {
+  margin-right: 8px;
+}
+.accordion-button{
+  padding: .25rem 1rem;
 }

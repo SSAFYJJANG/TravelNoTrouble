@@ -1,7 +1,9 @@
+SELECT * FROM db_trip.gugun;
 SELECT * FROM db_trip.sido;
 use db_trip;
 delete from sido;
 INSERT INTO `sido` VALUES 
+(0,'미정', "", ""),
 (1,'서울', "SEOUL, MY SOUL", ""),
 (2,'인천', " All ways INCHEON", ""),
 (3,'대전', "Daejeon is U", ''),
@@ -19,3 +21,9 @@ INSERT INTO `sido` VALUES
 (37,'전라북도', '함께 혁신, 함께 성공, 새로운 전북', ''),
 (38,'전라남도', '생명의 땅 으뜸 전남', ''),
 (39,'제주도', 'Jeju', '');
+
+insert into gugun values (1, '강남구', 1);
+
+INSERT INTO sido VALUES 
+(0,'미정', "", "");
+insert into gugun values (0, '미정', 0);

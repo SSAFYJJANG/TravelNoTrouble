@@ -5,10 +5,12 @@
 	<select id="getSidoList" resultType="sidoDto">
 		select *
 		from sido
+		where sido_code != 0
 	</select>
 
 	<select id="getGugunList" resultType="gugunDto">
-		select * from gugun
+		select * from gugun 
+		where gugun_code != 0
 	</select>
 
 	<select id="getAttractionList" parameterType="int" resultType="attractionDto">

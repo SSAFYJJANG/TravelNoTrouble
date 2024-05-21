@@ -688,7 +688,7 @@ a:hover {
 .form-control:focus {
   box-shadow: rgba(0, 0, 0, 0.07) 0px 1px 1px 0px,
     rgba(0, 0, 0, 0.07) 0px 1px 3px 0px, rgba(0, 0, 0, 0.03) 0px 0px 0px 1px;
-  border-color: #49a078 !important;
+  border-color: #49a078 ;
 }
 .form-control:-webkit-input-placeholder {
   font-family: "Brygada 1918", sans-serif;
@@ -8139,4 +8139,38 @@ a {
 }
 .accordion-button{
   padding: .25rem 1rem;
+}
+
+.memo{
+  padding : 1rem !important;
+}
+
+.memo:hover,
+.memo:focus {
+    box-shadow: rgba(0, 0, 0, 0.07) 0px 1px 1px 0px, rgba(0, 0, 0, 0.07) 0px 1px 3px 0px, rgba(0, 0, 0, 0.03) 0px 0px 0px 1px;
+    border-color: #e69985 !important;
+}
+
+.info{
+  font-size: smaller;
+  color : #485664;
+  margin : 0.01rem;
+}
+
+.input-day {
+  border-radius: 5px;
+  color: #2f4f4f;
+  width: 16rem;
+  margin-left: 1rem;
+  border-color: #dee2e6;
+  box-shadow: 0 0 0 0;
+}
+
+.inputs {
+  margin-bottom: .5rem;
+  margin-left: .5rem;
+}
+
+.accordion-body {
+  padding: 0 ;
 }

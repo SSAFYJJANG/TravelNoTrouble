@@ -47,8 +47,8 @@ public class MapServiceImpl implements MapService{
 	}
 
 	@Override
-	public List<AttractionDto> getAttractionList(int sido_code, int gugun_code, int content_type_id) {
-		return mapDao.getAttractionList(sido_code, gugun_code, content_type_id);
+	public List<AttractionDto> getAttractionList(Map<String, Object> map) {
+		return mapDao.getAttractionList(map);
 	}
 
 	@Override

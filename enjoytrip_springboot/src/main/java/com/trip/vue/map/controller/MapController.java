@@ -51,11 +51,9 @@ public class MapController {
 	}
 	// get 관광지 리스트 가져오기 (sido_code, gugun_code, content_type_id, keyword) ""
 	@GetMapping("")
-	public ResponseEntity<?> getAttractionList(@RequestParam("sido_code") int sido_code,
-												@RequestParam("gugun_code") int gugun_code, 
-												@RequestParam("content_type_id")	int content_type_id) throws Exception{
+	public ResponseEntity<?> getAttractionList(@RequestParam Map<String, Object> map) throws Exception{
 		try {
-			return new ResponseEntity<List<AttractionDto>>(service.getAttractionList(sido_code, gugun_code, content_type_id), HttpStatus.OK);
+			return new ResponseEntity<List<AttractionDto>>(service.getAttractionList(map), HttpStatus.OK);
 		} catch (Exception e) {
 			return new ResponseEntity<String>("서버 오류", HttpStatus.INTERNAL_SERVER_ERROR);
 		}
@@ -88,7 +86,7 @@ public class MapController {
 		}
 	}
 	// 사용자가 찜한 관광지 가져오기
-	@GetMapping("/{userid}")
+	@GetMapping("/cart/{userid}")
 	public ResponseEntity<?> getUserAttractionList(@PathVariable("userid") String userid) throws Exception{
 		try {
 			return new ResponseEntity<List<AttractionDto>>(service.getUserAttractionList(userid), HttpStatus.OK);

@@ -1,10 +1,12 @@
 package com.trip.vue.hotplace.model.service;
 
+import java.io.File;
 import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -39,7 +41,7 @@ public class HotplaceServiceImpl implements HotplaceService {
 		final String extension = file.getContentType().split("/")[1];
 		final String fileName = UUID.randomUUID() + "." + extension;
 				
-		Path uploadPath = Paths.get("uploadimg/" + ob.getUserId());
+		Path uploadPath = Paths.get("/uploadimg/");
 		if (!Files.exists(uploadPath)) {
 			Files.createDirectories(uploadPath);
 			System.out.println("make dir : " + uploadPath.toString());
@@ -48,7 +50,7 @@ public class HotplaceServiceImpl implements HotplaceService {
 		try (InputStream inputStream = file.getInputStream()) {
 			Path filePath = uploadPath.resolve(fileName);
 			Files.copy(inputStream, filePath, StandardCopyOption.REPLACE_EXISTING);
-			ob.setImage(filePath.toString());
+			ob.setImage(fileName);
 		} catch (Exception e) {
 			throw new Exception("Could not save image file: " + fileName, e);
 		}

@@ -1,5 +1,6 @@
 package com.trip.vue.hotplace.controller;
 
+import java.net.URLDecoder;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -56,7 +57,7 @@ public class HotplaceController {
 	//get list 가져오기(최신순) - 피드 ""
 	@GetMapping("")
 	public ResponseEntity<?> listHotplace() throws Exception{
-		try {
+		try {		
 			return new ResponseEntity<List<HotplaceDto>>(service.listHotplace(), HttpStatus.OK);
 		} catch (Exception e) {
 			return new ResponseEntity<String>("서버 오류", HttpStatus.INTERNAL_SERVER_ERROR);
@@ -67,15 +68,8 @@ public class HotplaceController {
 	        produces = {MediaType.APPLICATION_JSON_VALUE} )
 	public ResponseEntity<?> insertHotplace(@RequestPart("info") String infoString,
 			@RequestParam(name="fileImage", required=false) MultipartFile file) throws Exception{
+		infoString = URLDecoder.decode(infoString, "UTF-8");
 		HotplaceDto info = objectMapper.readValue(infoString, HotplaceDto.class);
-		System.out.println(info.getTitle());
-		System.out.println(info.getOverview());
-		System.out.println(info.getSido_code());
-		System.out.println(info.getGugun_code());
-		System.out.println(info.getImage());
-		System.out.println("file1 "+file.getName());
-		System.out.println("file2 "+file.getOriginalFilename());
-		System.out.println("file3 "+file.getSize());
 //		log.info("insertHotplace access = {}", info);
 		try {
 			return new ResponseEntity<Integer>(service.insertHotplace(info, file), HttpStatus.OK);

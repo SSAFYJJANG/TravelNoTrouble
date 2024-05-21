@@ -1,5 +1,27 @@
 <script setup>
+import { onMounted, ref } from "vue";
+import { useRouter } from "vue-router";
+import { useUserStore } from "@/stores/user";
+import { useBoardStore } from "@/stores/board";
 import "@vueup/vue-quill/dist/vue-quill.snow.css";
+
+const router = useRouter();
+const userStore = useUserStore();
+const boardStore = useBoardStore();
+
+const { getUserInfo, userInfo } = userStore;
+const { writeArticle } = boardStore;
+
+onMounted(() => {
+  let token = sessionStorage.getItem("accessToken");
+  getUserInfo(token);
+});
+
+const article = ref({
+  title: "",
+  overview: "",
+  userId: userInfo.userId,
+});
 
 const toolbarOptions = [
   ["bold", "italic", "underline", "strike"], // toggled buttons
@@ -22,20 +44,12 @@ const toolbarOptions = [
   ["clean"], // remove formatting button
 ];
 
-const clickWrite = function () {
+const clickWrite = async () => {
   const editor = document.querySelector("#editor");
+  article.value.overview = editor.children[0].innerHTML;
 
-  const title = document.querySelector("#editor-title").value; // 제목
-  const content = editor.children[0].innerHTML; // 내용
-
-  const article = {
-    title: title,
-    content: content,
-  };
-
-  console.log(article);
-
-  // axios.post();
+  await writeArticle(article.value);
+  router.replace({ name: "board-list" });
 };
 </script>
 
@@ -48,6 +62,7 @@ const clickWrite = function () {
           id="editor-title"
           placeholder="제목을 입력하세요"
           class="w-100 mb-3 border px-3 py-1"
+          v-model="article.title"
         />
         <QuillEditor
           id="editor"
@@ -58,7 +73,7 @@ const clickWrite = function () {
         <div class="d-flex justify-content-center">
           <button
             id="btn-board"
-            class="btn btn-primary rounded-pill mt-3"
+            class="btn btn-primary py-1 px-2 rounded-2 my-5"
             @click="clickWrite"
           >
             글쓰기

@@ -3,7 +3,12 @@ import { localAxios } from "@/util/http-commons";
 
 const local = localAxios();
 
-async function listArticle(param, success, fail) {
+async function write(article, success, fail) {
+  console.log("WRite 시도", article);
+  await local.post(`/board`, article).then(success).catch(fail);
+}
+
+async function list(param, success, fail) {
   // console.log(data.article);
   // const articles = data.article;
   // const currentPage = 1; // 현재 페이지
@@ -19,13 +24,12 @@ async function listArticle(param, success, fail) {
   await local.get(`/board`).then(success).catch(fail);
 }
 
-async function viewDetail(articleno, success, fail) {
+async function view(articleno, success, fail) {
   await local.get(`/board/${articleno}`).then(success).catch(fail);
 }
 
 async function modify(article, success, fail) {
-  console.log("MODIFY", article);
   await local.put(`/board`, article).then(success).catch(fail);
 }
 
-export { listArticle, viewDetail, modify };
+export { write, list, view, modify };

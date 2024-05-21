@@ -22,13 +22,6 @@ watch(
   },
   { immediate: true }
 );
-
-const options = [
-  { id: 1, name: "최신순", unavailable: true },
-  { id: 2, name: "조회순", unavailable: false },
-  { id: 3, name: "좋아요순", unavailable: false },
-];
-const selectedOption = ref(options[0]);
 </script>
 
 <template>
@@ -39,7 +32,7 @@ const selectedOption = ref(options[0]);
           id="btn-post"
           class="btn btn-primary rounded-circle bg-primary text-white fs-2"
         >
-          <i class="fa-solid fa-plus"></i>
+          <i class="bi bi-pencil-fill"></i>
         </div>
       </router-link>
     </div>
@@ -72,7 +65,7 @@ const selectedOption = ref(options[0]);
 <style scoped>
 #sidebar {
   position: fixed;
-  bottom: 30px;
+  bottom: 60px;
   right: 30px;
   z-index: 10;
 }

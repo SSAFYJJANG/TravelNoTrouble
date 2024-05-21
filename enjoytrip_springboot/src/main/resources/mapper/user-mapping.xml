@@ -43,7 +43,7 @@
 	<!-- 회원정보수정  -->
 	<update id="updateUserInfo" parameterType="userDto">
  		update user
-		set username=#{username}, email=#{email}, sido_code=#{sido_code}, gugun_code=#{gugun_code}
+		set username=#{username}, email=#{email}, sido_code=#{sido_code}, gugun_code=#{gugun_code}, image=#{image}
 		where userId=#{userId}
 	</update>
 	

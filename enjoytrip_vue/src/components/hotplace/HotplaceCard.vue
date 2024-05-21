@@ -12,7 +12,7 @@ const toggleViewModal = () => {
 </script>
 
 <template>
-  <div class="col-sm-6 card col-md-4 col-lg-3">
+  <div class="col-sm-6 card col-md-4 col-lg-3 m-0">
     <div
       :style="{
         backgroundImage: `url(${VITE_VUE_API_URL}/img/${props.card.image})`,

@@ -34,16 +34,16 @@ const likeFeed = () => {
       </div>
 
       <div class="my-4 mx-5">
-        <h4>{{ hotplaceStore.feedInfo.title }}</h4>
+        <h4>{{ info.title }}</h4>
         <div class="d-flex justify-content-between">
-          <div>{{ hotplaceStore.feedInfo.userId }} | {{ hotplaceStore.feedInfo.regist_time }}</div>
+          <div>{{ hotplaceStore.feedInfo.userId }} | {{ info.regist_time }}</div>
           <button @click="likeFeed">
             <i class="bi bi-heart-fill"></i>
             좋아요 {{ info.like }}</button>  
         </div>
         
         <hr class="mt-3 mb-3" />
-        <p>{{ hotplaceStore.feedInfo.overview }}</p>
+        <p>{{ info.overview }}</p>
         
       </div>
     </div>

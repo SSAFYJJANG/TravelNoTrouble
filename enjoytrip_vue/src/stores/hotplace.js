@@ -44,6 +44,8 @@ export const useHotplaceStore = defineStore("hotplaceStore", () => {
       (response) => {
         if (response.status === httpStatusCode.OK) {
           feedInfo.value = response.data;
+          console.log("getHotplaceDetail", feedInfo.value);
+          return feedInfo.value;
         }
       },
       async (error) => {

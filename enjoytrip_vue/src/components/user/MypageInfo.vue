@@ -1,10 +1,12 @@
 <script setup>
 import { onMounted, ref } from "vue";
 import { useUserStore } from "@/stores/user";
+const { VITE_VUE_API_URL } = import.meta.env;
 
 const userStore = useUserStore();
 
 const { getUserInfo, userInfo } = userStore;
+const defaultProfile = ref("/src/assets/images/default_profile.png"); // 기본 이미지
 
 onMounted(() => {
   let token = sessionStorage.getItem("accessToken");
@@ -20,8 +22,13 @@ onMounted(() => {
         <div class="mypage-item row justify-content-center rounded-4 mt-5">
           <!-- 프로필 이미지 -->
           <div class="col-4 px-5 py-4 d-flex justify-content-center">
-            <img
-              src="@/assets/images/shop5.jpg"
+            <img v-if="userInfo.image != null"
+              :src="`${VITE_VUE_API_URL}/profile/${userInfo.image}`"
+              style="width: 200px; height: 200px"
+              class="rounded-pill align-self-center border"
+            />
+            <img v-else
+              :src="defaultProfile"
               style="width: 200px; height: 200px"
               class="rounded-pill align-self-center border"
             />

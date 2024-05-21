@@ -1,7 +1,6 @@
 import { ref } from "vue";
 import { useRouter } from "vue-router";
 import { defineStore } from "pinia";
-import { jwtDecode } from "jwt-decode";
 
 import { upload, listFeed, viewDetail, likeFeed } from "@/api/hotplace";
 import { httpStatusCode } from "@/util/http-status";
@@ -9,13 +8,6 @@ import { httpStatusCode } from "@/util/http-status";
 export const useHotplaceStore = defineStore("hotplaceStore", () => {
   const feedList = ref(null);
   const feedInfo = ref(null);
-
-  const router = useRouter();
-
-  const isLogin = ref(false);
-  const isLoginError = ref(false);
-  const userInfo = ref(null);
-  const isValidToken = ref(false);
 
   const uploadHotplace = async (data) => {
     await upload(

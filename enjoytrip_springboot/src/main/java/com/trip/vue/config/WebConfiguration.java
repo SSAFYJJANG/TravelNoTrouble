@@ -1,7 +1,10 @@
 package com.trip.vue.config;
 
+import org.springframework.boot.web.servlet.FilterRegistrationBean;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
+import org.springframework.web.filter.CharacterEncodingFilter;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
@@ -14,7 +17,7 @@ import com.trip.vue.interceptor.JWTInterceptor;
 public class WebConfiguration implements WebMvcConfigurer {
 	
 	private JWTInterceptor jwtInterceptor;
-
+	
 	public WebConfiguration(JWTInterceptor jwtInterceptor) {
 		super();
 		this.jwtInterceptor = jwtInterceptor;
@@ -30,11 +33,12 @@ public class WebConfiguration implements WebMvcConfigurer {
 						HttpMethod.PATCH.name())
 			.maxAge(1800); // Pre-flight Caching
 	}
-
+	
 	@Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
-		registry.addResourceHandler("/img/**").addResourceLocations("classpath:/static/assets/img/");
-		registry.addResourceHandler("/*.html**").addResourceLocations("classpath:/static/");
+		registry.addResourceHandler("/img/**").addResourceLocations("file:///C:/uploadimg/");
+		registry.addResourceHandler("/profile/**").addResourceLocations("file:///C:/profile/");
+//		registry.addResourceHandler("/*.html**").addResourceLocations("classpath:/static/");
     }
 
 }

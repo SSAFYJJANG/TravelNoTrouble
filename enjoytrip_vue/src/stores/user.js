@@ -72,6 +72,7 @@ export const useUserStore = defineStore("userStore", () => {
       (response) => {
         if (response.status === httpStatusCode.OK) {
           userInfo.value = response.data.userInfo;
+          console.log("유저 정보", userInfo.value);
         } else {
           console.log("유저 정보 없음!!!!");
         }

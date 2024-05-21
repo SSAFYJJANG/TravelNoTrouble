@@ -5,9 +5,12 @@ import MenuPadding from "../common/MenuPadding.vue";
 import VSelect from "../common/VSelect.vue";
 import VSearchInput from "@/components/common/VSearchInput.vue";
 import PageNavigation from "../common/PageNavigation.vue";
-import { listArticle } from "@/api/board.js";
+import { useBoardStore } from "@/stores/board";
 import BoardListItem from "@/components/board/item/BoardListItem.vue";
 import router from "@/router"
+
+const boardStore = useBoardStore();
+const { boardList, getBoardList } = boardStore;
 
 const selectOption = ref([
     { text: "검색조건", value: "" },
@@ -30,7 +33,7 @@ const param = ref({
 });
 
 onMounted(() => {
-    getArticleList();
+    getBoardList();
 });
 
 const moveWrite = () => {
@@ -102,7 +105,7 @@ const getArticleList = () => {
                         </tr>
                     </thead>
                     <tbody>
-                        <BoardListItem v-for="article in articles" :key="article.articleNo" :article="article">
+                        <BoardListItem v-for="article in boardStore.boardList" :key="article.board_id" :article="article">
                         </BoardListItem>
                     </tbody>
                 </table>

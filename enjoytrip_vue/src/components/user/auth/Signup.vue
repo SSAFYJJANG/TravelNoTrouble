@@ -19,9 +19,13 @@ const signupUser = ref({
   gugun_code: ""
 });
 
+const possible = ref(false);
+const checkClick = ref(false);
 const errorId = ref(false);
 const checkId = async () => {
   const validateId = /^[A-Za-z0-9]{4,8}$/
+  userStore.isDuplicate = false;
+  possible.value = false;
 
   if (!validateId.test(signupUser.value.userId) || !signupUser.value.userId) {
     errorId.value = true;
@@ -29,13 +33,20 @@ const checkId = async () => {
   }
   errorId.value = false;
 
+  checkClick.value = true;
   await checkIdDuplicate(signupUser.value.userId);
-  console.log("중복?", userStore.isDuplicate);
+  if (!errorId.value && !userStore.isDuplicate) {
+    possible.value = true;
+  }
 };
 
 const clickSignup = () => {
-  userSignup(signupUser.value);
-  router.replace({ name: "auth-login" });
+  if (checkClick.value && !userStore.isDuplicate) {
+    userSignup(signupUser.value);
+    router.replace({ name: "auth-login" });
+  } else {
+    alert("아이디 중복 검사는 필수입니다.");
+  }
 };
 
 const validateEmail = (email) => {
@@ -82,10 +93,13 @@ const validateEmail = (email) => {
                   </div>
 
                   <div :style="[errorId == true ? { display: 'inline-block' } : { display: 'none' }]" colspan="2" style="font-size: 13px; color: red">
-                    아이디는 영문, 숫자를 포함한 4자 이상 20자 이내여야 합니다.
+                    아이디는 영문, 숫자를 포함한 4자 이상 8자 이내여야 합니다.
                   </div>
                   <div :style="[userStore.isDuplicate == true ? { display: 'inline-block' } : { display: 'none' }]" colspan="2" style="font-size: 13px; color: red">
                     이미 사용중인 아이디입니다.
+                  </div>
+                  <div :style="[possible == true ? { display: 'inline-block' } : { display: 'none' }]" colspan="2" style="font-size: 13px; color: green">
+                    사용 가능한 아이디입니다.
                   </div>
                 </td>
               </tr>
@@ -117,14 +131,6 @@ const validateEmail = (email) => {
                 <td>이메일</td>
                 <td class="ps-5">
                   <div class="d-flex">
-                    <input
-                      type="email"
-                      name="email"
-                      data-form-field="email"
-                      class="form-control fs-6 py-0 px-4"
-                      v-model="signupUser.email"
-                    />
-                    <div class="align-self-center px-1">@</div>
                     <input
                       type="email"
                       name="email"

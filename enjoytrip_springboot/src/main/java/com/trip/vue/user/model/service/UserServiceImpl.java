@@ -1,11 +1,18 @@
 package com.trip.vue.user.model.service;
 
+import java.io.InputStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.trip.vue.user.model.UserDto;
 import com.trip.vue.user.model.dao.UserDao;
@@ -51,8 +58,26 @@ public class UserServiceImpl implements UserService {
 
 	@Transactional
 	@Override
-	public int updateUserInfo(UserDto userinfo) {
-		return userDao.updateUserInfo(userinfo);
+	public int updateUserInfo(UserDto ob, MultipartFile file) throws Exception {		
+		if (file != null) {
+			final String extension = file.getContentType().split("/")[1];
+			final String fileName = UUID.randomUUID() + "." + extension;
+			
+			Path uploadPath = Paths.get("/profile/");
+			if (!Files.exists(uploadPath)) {
+				Files.createDirectories(uploadPath);
+				System.out.println("make dir : " + uploadPath.toString());
+			}
+			
+			try (InputStream inputStream = file.getInputStream()) {
+				Path filePath = uploadPath.resolve(fileName);
+				Files.copy(inputStream, filePath, StandardCopyOption.REPLACE_EXISTING);
+				ob.setImage(fileName);
+			} catch (Exception e) {
+				throw new Exception("Could not save image file: " + fileName, e);
+			}
+		}
+		return userDao.updateUserInfo(ob);
 	}
 
 	@Transactional

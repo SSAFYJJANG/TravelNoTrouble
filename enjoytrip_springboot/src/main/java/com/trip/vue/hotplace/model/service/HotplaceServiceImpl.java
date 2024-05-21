@@ -22,6 +22,7 @@ public class HotplaceServiceImpl implements HotplaceService {
 	@Autowired
 	private HotplaceDao hotplaceDao;
 	
+	
 	@Override
 	public List<HotplaceDto> listBestHotplace() throws Exception {
 		return hotplaceDao.listBestHotplace();
@@ -37,8 +38,8 @@ public class HotplaceServiceImpl implements HotplaceService {
 	public int insertHotplace(HotplaceDto ob, MultipartFile file) throws Exception {
 		final String extension = file.getContentType().split("/")[1];
 		final String fileName = UUID.randomUUID() + "." + extension;
-		
-		Path uploadPath = Paths.get("/uploadimg/" + ob.getUserId());
+				
+		Path uploadPath = Paths.get("/uploadimg/");
 		if (!Files.exists(uploadPath)) {
 			Files.createDirectories(uploadPath);
 			System.out.println("make dir : " + uploadPath.toString());
@@ -47,7 +48,7 @@ public class HotplaceServiceImpl implements HotplaceService {
 		try (InputStream inputStream = file.getInputStream()) {
 			Path filePath = uploadPath.resolve(fileName);
 			Files.copy(inputStream, filePath, StandardCopyOption.REPLACE_EXISTING);
-			ob.setImage(filePath.toString());
+			ob.setImage(fileName);
 		} catch (Exception e) {
 			throw new Exception("Could not save image file: " + fileName, e);
 		}

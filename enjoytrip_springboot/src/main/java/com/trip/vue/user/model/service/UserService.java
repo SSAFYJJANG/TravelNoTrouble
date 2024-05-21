@@ -1,6 +1,6 @@
 package com.trip.vue.user.model.service;
 
-import java.util.Map;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.trip.vue.user.model.UserDto;
 
@@ -16,7 +16,7 @@ public interface UserService {
 	//회원가입 - 아이디 중복 체크
 	public int registUser(UserDto userinfo);
 	//수정
-	public int updateUserInfo(UserDto userinfo);
+	public int updateUserInfo(UserDto userinfo, MultipartFile file) throws Exception;
 	//탈퇴
 	public int deleteUserInfo(String userId);
 	//세부정보 가져오기

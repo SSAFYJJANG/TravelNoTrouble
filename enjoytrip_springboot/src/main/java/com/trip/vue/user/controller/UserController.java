@@ -1,5 +1,6 @@
 package com.trip.vue.user.controller;
 
+import java.net.URLDecoder;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -14,8 +15,12 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.trip.vue.board.model.service.BoardService;
 import com.trip.vue.hotplace.model.service.HotplaceService;
 import com.trip.vue.map.model.service.MapService;
@@ -36,6 +41,10 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @CrossOrigin(origins="http://localhost:8080/trip")
 public class UserController {
+	
+	@Autowired
+	private ObjectMapper objectMapper;
+	
 	@Autowired
 	private UserService service;
 	@Autowired
@@ -147,17 +156,21 @@ public class UserController {
 	//put 수정 "/{userId}" --
 	@Operation(summary = "회원인증", description = "회원 정보를 담은 Token 을 반환한다.")
 	@PutMapping("/{userId}")
-	public ResponseEntity<?> updateUserInfo(
-			@RequestBody @Parameter(description = "인증할 회원의 아이디.", required = true) UserDto userinfo,
-			HttpServletRequest request) 
-					throws Exception{
+	public ResponseEntity<?> updateUserInfo(@RequestPart("info") String infoString,
+			@RequestParam(name="fileImage", required=false) MultipartFile file,
+//			@RequestBody @Parameter(description = "인증할 회원의 아이디.", required = true) UserDto userinfo,
+			HttpServletRequest request) throws Exception{
+		
+		infoString = URLDecoder.decode(infoString, "UTF-8");
+		UserDto userinfo = objectMapper.readValue(infoString, UserDto.class);
+		
 		Map<String, Object> resultMap = new HashMap<>();
 		HttpStatus status = HttpStatus.ACCEPTED;
 		if (jwtUtil.checkToken(request.getHeader("Authorization"))) {
 			log.info("사용 가능한 토큰!!!");
 			try {
 //				로그인 사용자 정보.
-				if(service.updateUserInfo(userinfo) < 1) throw new Exception();
+				if(service.updateUserInfo(userinfo, file) < 1) throw new Exception();
 				resultMap.put("userInfo", userinfo);
 //				resultMap.put("userInfo", service.getUserInfoById(userinfo.getUserId()));
 				status = HttpStatus.OK;

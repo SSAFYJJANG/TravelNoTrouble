@@ -26,8 +26,13 @@ async function logout(userid, success, fail) {
   await local.get(`/user/logout/${userid}`).then(success).catch(fail);
 }
 
-async function update(param, success, fail) {
-  await local.put(`/user/${param.userId}`, param).then(success).catch(fail);
+async function update(userInfo, success, fail) {
+  console.log("update", userInfo);
+  await local.put(`/user/${userInfo.userId}`, userInfo, {
+    headers: {
+      "Content-Type": "multipart/form-data",
+    },
+  }).then(success).catch(fail);
 }
 
 async function leave(userId, success, fail) {

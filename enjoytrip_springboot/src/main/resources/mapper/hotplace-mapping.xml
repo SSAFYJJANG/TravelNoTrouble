@@ -16,6 +16,7 @@
 	<select id="listHotplace" resultType="hotplaceDto">
 		select hotplace_id, image, title
 		from hotplace
+		order by hotplace_id desc
 	</select>
 
 	<insert id="insertHotplace" parameterType="hotplaceDto">

@@ -50,8 +50,11 @@ public class BoardController {
 		}
 	}
 	//put 글수정 ""
-	@PutMapping("/{id}")
+	@PutMapping("")
 	public ResponseEntity<?> modifyBoard(@RequestBody BoardDto ob) throws Exception{
+		System.out.println(ob.getTitle());
+		System.out.println(ob.getOverview());
+		System.out.println(ob.getUserId());
 		log.info("modifyBoard access = {}", ob);
 		try {
 			return new ResponseEntity<Integer>(service.modifyBoard(ob), HttpStatus.OK);

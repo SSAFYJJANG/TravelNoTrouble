@@ -36,6 +36,10 @@ public class BoardServiceImpl implements BoardService {
 	@Transactional
 	@Override
 	public int modifyBoard(BoardDto ob) throws Exception {
+		System.out.println("----");
+		System.out.println(ob.getTitle());
+		System.out.println(ob.getOverview());
+		System.out.println(ob.getHit());
 		return boardDao.modifyBoard(ob);
 	}
 

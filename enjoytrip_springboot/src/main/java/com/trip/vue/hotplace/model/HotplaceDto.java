@@ -1,7 +1,5 @@
 package com.trip.vue.hotplace.model;
 
-import java.sql.Blob;
-
 import lombok.Data;
 
 @Data
@@ -16,4 +14,5 @@ public class HotplaceDto {
     private String regist_time;
     private String modified_time;
     private int like;
+    private FileInfoDto fileInfo;
 }

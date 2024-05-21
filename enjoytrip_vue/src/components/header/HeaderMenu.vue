@@ -93,7 +93,6 @@ const clickLogout = () => {
             </button>
           </div>
         </li>
-      </div>
 
     </ul>
   </div>

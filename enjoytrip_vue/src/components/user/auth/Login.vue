@@ -3,7 +3,6 @@ import { ref } from "vue";
 import { storeToRefs } from "pinia";
 import { useRouter } from "vue-router";
 import { useUserStore } from "@/stores/user";
-import axios from "axios";
 
 const router = useRouter();
 const userStore = useUserStore();
@@ -70,7 +69,7 @@ const clickLogin = async () => {
 
             <div>
               <button
-                class="btn btn-primary display-7 py-2 px-4 mt-3 rounded-pill fs-6 fw-normal"
+                class="btn btn-primary display-7 py-2 px-4 mt-3 rounded-2 fs-6 fw-normal"
                 @click="clickLogin"
               >
                 로그인
@@ -78,9 +77,15 @@ const clickLogin = async () => {
             </div>
           </div>
 
-          <router-link :to="{ name: 'auth-signup' }" class="mb-4 fw-light">
+          <router-link :to="{ name: 'auth-signup' }" class="mb-2 fw-light">
             회원가입
           </router-link>
+
+          <div class="d-flex justify-content-center mb-4">
+            <router-link :to="{ name: 'auth-pwd' }" class="fw-light text-primary">
+              비밀번호 찾기
+            </router-link>
+          </div>
         </div>
       </div>
     </div>

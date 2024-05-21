@@ -4,13 +4,11 @@ import HotplaceViewModal from "@/components/hotplace/HotplaceViewModal.vue";
 
 const props = defineProps(["card"]);
 
-const hotplace_card = document.querySelector("#hotplace-card");
-
 const viewModalCheck = ref(false);
+
 const toggleViewModal = () => {
   viewModalCheck.value = !viewModalCheck.value;
 };
-console.log("Props", props.card.value);
 </script>
 
 <template>
@@ -36,7 +34,7 @@ console.log("Props", props.card.value);
       <div class="modal-btn d-flex justify-content-end">
         <button @click="toggleViewModal" class="display-4">✖</button>
       </div>
-      <HotplaceViewModal :card="props.card" />
+      <HotplaceViewModal :card="props.card" class="mt-2" />
     </div>
   </div>
 </template>
@@ -59,15 +57,10 @@ console.log("Props", props.card.value);
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  max-width: 1000px;
+  max-width: 600px;
   background: white;
   border-radius: 10px;
   padding: 20px;
   box-sizing: border-box;
-}
-@media (max-width: 1100px) {
-  .modal-container {
-    max-width: 90%;
-  }
 }
 </style>

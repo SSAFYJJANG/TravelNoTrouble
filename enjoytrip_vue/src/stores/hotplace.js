@@ -3,10 +3,13 @@ import { useRouter } from "vue-router";
 import { defineStore } from "pinia";
 import { jwtDecode } from "jwt-decode";
 
-import { upload, listFeed } from "@/api/hotplace";
+import { upload, listFeed, viewDetail, likeFeed } from "@/api/hotplace";
 import { httpStatusCode } from "@/util/http-status";
 
 export const useHotplaceStore = defineStore("hotplaceStore", () => {
+  const feedList = ref(null);
+  const feedInfo = ref(null);
+
   const router = useRouter();
 
   const isLogin = ref(false);
@@ -14,17 +17,12 @@ export const useHotplaceStore = defineStore("hotplaceStore", () => {
   const userInfo = ref(null);
   const isValidToken = ref(false);
 
-  const feedList = ref(null);
-
-  const uploadHotplace = async (info) => {
-    console.log("핫플 업로드 시도");
+  const uploadHotplace = async (data) => {
     await upload(
-      info,
+      data,
       (response) => {
         if (response.status === httpStatusCode.CREATE) {
           console.log("response", response);
-        } else {
-          console.log("핫플 업로드 response bad");
         }
       },
       async (error) => {
@@ -37,21 +35,51 @@ export const useHotplaceStore = defineStore("hotplaceStore", () => {
     await listFeed(
       "",
       (response) => {
-        feedList.value = response.data;
-        console.log(response.data);
+        if (response.status === httpStatusCode.OK) {
+          feedList.value = response.data;
+          console.log("feedList", response.data);
+        }
       },
       async (error) => {
         console.log("list hotplace feed", error);
       }
     );
-    // .then((response) => {
-    //   console.log("LIST", response);
-    // });
+  };
+
+  const getHotplaceDetail = async (feedId) => {
+    await viewDetail(
+      feedId,
+      (response) => {
+        if (response.status === httpStatusCode.OK) {
+          feedInfo.value = response.data;
+        }
+      },
+      async (error) => {
+        console.log(error);
+      }
+    );
+  };
+
+  const likeHotplaceFeed = async (feedId) => {
+    await likeFeed(
+      feedId,
+      (response) => {
+        if (response.status === httpStatusCode.OK) {
+          console.log("좋아요 성공!!!");
+        }
+      },
+      async (error) => {
+        console.log(error);
+      }
+    );
   };
 
   return {
     feedList,
+    feedInfo,
     uploadHotplace,
     getHotplaceFeed,
+    getHotplaceDetail,
+    likeHotplaceFeed,
   };
 });

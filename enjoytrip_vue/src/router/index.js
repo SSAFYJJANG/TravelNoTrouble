@@ -18,6 +18,7 @@ import MyTripPlanWrite from "@/components/myTripPlan/MyTripPlanWrite.vue";
 import AuthView from "@/views/AuthView.vue";
 import Login from "@/components/user/auth/Login.vue";
 import Signup from "@/components/user/auth/Signup.vue";
+import FindPwd from "@/components/user/auth/FindPwd.vue";
 
 import AOS from "aos";
 import 'aos/dist/aos.css';
@@ -31,7 +32,6 @@ const checkLoginUser = async (to, from, next) => {
   const { getUserInfo } = userStore;
 
   let token = sessionStorage.getItem("accessToken");
-  console.log("USERINFO", userInfo.value);
 
   if (token) {
     console.log("getInfo");
@@ -158,6 +158,11 @@ const router = createRouter({
           name: "auth-signup",
           component: Signup,
         },
+        {
+          path: "findpwd",
+          name: "auth-pwd",
+          component: FindPwd
+        }
       ],
     },
   ],

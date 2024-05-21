@@ -50,10 +50,10 @@ async function loadScripts() {
 .page {
   min-height: calc(100vh - 3rem);
 }
-.auth-login, .auth-signup {
+.auth-login, .auth-signup, .auth-pwd {
   display: none;
 }
-footer.place{
+footer.place {
   display: none;
 }
 </style>

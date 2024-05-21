@@ -58,4 +58,18 @@
 		select count(*)
 		from user
 	</select>
+	
+	<!-- 비밀번호 찾기 -->
+	<select id="findUserPassword" parameterType="string">
+		select password
+		from user
+		where userId=#{userId}
+	</select>
+	
+	<!-- 아이디 중복 검사 -->
+	<select id="checkIdDuplicate" parameterType="string">
+		select count(*)
+		from user
+		where userId=#{userId}
+	</select>
 </mapper>

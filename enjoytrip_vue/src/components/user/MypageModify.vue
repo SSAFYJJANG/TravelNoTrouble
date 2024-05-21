@@ -1,8 +1,10 @@
 <script setup>
 import { onMounted, ref } from "vue";
+import { useRouter } from "vue-router";
 import { useUserStore } from "@/stores/user";
 
 const userStore = useUserStore();
+const router = useRouter();
 
 const { getUserInfo, userInfo, updateUserInfo, deleteUserInfo } = userStore;
 
@@ -17,7 +19,7 @@ const info = ref({
   email: userInfo.email,
   image: userInfo.image,
   sido_code: userInfo.sido_code,
-  gugun_code: userInfo.sido_code,
+  gugun_code: userInfo.gugun_code,
 });
 
 const previewImage = ref("/src/assets/images/shop5.jpg"); // 기본 이미지
@@ -41,7 +43,11 @@ const completeModify = async () => {
 };
 
 const deleteAccount = () => {
-  deleteUserInfo(info.value);
+  const checkDel = confirm("정말 탈퇴하시겠습니까?");
+  if (checkDel) {
+    deleteUserInfo(info.value);
+    router.replace({ name: "auth-login" });
+  }
 };
 </script>
 
@@ -144,7 +150,6 @@ const deleteAccount = () => {
     </div>
   </div>
 
-  <!--
   <!-- 후보2 -->
   <div class="container">
     <div class="p-5">

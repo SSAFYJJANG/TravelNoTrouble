@@ -71,4 +71,14 @@ public class UserServiceImpl implements UserService {
 		return userDao.getTotalUserCount();
 	}
 
+	@Override
+	public int findUserPassword(String userId) {
+		return userDao.findUserPassword(userId);
+	}
+
+	@Override
+	public int checkIdDuplicate(String userId) {
+		return userDao.checkIdDuplicate(userId);
+	}
+
 }

@@ -4,12 +4,15 @@ import { defineStore } from "pinia";
 import { jwtDecode } from "jwt-decode";
 
 import {
+  signup,
   userConfirm,
   findById,
   tokenRegeneration,
   logout,
   update,
   leave,
+  findPwd,
+  duplicate
 } from "@/api/user";
 import { httpStatusCode } from "@/util/http-status";
 
@@ -20,6 +23,21 @@ export const useUserStore = defineStore("userStore", () => {
   const isLoginError = ref(false);
   const userInfo = ref(null);
   const isValidToken = ref(false);
+  const userPwd = ref(null);
+  const isDuplicate = ref(false);
+
+  const userSignup = async (signupUser) => {
+    await signup(signupUser,
+      (response) => {
+        if (response.status === httpStatusCode.CREATE) {
+          console.log("회원가입 성공!!!");
+          console.log("res", response);
+        }
+       },
+      (error) => { 
+        console.log(error);
+      });
+  };
 
   const userLogin = async (loginUser) => {
     await userConfirm(
@@ -49,7 +67,6 @@ export const useUserStore = defineStore("userStore", () => {
 
   const getUserInfo = async (token) => {
     let decodeToken = jwtDecode(token);
-    console.log(decodeToken);
     await findById(
       decodeToken.userId,
       (response) => {
@@ -146,7 +163,6 @@ export const useUserStore = defineStore("userStore", () => {
   };
 
   const deleteUserInfo = async (userInfo) => {
-    console.log("DELE USERINFO", userInfo);
     await leave(
       userInfo.userId,
       (response) => {
@@ -160,16 +176,54 @@ export const useUserStore = defineStore("userStore", () => {
     );
   };
 
+  const findUserPassword = async (userId) => {
+    await findPwd(
+      userId,
+      (response) => { 
+        if (response.status === httpStatusCode.OK) {
+          console.log(userId, "비밀번호:", response.data);
+          userPwd.value = response.data;
+        }
+      },
+      async (error) => {
+        console.log(error);
+      }
+    )
+  };
+
+  const checkIdDuplicate = async (userId) => {
+    await duplicate(
+      userId,
+      (response) => { 
+        if (response.status === httpStatusCode.OK) {
+          if (response.data > 0) {
+            isDuplicate.value = true;
+          } else {
+            isDuplicate.value = false;
+          }
+        }
+      },
+      async (error) => {
+        console.log(error);
+      }
+    );
+  };
+
   return {
     isLogin,
     isLoginError,
     userInfo,
     isValidToken,
+    isDuplicate,
+    userPwd,
+    userSignup,
     userLogin,
     getUserInfo,
     tokenRegenerate,
     userLogout,
     updateUserInfo,
     deleteUserInfo,
+    findUserPassword,
+    checkIdDuplicate
   };
 });

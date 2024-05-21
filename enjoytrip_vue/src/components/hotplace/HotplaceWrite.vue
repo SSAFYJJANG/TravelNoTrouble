@@ -16,7 +16,7 @@ onMounted(() => {
   getUserInfo(token);
 });
 
-const previewImage = ref("/src/assets/images/gallery06.jpg"); // 기본 이미지
+const previewImage = ref("/src/assets/images/no_image.jpeg"); // 기본 이미지
 const info = ref({
   title: "",
   overview: "",
@@ -38,7 +38,6 @@ const uploadImage = (event) => {
     reader.readAsDataURL(file);
 
     info.value.image = file.name;
-    // 이미지 파일 이름 : file.name
     fileImage.value = file;
   }
 };
@@ -58,7 +57,7 @@ const clickSubmit = async () => {
       <div>
         <div class="row">
           <!-- 이미지 파일 업로드 -->
-          <div class="col-lg-6">
+          <div class="position-relative col-lg-6">
             <input
               type="file"
               id="upfile"
@@ -69,11 +68,15 @@ const clickSubmit = async () => {
             />
             <label for="upfile">
               <img
-                class="border rounded-2"
-                style="object-fit: cover; width: 516px; height: 516px"
+                class="border rounded-3"
+                style="object-fit: cover; height: 480px"
                 :src="previewImage"
               />
             </label>
+            <i
+              class="position-absolute bottom-0 end-0 fa-solid fa-square-pen fs-4"
+              style="color: #acb4b9"
+            ></i>
           </div>
 
           <!-- 입력 폼 -->
@@ -184,5 +187,11 @@ const clickSubmit = async () => {
 <style scoped>
 .hot-input {
   font-size: 0.9rem;
+}
+.hot-input:hover,
+.hot-input:focus {
+  box-shadow: rgba(0, 0, 0, 0.07) 0px 1px 1px 0px,
+    rgba(0, 0, 0, 0.07) 0px 1px 3px 0px, rgba(0, 0, 0, 0.03) 0px 0px 0px 1px;
+  border-color: #49a078;
 }
 </style>

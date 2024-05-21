@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,8 +14,11 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.trip.vue.hotplace.model.HotplaceDto;
 import com.trip.vue.hotplace.model.service.HotplaceService;
 
@@ -24,6 +28,9 @@ import lombok.extern.slf4j.Slf4j;
 @RequestMapping("/hotplace")
 @Slf4j
 public class HotplaceController {
+	
+	@Autowired	
+    private ObjectMapper objectMapper;
 	@Autowired
 	private HotplaceService service;
 	//get 좋아요순으로 가져오기(이미지, id) - 메인 "/best"
@@ -56,14 +63,22 @@ public class HotplaceController {
 		}
 	}
 	//post 글쓰기 ""
-	@PostMapping("")
-	public ResponseEntity<?> insertHotplace(@RequestBody HotplaceDto ob) throws Exception{
-		System.out.println(ob.getTitle());
-		System.out.println(ob.getImage());
-		System.out.println(ob.getGugun_code());
-		log.info("insertHotplace access = {}", ob);
+	@PostMapping(value="", consumes = {MediaType.MULTIPART_FORM_DATA_VALUE},
+	        produces = {MediaType.APPLICATION_JSON_VALUE} )
+	public ResponseEntity<?> insertHotplace(@RequestPart("info") String infoString,
+			@RequestParam(name="fileImage", required=false) MultipartFile file) throws Exception{
+		HotplaceDto info = objectMapper.readValue(infoString, HotplaceDto.class);
+		System.out.println(info.getTitle());
+		System.out.println(info.getOverview());
+		System.out.println(info.getSido_code());
+		System.out.println(info.getGugun_code());
+		System.out.println(info.getImage());
+		System.out.println("file1 "+file.getName());
+		System.out.println("file2 "+file.getOriginalFilename());
+		System.out.println("file3 "+file.getSize());
+//		log.info("insertHotplace access = {}", info);
 		try {
-			return new ResponseEntity<Integer>(service.insertHotplace(ob), HttpStatus.OK);
+			return new ResponseEntity<Integer>(service.insertHotplace(info, file), HttpStatus.OK);
 		} catch (Exception e) {
 			return new ResponseEntity<String>("서버 오류", HttpStatus.INTERNAL_SERVER_ERROR);
 		}

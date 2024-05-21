@@ -2,6 +2,8 @@ package com.trip.vue.hotplace.model.service;
 
 import java.util.List;
 
+import org.springframework.web.multipart.MultipartFile;
+
 import com.trip.vue.hotplace.model.HotplaceDto;
 
 public interface HotplaceService {
@@ -10,7 +12,7 @@ public interface HotplaceService {
 	//list 가져오기(최신순) - 피드
 	public List<HotplaceDto> listHotplace() throws Exception;
 	//글 쓰기
-	public int insertHotplace(HotplaceDto ob) throws Exception;
+	public int insertHotplace(HotplaceDto ob, MultipartFile image) throws Exception;
 	//글 삭제
 	public int deleteHotplace(int hotplace_id) throws Exception;
 	//글 수정

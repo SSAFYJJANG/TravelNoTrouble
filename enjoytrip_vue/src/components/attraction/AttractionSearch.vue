@@ -37,7 +37,7 @@ const content_types = ref([
 ]);
 
 const picked = ref('1');
-
+const btnColor = 'danger';
 </script>
 
 <template>
@@ -46,17 +46,17 @@ const picked = ref('1');
             <VSelect :selectOption="sidoSelectOption" :selectClass="selectClass" @onKeySelect="changeKey" />
             <VSelect :selectOption="gugunSelectOption" :selectClass="selectClass" @onKeySelect="changeKey" />
         </div>
-        <VSearchInput class="mb-3" />
+        <VSearchInput class="mb-3" :btn-color="btnColor" />
         <div>
             <div class="line">분류 선택</div>
             <div class="d-flex align-content-around flex-wrap">
                 <CFormCheck v-for="(content_type, index) in content_types" :key="content_type.text" type="radio" inline
                     :label="content_type.text" :value="content_type.value" :id="`content-type-${index}`"
                     v-model="picked" />
-                </div>
-                <hr>
-                <CFormCheck :button="{ color: 'danger', variant: 'outline', class: 'save-load-button' }"
-                    id="btn-check-outlined" autocomplete="off" label="찜 목록 보기" />
+            </div>
+            <hr>
+            <CFormCheck :button="{ color: 'danger', variant: 'outline', class: 'save-load-button' }"
+                id="btn-check-outlined" autocomplete="off" label="찜 목록 보기" />
             <AttractionCardList />
         </div>
     </div>
@@ -90,6 +90,10 @@ const picked = ref('1');
     height: 1px;
     font-size: 0px;
     line-height: 0px;
+}
+
+i {
+    margin: 0 .2rem;
 }
 </style>
 <!-- ㄴ 검색창 -->

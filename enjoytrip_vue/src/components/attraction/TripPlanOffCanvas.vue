@@ -1,9 +1,10 @@
 <script setup>
 import { ref } from 'vue';
-import { COffcanvas, CButton, CCloseButton, COffcanvasHeader, COffcanvasTitle, COffcanvasBody, } from '@coreui/vue';
+import { COffcanvas, CButton, CInputGroup, COffcanvasHeader, COffcanvasTitle, COffcanvasBody, CFormTextarea } from '@coreui/vue';
 import PlanDaysDetailList from "@/components/attraction/PlanDaysDetailList.vue";
 import PlanCalendar from '@/components/attraction/PlanCalendar.vue';
 const visibleOffCanvas = ref(false);
+const plan_title = ref("나의 여행계획");
 </script>
 
 <template>
@@ -20,8 +21,23 @@ const visibleOffCanvas = ref(false);
             </COffcanvasHeader>
             <hr>
             <COffcanvasBody>
-                <PlanCalendar/>
+
+                <div class="d-flex startDay inputs">
+                    <label for="start" class="">
+                        <strong>
+                            <i class="fa-solid fa-pen-to-square"></i> title:
+                        </strong>
+                    </label>
+                    <input type="text" id="plan_title" class="plan_title" name="plan_title" v-model="plan_title" />
+                </div>
+
+                <PlanCalendar />
+                <CInputGroup>
+                    <CFormTextarea class="memo" aria-label="With textarea" placeholder="전체 계획에 대해 자유롭게 메모해보세요">
+                    </CFormTextarea>
+                </CInputGroup>
                 <CButton color="danger" variant="outline" class="save-load-button">저장하기</CButton>
+
                 <PlanDaysDetailList />
             </COffcanvasBody>
         </COffcanvas>
@@ -52,9 +68,19 @@ hr {
 .open {
     transform: none;
 }
-.save-load-button{
-    margin : .5rem auto 1rem !important;
+
+.save-load-button {
+    margin: .5rem auto 1rem !important;
     border-radius: 5px;
+}
+
+.plan_title {
+    border-radius: 5px;
+    color: #2f4f4f;
+    width: 16.2rem;
+    margin-left: 1rem;
+    border-color: #dee2e6;
+    box-shadow: 0 0 0 0;
 }
 </style>
 <!--ㄴ 여행 계획 off canvas -->

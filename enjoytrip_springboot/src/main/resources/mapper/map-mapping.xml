@@ -5,18 +5,32 @@
 	<select id="getSidoList" resultType="sidoDto">
 		select *
 		from sido
+		where sido_code != 0
 	</select>
 
 	<select id="getGugunList" resultType="gugunDto">
-		select * from gugun
+		select * from gugun 
+		where gugun_code != 0
 	</select>
 
-	<select id="getAttractionList" parameterType="int" resultType="attractionDto">
-		select content_id, title, addr1, first_image, sido_code, gugun_code, longitude, latitude
-		from attraction_info
-		where (#{sido_code} = 0 OR sido_code = #{sido_code})
-        AND (#{gugun_code} = 0 OR gugun_code = #{gugun_code})
-        AND (#{content_type_id} = 0 OR content_type_id = #{content_type_id})
+	<select id="getAttractionList" parameterType="map" resultType="attractionDto">
+		select ai.content_id, title, addr1, first_image, sido_code, gugun_code, longitude, latitude, overview
+		from attraction_info ai left join attraction_description ad
+		on ai.content_id = ad.content_id
+		<where>
+	        <if test='sido_code != 0 and sido_code != ""'>
+	            AND sido_code = #{sido_code}
+	        </if>
+	        <if test='gugun_code != 0 and gugun_code != ""'>
+	            AND gugun_code = #{gugun_code}
+	        </if>
+	        <if test='content_type_id != 0 and content_type_id != ""'>
+	            AND content_type_id = #{content_type_id}
+	        </if>
+	        <if test='overview != null and overview != ""'>
+	            AND overview like CONCAT(‘%’, #{overview}, ‘%’)
+	        </if>
+        </where>
 	</select>
 	
 	<select id="viewAttraction" parameterType="int" resultType="attractionDto">

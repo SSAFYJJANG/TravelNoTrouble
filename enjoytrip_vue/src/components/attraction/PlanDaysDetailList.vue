@@ -1,45 +1,62 @@
 <template>
     <div class="card-scene">
+        <p class="info">
+            <i class="bi bi-info-circle"></i>
+            <i class="fa-solid fa-plus fa-2xs"></i>를 클릭하면 Day를 추가할 수 있어요
+        </p>
+        <div class="pagination-controls">
+            <button @click="prevPage" :disabled="currentPage === 1">Prev</button>
+            <span>{{ currentPage }} / {{ totalPages }}</span>
+            <button @click="nextPage" :disabled="currentPage === totalPages">Next</button>
+        </div>
         <Container orientation="horizontal" @drop="onColumnDrop" drag-handle-selector=".column-drag-handle"
             :drop-placeholder="upperDropPlaceholderOptions">
             <Draggable v-for="(column, index) in scene.children" :key="column.id">
-                <div :class="column.props.className">
-                    <button class="column-drag-handle">
-                        <span @click="addRow(column)"> {{ index }}</span>
-                        <i class="bi bi-x remove-column-button" @click="removeColumn(column.id)"></i>
+                <div :class="column.props.className" :style="getColumnStyle(column.id)" @mouseover="hoverCol(column.id)"
+                    @mouseleave="hoverCol(null)">
+                    <button @click="selectCol(column.id)" :style="selectedColumnId === column.id ? selectedStyle : {}"
+                        class="column-drag-handle d-flex align-items-center justify-content-between pe-0 ps-2">
+                        <span @click="addRow(column)"> {{ index + 1 }}</span>
+                        <i class="bi bi-x remove-column-button ml-auto" @click="removeColumn(column.id)">
+                        </i>
                     </button>
-                    <Container group-name="col" @drop="e => onCardDrop(column.id, e)"
-                        :get-child-payload="getCardPayload(column.id)" drag-class="card-ghost"
-                        drop-class="card-ghost-drop" :drop-placeholder="dropPlaceholderOptions">
 
+                    <Container group-name="col" v-show="selectedColumnId === column.id"
+                        @drop="e => onCardDrop(column.id, e)" @drag-start="onDragStart" @drag-end="onDragEnd"
+                        :get-child-payload="getCardPayload(column.id)" drag-class="card-ghost"
+                        drop-class="card-ghost-drop" :drop-placeholder="dropPlaceholderOptions"
+                        :style="{ zIndex: column.zIndex }">
                         <Draggable v-for="card in column.children" :key="card.id">
-                            <div :class="card.props.className" :style="card.props.style" >
-                                <!-- {{ attraction }} -->
-                            <PlanDaysDetail :attraction="attraction">
-                            </PlanDaysDetail>
+                            <div :class="card.props.className" :style="card.props.style">
+                                <PlanDaysDetail :attraction="attraction">
+                                </PlanDaysDetail>
                             </div>
                         </Draggable>
-
                     </Container>
-
                 </div>
             </Draggable>
-
-            <button class="column-add-button" @click="addColumn">+</button>
-
+            <button class="column-add-button" @click="addColumn">
+                <i class="fa-solid fa-plus fa-2xs"></i>
+            </button>
         </Container>
     </div>
 </template>
 
 <script setup>
 import { ref } from 'vue';
-import { CFormCheck } from '@coreui/vue';
 import { Container, Draggable } from 'vue3-smooth-dnd';
 import PlanDaysDetail from "@/components/attraction/PlanDaysDetailItem.vue"
+
 import data from "@/data/index.js";
 const attraction = ref({});
 attraction.value = data.attractionList[0];
-console.log(attraction.value);
+
+// 선택된 열 ID
+const selectedColumnId = ref(0);
+const selectedStyle = {
+    backgroundColor: 'salmon',
+    color: 'white'
+};
 
 const applyDrag = (arr, dragResult) => {
     const { removedIndex, addedIndex, payload } = dragResult
@@ -55,16 +72,6 @@ const applyDrag = (arr, dragResult) => {
     return result
 }
 
-const cardColors = [
-    'azure', 'beige', 'bisque', 'blanchedalmond',
-    'cornsilk', 'gainsboro', 'ghostwhite', 'ivory',
-    'lightCyan', 'palegreen', 'ivory', 'linen', 'whitesmoke'
-];
-
-const pickColor = () => {
-    const rand = Math.floor(Math.random() * cardColors.length);
-    return cardColors[rand];
-};
 
 const scene = ref({
     type: 'container',
@@ -76,7 +83,7 @@ const addRow = (parent) => {
     const newRow = {
         type: 'draggable',
         id: `${scene.value.children.length}${scene.value.children.children && scene.value.children.children.length ? scene.value.children.children.length : 0}`,
-        props: { className: 'card', style: { backgroundColor: pickColor() } },
+        props: { className: 'card', style: { boxShadow: "0px 2px 6px 0px #89737380" } },
     };
     parent.children.push(newRow);
 }
@@ -87,9 +94,11 @@ const addColumn = () => {
         type: 'container',
         name: 'New Column',
         props: { orientation: 'vertical', className: 'card-container' },
-        children: []
+        children: [],
+        zIndex: 0,
     };
     scene.value.children.push(newColumn);
+    selectCol(newColumn.id);
 };
 
 const upperDropPlaceholderOptions = {
@@ -108,6 +117,13 @@ const onColumnDrop = (dropResult) => {
     const updatedScene = { ...scene.value };
     updatedScene.children = applyDrag(updatedScene.children, dropResult);
     scene.value = updatedScene;
+    // Ensure the selected column stays highlighted after drop
+    if (selectedColumnId.value) {
+        const selectedColumn = updatedScene.children.find(column => column.id === selectedColumnId.value);
+        if (selectedColumn) {
+            selectCol(selectedColumnId.value);
+        }
+    }
 };
 
 const onCardDrop = (columnId, dropResult) => {
@@ -132,6 +148,48 @@ const removeColumn = (columnId) => {
     scene.value.children = scene.value.children.filter(column => column.id !== columnId);
 };
 
+// 열 선택 함수
+const selectCol = (columnId) => {
+    selectedColumnId.value = columnId;
+    scene.value.children.forEach((column) => {
+        column.zIndex = column.id === columnId ? 20 : 0;
+    });
+};
+
+// 드래그 중인지 여부를 추적하는 상태
+const isDragging = ref(false);
+
+// 드래그 시작 함수
+const onDragStart = () => {
+    isDragging.value = true;
+};
+
+// 드래그 종료 함수
+const onDragEnd = () => {
+    isDragging.value = false;
+};
+
+// 마우스 오버된 열 ID
+const hoveredColumnId = ref(null);
+
+// 열 마우스 오버 함수
+const hoverCol = (columnId) => {
+    hoveredColumnId.value = columnId;
+};
+
+// 열 스타일 가져오기 함수
+const getColumnStyle = (columnId) => {
+    if (hoveredColumnId.value === columnId && isDragging.value && hoveredColumnId.value != selectedColumnId.value) {
+        return {
+            position: 'fixed',
+            transform: 'translateY(-300px)',
+            transition: 'transform 1s ease-in-out',
+            // zIndex: 20 // Ensure the hovered column is on top
+        };
+    }
+    return { display: selectedColumnId.value === columnId ? 20 : 0 };
+};
+
 </script>
 
 <style>
@@ -139,6 +197,7 @@ const removeColumn = (columnId) => {
     /* background-color: salmon; */
     width: 360px;
 }
+
 .column-drag-handle,
 .column-add-button {
     width: 50px;
@@ -154,10 +213,11 @@ const removeColumn = (columnId) => {
 .smooth-dnd-draggable-wrapper .smooth-dnd-container {
     position: absolute;
     left: 0;
-    /* background-color: rgba(255, 230, 227, 0.151); */
-    background-color: salmon;
+    background-color: white;
     border-bottom-right-radius: 10px;
     border-bottom-left-radius: 10px;
+    border-top-right-radius: 10px;
+    border: 2px solid salmon
 }
 
 .card-container {
@@ -170,7 +230,7 @@ const removeColumn = (columnId) => {
 }
 
 .vertical {
-    min-height: calc(70vh) !important;
+    min-height: calc(60vh) !important;
 }
 
 .card {
@@ -180,4 +240,21 @@ const removeColumn = (columnId) => {
 .selectCol {
     background-color: salmon;
 }
+
+.card {
+    border-radius: 5px;
+}
+
+.info {
+    margin: 0 0 .5rem;
+}
+
+i {
+    margin: 0 .2rem;
+}
+
+/* {
+    transform: translateY(-50px);
+    transition: transform 0.3s ease-in-out;
+} */
 </style>

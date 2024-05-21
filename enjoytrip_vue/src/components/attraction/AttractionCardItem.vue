@@ -11,8 +11,8 @@ defineProps({ attraction: Object });
             <div class="card-btn d-flex flex-nowrap align-items-center justify-content-between">
                 <h5 class="card-title">{{ attraction.title }}</h5>
                 <div class="card-btn">
-                    <i class="bi bi-patch-plus"></i>
-                    <i class="bi bi-heart"></i>
+                    <button><i class="fa-regular fa-square-plus"></i></button>
+                    <button><i class="fa-regular fa-heart"></i></button>
                 </div>
             </div>
             <p class="card-text">{{ attraction.add1 }}</p>
@@ -35,7 +35,7 @@ defineProps({ attraction: Object });
     /* border: 1px solid black; */
     border-radius: 2%;
     padding: 0.25rem;
-    margin : 1rem auto;
+    margin: 1rem auto;
 }
 
 .card-title {
@@ -52,7 +52,14 @@ defineProps({ attraction: Object });
     object-fit: cover;
     align-self: center;
 }
-.card-btn i{
-    margin-left : 1rem;
+
+.card-btn i {
+    margin-left: .5rem;
+    margin-bottom: .5rem;
+    margin-right: 0;
+}
+
+i {
+    margin: 0 .2rem;
 }
 </style>

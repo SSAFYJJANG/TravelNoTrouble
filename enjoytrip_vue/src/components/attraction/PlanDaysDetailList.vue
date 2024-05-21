@@ -5,27 +5,29 @@
             <i class="fa-solid fa-plus fa-2xs"></i>를 클릭하면 Day를 추가할 수 있어요
         </p>
         <div class="pagination-controls">
-            <button @click="prevPage" :disabled="currentPage === 1">Prev</button>
+            <button @click="prevPage" @mouseover="onPaginationHover('prev')" :disabled="currentPage === 1">Prev</button>
             <span>{{ currentPage }} / {{ totalPages }}</span>
-            <button @click="nextPage" :disabled="currentPage === totalPages">Next</button>
+            <button @click="nextPage" @mouseover="onPaginationHover('next')" :disabled="currentPage === totalPages">Next</button>
         </div>
         <Container orientation="horizontal" @drop="onColumnDrop" drag-handle-selector=".column-drag-handle"
             :drop-placeholder="upperDropPlaceholderOptions">
-            <Draggable v-for="(column, index) in scene.children" :key="column.id">
-                <div :class="column.props.className" :style="getColumnStyle(column.id)" @mouseover="hoverCol(column.id)"
+            <Draggable v-for="(column, index) in paginatedColumns" :key="column.id">
+                <div :class="column.props.className" 
+                    :style="getColumnStyle(column.id)" @mouseover="hoverCol(column.id)"
                     @mouseleave="hoverCol(null)">
                     <button @click="selectCol(column.id)" :style="selectedColumnId === column.id ? selectedStyle : {}"
                         class="column-drag-handle d-flex align-items-center justify-content-between pe-0 ps-2">
-                        <span @click="addRow(column)"> {{ index + 1 }}</span>
+                        <span @click="addRow(column)"> {{ getColumnNumber(index) }} </span>
                         <i class="bi bi-x remove-column-button ml-auto" @click="removeColumn(column.id)">
                         </i>
                     </button>
 
-                    <Container group-name="col" v-show="selectedColumnId === column.id"
+                    <Container group-name="col" 
+                        v-show="selectedColumnId === column.id || (isDragging && hoveredColumnId === column.id)"
                         @drop="e => onCardDrop(column.id, e)" @drag-start="onDragStart" @drag-end="onDragEnd"
                         :get-child-payload="getCardPayload(column.id)" drag-class="card-ghost"
                         drop-class="card-ghost-drop" :drop-placeholder="dropPlaceholderOptions"
-                        :style="{ zIndex: column.zIndex }">
+                        :style="getContainerStyle(column.id)">
                         <Draggable v-for="card in column.children" :key="card.id">
                             <div :class="card.props.className" :style="card.props.style">
                                 <PlanDaysDetail :attraction="attraction">
@@ -43,7 +45,7 @@
 </template>
 
 <script setup>
-import { ref } from 'vue';
+import { ref, computed } from 'vue';
 import { Container, Draggable } from 'vue3-smooth-dnd';
 import PlanDaysDetail from "@/components/attraction/PlanDaysDetailItem.vue"
 
@@ -57,6 +59,9 @@ const selectedStyle = {
     backgroundColor: 'salmon',
     color: 'white'
 };
+
+// Column ID Counter
+let columnIdCounter = 0;
 
 const applyDrag = (arr, dragResult) => {
     const { removedIndex, addedIndex, payload } = dragResult
@@ -82,7 +87,7 @@ const scene = ref({
 const addRow = (parent) => {
     const newRow = {
         type: 'draggable',
-        id: `${scene.value.children.length}${scene.value.children.children && scene.value.children.children.length ? scene.value.children.children.length : 0}`,
+        id: `${scene.value.children.length}${parent.children && parent.children.length ? parent.children.length : 0}`,
         props: { className: 'card', style: { boxShadow: "0px 2px 6px 0px #89737380" } },
     };
     parent.children.push(newRow);
@@ -90,7 +95,7 @@ const addRow = (parent) => {
 
 const addColumn = () => {
     const newColumn = {
-        id: `${scene.value.children.length}`,
+        id: `col-${columnIdCounter++}`,
         type: 'container',
         name: 'New Column',
         props: { orientation: 'vertical', className: 'card-container' },
@@ -98,6 +103,7 @@ const addColumn = () => {
         zIndex: 0,
     };
     scene.value.children.push(newColumn);
+    // 새 열을 추가한 후 자동으로 선택
     selectCol(newColumn.id);
 };
 
@@ -151,9 +157,6 @@ const removeColumn = (columnId) => {
 // 열 선택 함수
 const selectCol = (columnId) => {
     selectedColumnId.value = columnId;
-    scene.value.children.forEach((column) => {
-        column.zIndex = column.id === columnId ? 20 : 0;
-    });
 };
 
 // 드래그 중인지 여부를 추적하는 상태
@@ -181,15 +184,59 @@ const hoverCol = (columnId) => {
 const getColumnStyle = (columnId) => {
     if (hoveredColumnId.value === columnId && isDragging.value && hoveredColumnId.value != selectedColumnId.value) {
         return {
-            position: 'fixed',
+            // position: 'fixed',
             transform: 'translateY(-300px)',
             transition: 'transform 1s ease-in-out',
+            // display : 'block',
             // zIndex: 20 // Ensure the hovered column is on top
         };
     }
-    return { display: selectedColumnId.value === columnId ? 20 : 0 };
+    return { };
 };
 
+// Container 스타일 가져오기 함수
+const getContainerStyle = (columnId) => {
+    return {
+        zIndex: selectedColumnId.value === columnId ? 10 : 1
+    };
+};
+
+// 페이지네이션 관련 상태 및 함수
+const itemsPerPage = 6;
+const currentPage = ref(1);
+
+const totalPages = computed(() => Math.ceil(scene.value.children.length / itemsPerPage));
+
+const paginatedColumns = computed(() => {
+    const start = (currentPage.value - 1) * itemsPerPage;
+    const end = start + itemsPerPage;
+    return scene.value.children.slice(start, end);
+});
+
+const getColumnNumber = (index) => {
+    return (currentPage.value - 1) * itemsPerPage + index + 1;
+};
+
+const nextPage = () => {
+    if (currentPage.value < totalPages.value) {
+        currentPage.value += 1;
+    }
+};
+
+const prevPage = () => {
+    if (currentPage.value > 1) {
+        currentPage.value -= 1;
+    }
+};
+const onPaginationHover = (direction) => {
+    if (isDragging.value) {
+        if (direction === 'next' && currentPage.value < totalPages.value) {
+            currentPage.value += 1;
+        } else if (direction === 'prev' && currentPage.value > 1) {
+            currentPage.value -= 1;
+        }
+    }
+};
 </script>
 
 <style>
@@ -230,7 +277,7 @@ const getColumnStyle = (columnId) => {
 }
 
 .vertical {
-    min-height: calc(60vh) !important;
+    min-height: calc(50vh) !important;
 }
 
 .card {
@@ -252,6 +299,24 @@ const getColumnStyle = (columnId) => {
 i {
     margin: 0 .2rem;
 }
+.pagination-controls {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 1rem;
+}
+/* .columns-container {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.column-drag-handle {
+    cursor: pointer;
+} */
+
+/* .column-drag-handle:hover {
+    transform: translateY(-50px);
+    transition: transform 0.3s ease-in-out;
+} */
 
 /* {
     transform: translateY(-50px);

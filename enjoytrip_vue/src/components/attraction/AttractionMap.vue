@@ -14,13 +14,14 @@ let bounds: kakao.maps.LatLngBounds;
 const onLoadKakaoMap = (mapRef: kakao.maps.Map) => {
   map.value = mapRef;
   // 장소 검색 객체를 생성합니다
-  const ps = new kakao.maps.services.Places();
+  // const ps = new kakao.maps.services.Places();
   // 키워드로 장소를 검색합니다
-  ps.keywordSearch(keyword.value, placesSearchCB);
+  // ps.keywordSearch(keyword.value, placesSearchCB);
 };
 
 // 키워드 검색 완료 시 호출되는 콜백함수 입니다
-const placesSearchCB = (data: kakao.maps.services.PlacesSearchResult,
+const placesSearchCB = (
+  data: kakao.maps.services.PlacesSearchResult,
   status: kakao.maps.services.Status): void => {
   if (status === kakao.maps.services.Status.OK) {
     // 검색된 장소 위치를 기준으로 지도 범위를 재설정하기위해
@@ -70,8 +71,11 @@ const coordinate = {
 <template>
   <KakaoMap style="border-radius: 0;" width="100%" height="100%" :lat="coordinate.lat" :lng="coordinate.lng"
     @onLoadKakaoMap="onLoadKakaoMap">
-    <KakaoMapMarker v-for="(marker, index) in markerList" :key="marker.key === undefined ? index : marker.key"
-      :lat="marker.lat" :lng="marker.lng" :infoWindow="marker.infoWindow" :clickable="true"
+    <KakaoMapMarker v-for="(marker, index) in markerList" 
+      :key="marker.key === undefined ? index : marker.key"
+      :lat="marker.lat" 
+      :lng="marker.lng" 
+      :infoWindow="marker.infoWindow" :clickable="true"
       @onClickKakaoMapMarker="onClickMapMarker(marker)" />
   </KakaoMap>
   <button class="reset-button" @click="setBounds">

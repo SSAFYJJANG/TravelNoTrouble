@@ -1,19 +1,27 @@
 <script setup>
-import { ref } from "vue";
+import { onMounted, ref } from "vue";
 import { useRouter } from "vue-router";
 import { useHotplaceStore } from "@/stores/hotplace";
+import { useUserStore } from "@/stores/user";
 
 const router = useRouter();
+const userStore = useUserStore();
+const { getUserInfo, userInfo } = userStore;
 const hotplaceStore = useHotplaceStore();
 const { uploadHotplace } = hotplaceStore;
 const formData = new FormData();
+
+onMounted(() => {
+  let token = sessionStorage.getItem("accessToken");
+  getUserInfo(token);
+});
 
 const previewImage = ref("/src/assets/images/gallery06.jpg"); // 기본 이미지
 const info = ref({
   title: "",
   overview: "",
   image: "",
-  userId: "ssafy2",
+  userId: userInfo.userId,
   sido_code: null,
   gugun_code: null,
 });
@@ -29,7 +37,6 @@ const uploadImage = (event) => {
     };
     reader.readAsDataURL(file);
 
-    console.log(file);
     info.value.image = file.name;
     // 이미지 파일 이름 : file.name
     fileImage.value = file;
@@ -37,10 +44,10 @@ const uploadImage = (event) => {
 };
 
 const clickSubmit = async () => {
-  formData.append("info", JSON.stringify(info.value));
+  formData.append("info", encodeURIComponent(JSON.stringify(info.value)));
   formData.append("fileImage", fileImage.value);
   await uploadHotplace(formData);
-  // router.replace({ name: "hotplace-feed" });
+  router.replace({ name: "hotplace-feed" });
 };
 </script>
 

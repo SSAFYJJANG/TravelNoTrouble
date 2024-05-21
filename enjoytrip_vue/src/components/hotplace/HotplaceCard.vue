@@ -3,7 +3,7 @@ import { ref, defineProps } from "vue";
 import HotplaceViewModal from "@/components/hotplace/HotplaceViewModal.vue";
 
 const props = defineProps(["card"]);
-
+const { VITE_VUE_API_URL } = import.meta.env;
 const viewModalCheck = ref(false);
 
 const toggleViewModal = () => {
@@ -14,7 +14,7 @@ const toggleViewModal = () => {
 <template>
   <div class="col-sm-6 card col-md-4 col-lg-3">
     <div
-      :style="{ backgroundImage: `url(${props.card.image})` }"
+      :style="{ backgroundImage: `url(${VITE_VUE_API_URL}/img/${props.card.image})` }"
       class="card-wrap hoptplace-card"
     >
       <div class="content-wrap card">

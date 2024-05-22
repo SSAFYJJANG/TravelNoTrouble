@@ -6,6 +6,7 @@ import lombok.Data;
 public class PlanDetailDto {
 	private int plan_detail_id;
 	private int plan_days_id;
+	private int plan_id;
 	private int content_id;
 	private String overview;
 	private String content_name;

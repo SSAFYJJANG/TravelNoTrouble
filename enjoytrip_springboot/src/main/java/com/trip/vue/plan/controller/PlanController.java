@@ -106,7 +106,7 @@ public class PlanController {
 	}
 	
 	// 세부 일정 메모 수정
-	@PutMapping("/{plan_id}")
+	@PutMapping("/detail")
 	public ResponseEntity<?> modifyPlanDetailOverview(@RequestBody PlanDetailDto ob) throws Exception{
 		try {
 			return new ResponseEntity<Integer>(planDetailService.modifyPlanDetailOverview(ob), HttpStatus.OK);

@@ -34,10 +34,6 @@ onMounted(() => {
   getBoardList();
 });
 
-const moveWrite = () => {
-  router.push({ name: "article-write" });
-};
-
 const onPageChange = (val) => {
   currentPage.value = val;
   param.value.pgno = val;

@@ -7,29 +7,50 @@ import AttractionCardList from "@/components/attraction/AttractionCardList.vue";
 import { useAttractionStore } from "@/stores/attraction";
 import { storeToRefs } from "pinia";
 const attractionStore = useAttractionStore();
-const { getSidoList, getGugunList, } = attractionStore;
-const { sidoList, isSelectSidoCode, gugunList } = storeToRefs(attractionStore);
+const { getSidoList, getGugunList, getAttractionList } = attractionStore;
+const { sidoList, isClickSidoCard, gugunList } = storeToRefs(attractionStore);
 
 const selectGugunList = ref([]);
 const selectOptionSidoList = ref([]);
+const isSelectGugunCode = ref(0);
+const isSelectSidoCode  = ref(0);
+const isSelectContenType = ref('0');
+
+import data from "@/data/index.js";
+const contentTypeList = ref([]);
+contentTypeList.value = data.content_types;
 
 onMounted(async () => {
+    console.log("isClickSidoCard " + isClickSidoCard.value );
+    if (isClickSidoCard.value != null) {
+        const params = {
+            sido_code: isClickSidoCard.value,
+            gugun_code: 0,
+            content_type_id: 0,
+            overview: '',
+        }
+        await Promise.all([
+            getAttractionList(params),
+            changeSido(isClickSidoCard.value),
+        ]);
+    }
+
+
     await Promise.all([
-        getSidoList(),
-        getGugunList(),
+        selectOptionSidoList.value = sidoList.value.map((sido) => ({
+            text: sido.sido_name,
+            value: sido.sido_code,
+        })),
+        selectOptionSidoList.value.unshift({
+            text: '시/도',
+            value: 0,
+        }),
+        selectGugunList.value.unshift({
+            text: '구/군',
+            value: 0,
+        }),
     ]);
-    selectOptionSidoList.value = sidoList.value.map((sido) => ({
-        text: sido.sido_name,
-        value: sido.sido_code,
-    }));
-    selectOptionSidoList.value.unshift({
-        text: '시/도',
-        value: 0,
-    });
-    selectGugunList.value.unshift({
-        text: '구/군',
-        value: 0,
-    });
+    console.log(isSelectSidoCode.value);
     console.log(selectOptionSidoList.value);
 });
 
@@ -37,55 +58,56 @@ const selectClass = ref([
     'mb-2', 'me-1', 'ms-1'
 ]);
 
-const changeKey = (val) => {
+const changeSido = (val) => {
+    isSelectGugunCode.value = 0;
     isSelectSidoCode.value = val;
-};
-
-watch(isSelectSidoCode, (newVal) => {
-    console.log("sss");
-    if (newVal != 0 && gugunList != null) {
-        selectGugunList.value = gugunList.value.filter(gugun => newVal === gugun.sido_code);
+    selectGugunList.value = [];
+    if (val != 0 && gugunList != null) {
+        selectGugunList.value = gugunList.value[val].map(item => ({
+            text: item.gugun_name,
+            value: item.gugun_code
+        }));
     }
     selectGugunList.value.unshift({
         text: '구/군',
         value: 0,
     });
-    console.log(selectGugunList.value);
-})
+    console.log("selectGugunList " + selectGugunList.value);
+};
 
-const content_types = ref([
-    { text: '전체', value: '0' },
-    { text: '관광지', value: '1' },
-    { text: '문화시설', value: '2' },
-    { text: '축제공연행사', value: '3' },
-    { text: '여행코스', value: '4' },
-    { text: '레포츠', value: '5' },
-    { text: '숙박', value: '6' },
-    { text: '쇼핑', value: '7' },
-    { text: '식당', value: '8' }
-]);
+const changeGugun = (val) => {
+    isSelectGugunCode = val;
+    console.log(isSelectGugunCode);
+}
 
-const isSelectContenType = ref('0');
+const clickSearch = (val) => {
+    const params = {
+        sido_code: isSelectSidoCode.value,
+        gugun_code: isSelectGugunCode.value,
+        content_type_id: isSelectContenType.value,
+        overview: val
+    }
+    getAttractionList(params);
+}
+
 const btnColor = 'danger';
 </script>
 
 <template>
     <div>
         <div class="d-flex justify-content-between">
-            <VSelect :selectOption="selectOptionSidoList" :selectClass="selectClass" @onKeySelect="changeKey" />
-            <VSelect :selectOption="selectGugunList" :selectClass="selectClass" @onKeySelect="changeKey" />
+            <VSelect :selectOption="selectOptionSidoList" :selectClass="selectClass" @onKeySelect="changeSido"
+                v-model="isSelectSidoCode" />
+            <VSelect :selectOption="selectGugunList" :selectClass="selectClass" @onKeySelect="changeGugun" />
         </div>
-        <VSearchInput class="mb-3" :btn-color="btnColor" />
+        <VSearchInput class="mb-3" :btn-color="btnColor" @clickBtn="clickSearch" />
         <div>
             <div class="line">분류 선택</div>
             <div class="d-flex align-content-around flex-wrap">
-                <CFormCheck v-for="(content_type, index) in content_types" :key="content_type.text" type="radio" inline
-                    :label="content_type.text" :value="content_type.value" :id="`content-type-${index}`"
+                <CFormCheck v-for="(content_type, index) in contentTypeList" :key="content_type.text" type="radio"
+                    inline :label="content_type.text" :value="content_type.value" :id="`content-type-${index}`"
                     v-model="isSelectContenType" />
             </div>
-            <hr>
-            <CFormCheck :button="{ color: 'danger', variant: 'outline', class: 'save-load-button' }"
-                id="btn-check-outlined" autocomplete="off" label="찜 목록 보기" />
             <AttractionCardList />
         </div>
     </div>

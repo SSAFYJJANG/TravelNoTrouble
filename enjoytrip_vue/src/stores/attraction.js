@@ -22,7 +22,7 @@ export const useAttractionStore = defineStore(
     const attractionCnt = ref(2357);
     const recommendationAttraction = ref(null);
     const likeAttractionList = ref(null);
-    const isSelectSidoCode = ref(0);
+    const isClickSidoCard = ref(0);
 
     const getSidoList = async () => {
       await sido(
@@ -137,7 +137,7 @@ export const useAttractionStore = defineStore(
     };
 
     return {
-      isSelectSidoCode,
+      isClickSidoCard,
       sidoList,
       gugunList,
       searchAttractionList,

@@ -28,20 +28,13 @@ public class MapServiceImpl implements MapService{
 	public Map<Integer, List<GugunDto>> getGugunList() {
 		List<GugunDto> guguns = mapDao.getGugunList();
 		Map<Integer, List<GugunDto>> map = new HashMap<>();
-		GugunDto newG = new GugunDto();
-		
 		for (int i=0; i<guguns.size(); i++) {
 			GugunDto g = guguns.get(i);
 			int sido_code = g.getSido_code();
-			
 			if (!map.containsKey(sido_code)) {
 				map.put(sido_code, new ArrayList<>());
 			}
-			
-			newG.setGugun_code(g.getGugun_code());
-			newG.setGugun_name(g.getGugun_name());
-			newG.setSido_code(sido_code);
-			map.get(sido_code).add(newG);
+			map.get(sido_code).add(g);
 		}
 		return map;
 	}

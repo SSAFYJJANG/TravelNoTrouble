@@ -1,6 +1,8 @@
 <script setup>
 import { ref } from 'vue';
 import AttractionCardItem from './AttractionCardItem.vue';
+import { CFormCheck } from '@coreui/vue';
+
 import data from "@/data/index.js";
 const attractionList = ref([]);
 attractionList.value = data.attractionList;
@@ -9,6 +11,9 @@ console.log(attractionList);
 
 <template>
     <div>
+        <CFormCheck :button="{ color: 'danger', variant: 'outline', class: 'save-load-button' }" id="btn-check-outlined"
+            autocomplete="off" label="찜 목록 보기" />
+        <hr>
         <p class="info"><i class="bi bi-info-circle"></i> +를 누르면 여행계획에 추가할 수 있어요</p>
         <AttractionCardItem v-for="attraction in attractionList" :key="attraction.content_id"
             :attraction="attraction" />

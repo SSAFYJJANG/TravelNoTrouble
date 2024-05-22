@@ -1,12 +1,16 @@
 <script setup>
-import { onMounted, ref } from "vue";
+import { computed } from "vue";
 import { useUserStore } from "@/stores/user";
 const { VITE_VUE_API_URL } = import.meta.env;
 
 const userStore = useUserStore();
 
 const { userInfo } = userStore;
-const defaultProfile = ref("/src/assets/images/default_profile.png"); // 기본 이미지
+const profileImage = computed(() => {
+  return userInfo.image == null
+    ? "/src/assets/images/default_profile.png"
+    : `${VITE_VUE_API_URL}/profile/${userInfo.image}`;
+});
 </script>
 
 <template>
@@ -18,15 +22,8 @@ const defaultProfile = ref("/src/assets/images/default_profile.png"); // 기본 
           <!-- 프로필 이미지 -->
           <div class="col-lg-4 px-4 py-4 d-flex justify-content-center">
             <img
-              v-if="userInfo.image != null"
-              :src="`${VITE_VUE_API_URL}/profile/${userInfo.image}`"
-              style="width: 160px; height: 160px"
-              class="rounded-pill align-self-center border"
-            />
-            <img
-              v-else
-              :src="defaultProfile"
-              style="width: 160px; height: 160px"
+              :src="profileImage"
+              style="width: 160px; height: 160px; object-fit: cover;"
               class="rounded-pill align-self-center border"
             />
           </div>

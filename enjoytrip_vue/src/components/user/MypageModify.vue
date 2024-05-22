@@ -69,13 +69,6 @@ const deleteAccount = () => {
               <div>
                 <div class="position-relative">
                   <img
-                    v-if="userInfo.image == null"
-                    :src="previewImage"
-                    style="width: 200px; height: 200px; object-fit: cover"
-                    class="rounded-pill align-self-center border"
-                  />
-                  <img
-                    v-else
                     :src="previewImage"
                     style="width: 200px; height: 200px; object-fit: cover"
                     class="rounded-pill align-self-center border"

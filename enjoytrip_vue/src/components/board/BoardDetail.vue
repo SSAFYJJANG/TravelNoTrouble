@@ -38,7 +38,7 @@ const onDeleteArticle = () => {
         <h3 class="m-4">{{ boardStore.articleInfo.title }}</h3>
         <div class="m-4">
           <div>{{ boardStore.articleInfo.userId }}</div>
-          <div>{{ boardStore.articleInfo.regist_time }} | 조회 12</div>
+          <div>{{ boardStore.articleInfo.regist_time }} | 조회 {{ boardStore.articleInfo.hit }}</div>
           <hr />
         </div>
 

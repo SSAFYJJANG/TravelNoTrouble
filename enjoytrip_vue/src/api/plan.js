@@ -9,4 +9,9 @@ async function listDetail(plan_id, success, fail) {
   await local.get(`/plan/${plan_id}`).then(success).catch(fail);
 }
 
-export { list, listDetail };
+async function modifyDetail(param, success, fail) {
+  console.log("param", param);
+  await local.put(`/plan/detail`, param).then(success).catch(fail);
+}
+
+export { list, listDetail, modifyDetail };

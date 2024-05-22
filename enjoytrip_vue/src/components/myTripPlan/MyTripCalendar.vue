@@ -17,13 +17,21 @@ const selectedDay = ref(1);
 const clickDay = (day) => {
   selectedDay.value = day;
 };
+const isModifyMode = ref(false);
+const modifyDetailId = ref(null);
+const goModifyMode = (modifyId, onOff) => {
+  isModifyMode.value = onOff ? true : false;
+  modifyDetailId.value = modifyId;
+};
+
 const viewPlanModal = ref(false);
 const togglePlanModal = () => {
   viewPlanModal.value = !viewPlanModal.value;
   selectedDay.value = 1;
+  isModifyMode.value = false;
 };
 
-const planDetailList = ref(null);
+const details = ref(null);
 const planInfo = ref({
   plan_id: null,
   title: null,
@@ -49,12 +57,10 @@ const handleEventClick = (clickInfo) => {
     planInfo.value.plan_id,
     (response) => {
       if (response.status === httpStatusCode.OK) {
-        planDetailList.value = response.data;
-        planInfo.value.first_day = planDetailList.value.reduce(
-          (prev, value) => {
-            return prev.plan_days_id <= value.plan_days_id ? prev : value;
-          }
-        );
+        details.value = response.data;
+        planInfo.value.first_day = details.value.reduce((prev, value) => {
+          return prev.plan_days_id <= value.plan_days_id ? prev : value;
+        });
         planInfo.value.first_day = planInfo.value.first_day.plan_days_id;
       }
     },
@@ -86,7 +92,6 @@ onMounted(async () => {
             textColor: "white",
           };
         });
-        // console.log("CAL", plans.value);
         var calendar = new Calendar(calendarEl, {
           plugins: [dayGridPlugin, timeGridPlugin, interactionPlugin],
           initialView: "dayGridMonth",
@@ -130,9 +135,12 @@ onMounted(async () => {
       </div>
       <MyTripViewModal
         :plan="planInfo"
-        :details="planDetailList"
+        :details="details"
         :selectedDay="selectedDay"
+        :isModifyMode="isModifyMode"
+        :modifyDetailId="modifyDetailId"
         @clickDay="clickDay"
+        @goModifyMode="goModifyMode"
       />
     </div>
   </div>

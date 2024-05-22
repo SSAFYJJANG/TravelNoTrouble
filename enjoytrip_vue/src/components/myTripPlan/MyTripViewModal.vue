@@ -2,13 +2,21 @@
 import { ref, defineProps } from "vue";
 import PlanDetailItem from "./PlanDetailItem.vue";
 
-const props = defineProps(["plan", "details", "selectedDay"]);
-const emit = defineEmits(["clickDay"]);
+const props = defineProps([
+  "plan",
+  "details",
+  "selectedDay",
+  "isModifyMode",
+  "modifyDetailId",
+]);
+const emit = defineEmits(["clickDay", "goModifyMode"]);
 
-// const selectedDay = ref(1);
 const clickDay = (day) => {
   emit("clickDay", day);
-  //   selectedDay.value = day;
+};
+
+const goModifyMode = (detailId, onoff) => {
+  emit("goModifyMode", detailId, onoff);
 };
 </script>
 
@@ -55,10 +63,14 @@ const clickDay = (day) => {
       </div>
       <PlanDetailItem
         v-else
-        v-for="detail in props.details"
+        v-for="(detail, index) in details"
         :detail="detail"
+        :index="index"
         :day="selectedDay"
         :first_day="props.plan.first_day"
+        :isModifyMode="isModifyMode"
+        :modifyDetailId="modifyDetailId"
+        @goModifyMode="goModifyMode"
       />
     </div>
   </div>

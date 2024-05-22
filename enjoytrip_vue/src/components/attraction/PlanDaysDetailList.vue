@@ -7,13 +7,13 @@
         <div class="pagination-controls">
             <button @click="prevPage" @mouseover="onPaginationHover('prev')" :disabled="currentPage === 1">Prev</button>
             <span>{{ currentPage }} / {{ totalPages }}</span>
-            <button @click="nextPage" @mouseover="onPaginationHover('next')" :disabled="currentPage === totalPages">Next</button>
+            <button @click="nextPage" @mouseover="onPaginationHover('next')"
+                :disabled="currentPage === totalPages">Next</button>
         </div>
         <Container orientation="horizontal" @drop="onColumnDrop" drag-handle-selector=".column-drag-handle"
             :drop-placeholder="upperDropPlaceholderOptions">
             <Draggable v-for="(column, index) in paginatedColumns" :key="column.id">
-                <div :class="column.props.className" 
-                    :style="getColumnStyle(column.id)" @mouseover="hoverCol(column.id)"
+                <div :class="column.props.className" :style="getColumnStyle(column.id)" @mouseover="hoverCol(column.id)"
                     @mouseleave="hoverCol(null)">
                     <button @click="selectCol(column.id)" :style="selectedColumnId === column.id ? selectedStyle : {}"
                         class="column-drag-handle d-flex align-items-center justify-content-between pe-0 ps-2">
@@ -22,7 +22,7 @@
                         </i>
                     </button>
 
-                    <Container group-name="col" 
+                    <Container group-name="col"
                         v-show="selectedColumnId === column.id || (isDragging && hoveredColumnId === column.id)"
                         @drop="e => onCardDrop(column.id, e)" @drag-start="onDragStart" @drag-end="onDragEnd"
                         :get-child-payload="getCardPayload(column.id)" drag-class="card-ghost"
@@ -94,6 +94,11 @@ const addRow = (parent) => {
 }
 
 const addColumn = () => {
+    if (scene.value.children.length >= 30) {
+        alert('최대 30일까지만 만들 수 있어요!');
+        return;
+    }
+
     const newColumn = {
         id: `col-${columnIdCounter++}`,
         type: 'container',
@@ -191,7 +196,7 @@ const getColumnStyle = (columnId) => {
             // zIndex: 20 // Ensure the hovered column is on top
         };
     }
-    return { };
+    return {};
 };
 
 // Container 스타일 가져오기 함수
@@ -247,7 +252,7 @@ const onPaginationHover = (direction) => {
 
 .column-drag-handle,
 .column-add-button {
-    width: 50px;
+    width: 53px;
     background-color: white;
     border: 1.5px solid salmon;
     border-radius: 10px 10px 0px 0px;
@@ -299,11 +304,13 @@ const onPaginationHover = (direction) => {
 i {
     margin: 0 .2rem;
 }
+
 .pagination-controls {
     display: flex;
     justify-content: space-between;
     margin-bottom: 1rem;
 }
+
 /* .columns-container {
     display: flex;
     flex-wrap: wrap;

@@ -45,11 +45,7 @@ watch(
       >
         <div class="">
           <div class="mt-5">
-            <div v-if="loading">
-              <p>Loading...</p>
-            </div>
-
-            <div v-else class="row">
+            <div v-if="!loading" class="row">
               <HotplaceCard
                 v-for="feed in hotplaceStore.feedList"
                 :card="feed"

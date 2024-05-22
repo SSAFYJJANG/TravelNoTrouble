@@ -24,9 +24,7 @@ const likeFeed = () => {
 
 <template>
   <div>
-    <div v-if="loading">loading...</div>
-
-    <div v-else>
+    <div v-if="!loading">
       <div class="d-flex justify-content-center">
         <img
           class="hotplace_img border rounded-3"

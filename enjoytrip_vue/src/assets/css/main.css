@@ -8174,3 +8174,19 @@ a {
 .accordion-body {
   padding: 0 ;
 }
+
+.fc .fc-button-primary { 
+  color: black; 
+  background-color: white !important; 
+  border-color: #FFFFFF; 
+}
+.fc .fc-button-primary:hover {
+  color: #49a078;
+  border-color: #FFFFFF; 
+}
+.fc-col-header-cell-cushion, .fc-daygrid-day-number {
+  color: black
+}
+.fc-daygrid-more-link {
+  color: gray;
+}

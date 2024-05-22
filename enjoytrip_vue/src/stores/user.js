@@ -27,6 +27,7 @@ export const useUserStore = defineStore("userStore", () => {
   const isValidToken = ref(false);
   const userPwd = ref(null);
   const isDuplicate = ref(false);
+  const isExist = ref(false);
 
   const getUsersCnt = async () => {
     await getUserCount(
@@ -197,15 +198,19 @@ export const useUserStore = defineStore("userStore", () => {
   };
 
   const findUserPassword = async (userId) => {
+    userPwd.value = null;
     await findPwd(
       userId,
       (response) => {
         if (response.status === httpStatusCode.OK) {
-          console.log(userId, "비밀번호:", response.data);
           userPwd.value = response.data;
+          isExist.value = true;
+        } else {
+          isExist.value = false;
         }
       },
       async (error) => {
+        isExist.value = false;
         console.log(error);
       }
     );
@@ -237,6 +242,7 @@ export const useUserStore = defineStore("userStore", () => {
     isDuplicate,
     userPwd,
     userTotalCnt,
+    isExist,
     userSignup,
     userLogin,
     getUserInfo,

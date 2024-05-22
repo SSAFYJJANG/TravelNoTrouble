@@ -9,13 +9,8 @@ const router = useRouter();
 const userStore = useUserStore();
 const boardStore = useBoardStore();
 
-const { getUserInfo, userInfo } = userStore;
+const { userInfo } = userStore;
 const { writeArticle } = boardStore;
-
-onMounted(() => {
-  let token = sessionStorage.getItem("accessToken");
-  getUserInfo(token);
-});
 
 const article = ref({
   title: "",

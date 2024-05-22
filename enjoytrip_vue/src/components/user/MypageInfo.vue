@@ -1,16 +1,15 @@
 <script setup>
-import { onMounted, ref } from "vue";
+import { computed } from "vue";
 import { useUserStore } from "@/stores/user";
 const { VITE_VUE_API_URL } = import.meta.env;
 
 const userStore = useUserStore();
 
-const { getUserInfo, userInfo } = userStore;
-const defaultProfile = ref("/src/assets/images/default_profile.png"); // 기본 이미지
-
-onMounted(() => {
-  let token = sessionStorage.getItem("accessToken");
-  getUserInfo(token);
+const { userInfo } = userStore;
+const profileImage = computed(() => {
+  return userInfo.image == null
+    ? "/src/assets/images/default_profile.png"
+    : `${VITE_VUE_API_URL}/profile/${userInfo.image}`;
 });
 </script>
 
@@ -23,15 +22,8 @@ onMounted(() => {
           <!-- 프로필 이미지 -->
           <div class="col-lg-4 px-4 py-4 d-flex justify-content-center">
             <img
-              v-if="userInfo.image != null"
-              :src="`${VITE_VUE_API_URL}/profile/${userInfo.image}`"
-              style="width: 160px; height: 160px"
-              class="rounded-pill align-self-center border"
-            />
-            <img
-              v-else
-              :src="defaultProfile"
-              style="width: 160px; height: 160px"
+              :src="profileImage"
+              style="width: 160px; height: 160px; object-fit: cover;"
               class="rounded-pill align-self-center border"
             />
           </div>
@@ -40,14 +32,14 @@ onMounted(() => {
             <div>
               <div class="mb-3 d-flex justify-content-between">
                 <div class="d-flex align-items-center">
-                  <div class="fs-4 fw-bold">
+                  <div class="fs-4 fw-light">
                     {{ userInfo.username }}
                   </div>
                   <div class="fs-5 ps-1 fw-light">({{ userInfo.userId }})</div>
                 </div>
 
                 <router-link
-                  class="btn btn-primary display-7 px-2 py-1 m-0 rounded-2 fs-6 fw-normal"
+                  class="btn btn-primary display-7 px-2 py-1 m-0 rounded-2 fs-6 fw-light"
                   :to="{ name: 'mypage-modify' }"
                 >
                   수정
@@ -57,11 +49,11 @@ onMounted(() => {
               <div class="row border rounded-3 px-3 align-center">
                 <div class="col-lg-6 my-3">
                   <p class="mb-3 fw-light">이메일</p>
-                  <p class="mb-0 fw-bold">{{ userInfo.email }}</p>
+                  <p class="mb-0 fw-light">{{ userInfo.email }}</p>
                 </div>
                 <div class="col-lg-6 my-3">
                   <p class="fw-light">주소</p>
-                  <p class="mb-0 fw-bold">
+                  <p class="mb-0 fw-llight">
                     {{ userInfo.sido_code }}시 {{ userInfo.gugun_code }}구
                   </p>
                 </div>

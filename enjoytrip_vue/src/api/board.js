@@ -32,4 +32,8 @@ async function modify(article, success, fail) {
   await local.put(`/board`, article).then(success).catch(fail);
 }
 
-export { write, list, view, modify };
+async function del(articleId, success, fail) {
+  await local.delete(`/board/${articleId}`).then(success).catch(fail);
+}
+
+export { write, list, view, modify, del };

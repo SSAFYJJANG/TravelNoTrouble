@@ -12,6 +12,7 @@
 		select b.board_id, b.title, b.userid, b.regist_time, b.modified_time, b.hit, u.username
 		from board b left join user u
 		on b.userid = u.userid
+		order by board_id desc
 	</select>
 	
 	<select id="viewBoard" parameterType="int" resultType="boardDto">

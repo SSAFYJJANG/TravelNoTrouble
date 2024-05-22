@@ -2,12 +2,81 @@ import { ref } from "vue";
 import { useRouter } from "vue-router";
 import { defineStore } from "pinia";
 
-import { upload, listFeed, viewDetail, likeFeed } from "@/api/hotplace";
+import {
+  TotalHotplaceCnt,
+  bestFeed,
+  upload,
+  listFeed,
+  modify,
+  deleteHotplaceFeed,
+  viewDetail,
+  likeFeed,
+} from "@/api/hotplace";
 import { httpStatusCode } from "@/util/http-status";
 
 export const useHotplaceStore = defineStore("hotplaceStore", () => {
   const feedList = ref(null);
   const feedInfo = ref(null);
+  const bestFeedList = ref(null);
+  const hotplaceCnt = ref(357);
+
+  const getBestHotplaceFeed = async () => {
+    await bestFeed(
+      (response) => {
+        if (response.status === httpStatusCode.OK) {
+          console.log("response", response);
+          bestFeedList.value = response.data;
+          console.log("bestFeedList", response.data);
+        }
+      },
+      async (error) => {
+        console.error("get list Best hotplac feed", error);
+      }
+    );
+  };
+
+  const getTotalHotplaceCount = async () => {
+    await TotalHotplaceCnt(
+      (response) => {
+        if (response.status === httpStatusCode.OK) {
+          console.log("response", response);
+          hotplaceCnt.value = response.data;
+          console.log("hotplaceCnt", response.data);
+        }
+      },
+      async (error) => {
+        console.error("get hotplac cnt", error);
+      }
+    );
+  };
+
+  const modifyHotplace = async (data) => {
+    await modify(
+      data,
+      (response) => {
+        if (response.status === httpStatusCode.OK) {
+          console.log("리뷰 수정 성공!!!");
+        }
+      },
+      async (error) => {
+        console.log(error);
+      }
+    );
+  };
+
+  const deleteHotplace = async (data) => {
+    await deleteHotplaceFeed(
+      data,
+      (response) => {
+        if (response.status === httpStatusCode.OK) {
+          console.log("리뷰 삭제 성공!!!");
+        }
+      },
+      async (error) => {
+        console.log(error);
+      }
+    );
+  };
 
   const uploadHotplace = async (data) => {
     await upload(
@@ -71,9 +140,15 @@ export const useHotplaceStore = defineStore("hotplaceStore", () => {
   return {
     feedList,
     feedInfo,
+    bestFeedList,
+    hotplaceCnt,
+    getBestHotplaceFeed,
+    getTotalHotplaceCount,
     uploadHotplace,
     getHotplaceFeed,
     getHotplaceDetail,
     likeHotplaceFeed,
+    deleteHotplace,
+    modifyHotplace,
   };
 });

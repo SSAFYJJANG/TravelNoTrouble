@@ -12,8 +12,8 @@
 		where plan_id = {plan_id}
 	</select>
 
-	<insert id="insertPlanDetail" parameterType="planDetailDto">
-		insert into plan_detail(plan_id, content_id)
+	<insert id="addPlanDetail" parameterType="planDetailDto"  >
+		insert into plan_detail(plan_id, plan_days_ content_id)
 		values (#{plan_id}, #{content_id})
 	</insert>
 	

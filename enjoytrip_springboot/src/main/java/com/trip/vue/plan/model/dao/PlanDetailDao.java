@@ -3,16 +3,19 @@ package com.trip.vue.plan.model.dao;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Options;
 
 import com.trip.vue.plan.model.PlanDetailDto;
-import com.trip.vue.plan.model.PlanDto;
 
 @Mapper
 public interface PlanDetailDao {
+	// 처음 세부 일정 넣기
+	@Options(useGeneratedKeys = true, keyProperty = "plan_detail_id", keyColumn = "plan_detail_id")
+    void insertPlanDetail(PlanDetailDto planDetail);
 	// list 가져오기
 	public List<PlanDetailDto> listPlanDetail(int plan_id) throws Exception;
 	// 세부일정 쓰기
-	public int insertPlanDetail(PlanDetailDto ob) throws Exception;
+	public int addPlanDetail(PlanDetailDto ob) throws Exception;
 	// 세부일정 삭제
 	public int deletePlanDetail(int plan_detail_id) throws Exception;
 	// 전체 세부 일정 삭제

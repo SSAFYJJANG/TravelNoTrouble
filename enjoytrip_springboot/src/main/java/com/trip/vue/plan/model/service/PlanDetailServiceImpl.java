@@ -21,8 +21,8 @@ public class PlanDetailServiceImpl implements PlanDetailService{
 	
 	@Transactional
 	@Override
-	public int insertPlanDetail(PlanDetailDto ob) throws Exception {
-		return planDetailDao.insertPlanDetail(ob);
+	public int addPlanDetail(PlanDetailDto ob) throws Exception {
+		return planDetailDao.addPlanDetail(ob);
 	}
 	
 	@Override

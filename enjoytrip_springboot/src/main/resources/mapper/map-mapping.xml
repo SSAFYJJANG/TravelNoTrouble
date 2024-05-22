@@ -14,9 +14,11 @@
 	</select>
 
 	<select id="getAttractionList" parameterType="map" resultType="attractionDto">
-		select ai.content_id, title, addr1, first_image, sido_code, gugun_code, longitude, latitude, overview
+		select ai.content_id, title, addr1, first_image, sido_code, gugun_code, longitude, latitude, overview,
+		CASE WHEN ac.userId IS NOT NULL THEN TRUE ELSE FALSE END AS isLiked
 		from attraction_info ai left join attraction_description ad
-		on ai.content_id = ad.content_id
+		on ai.content_id = ad.content_id left join attraction_cart ac 
+		on ai.content_id = ac.content_id
 		<where>
 	        <if test='sido_code != 0 and sido_code != ""'>
 	            AND sido_code = #{sido_code}
@@ -54,7 +56,8 @@
 	</select>
 	
 	<select id="getUserAttractionList" parameterType="string">
-		select * from attraction_cart
+		select content_id
+		from attraction_cart
 		where userid=#{userid}
 	</select>
 	

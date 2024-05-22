@@ -30,4 +30,5 @@ public class AttractionDto {
 	private String created_time;
 	private String modified_time;
 	private String booktour;
+	private String isLiked;
 }

@@ -13,7 +13,7 @@ const clickDay = (day) => {
 </script>
 
 <template>
-  <div id="modal" class="px-3">
+  <div class="px-3">
     <!-- 여행 계획 헤더 -->
     <div>
       <div class="d-flex justify-content-center">
@@ -46,25 +46,27 @@ const clickDay = (day) => {
     <hr class="mt-0" />
 
     <!-- 여행 계획 내용 -->
-    <div
-      v-if="props.details != null && props.details.length == 0"
-      class="d-flex justify-content-center fs-6"
-    >
-      계획이 없습니다.
+    <div id="scroll">
+      <div
+        v-if="props.details != null && props.details.length == 0"
+        class="d-flex justify-content-center fs-6"
+      >
+        계획이 없습니다.
+      </div>
+      <PlanDetailItem
+        v-else
+        v-for="detail in props.details"
+        :detail="detail"
+        :day="selectedDay"
+        :first_day="props.plan.first_day"
+      />
     </div>
-    <PlanDetailItem
-      v-else
-      v-for="detail in props.details"
-      :detail="detail"
-      :day="selectedDay"
-      :first_day="props.plan.first_day"
-    />
   </div>
 </template>
 
 <style scoped>
-#modal {
-  max-height: 70vh;
+#scroll {
+  max-height: 60vh;
   overflow-y: auto;
   overflow-x: hidden;
 }

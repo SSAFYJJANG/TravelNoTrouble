@@ -36,7 +36,6 @@ public class MapServiceImpl implements MapService{
 			}
 			map.get(sido_code).add(g);
 		}
-		System.out.println(map);
 		return map;
 	}
 

@@ -18,6 +18,10 @@ const clickDay = (day) => {
 const goModifyMode = (detailId, onoff) => {
   emit("goModifyMode", detailId, onoff);
 };
+
+const deletePlan = () => {
+  console.log("삭제할 플랜", props.plan.plan_id);
+};
 </script>
 
 <template>
@@ -44,17 +48,25 @@ const goModifyMode = (detailId, onoff) => {
       </p>
     </div>
 
-    <button
-      v-for="(cnt, index) in props.plan.days"
-      class="border fs-6 m-0"
-      @click="clickDay(index + 1)"
-    >
-      {{ index + 1 }}일차
-    </button>
-    <hr class="mt-0" />
+    <!-- N일차 버튼 -->
+    <div id="scroll-x" class="border-bottom">
+      <button
+        v-for="(cnt, index) in props.plan.days"
+        class="border fs-6 m-0 pb-1"
+        style="
+          text-align: center;
+          text-decoration: none;
+          width: 55px;
+          border-radius: 5px 5px 0 0;
+        "
+        @click="clickDay(index + 1)"
+      >
+        <span style="font-size: 13px">{{ index + 1 }}일차</span>
+      </button>
+    </div>
 
     <!-- 여행 계획 내용 -->
-    <div id="scroll">
+    <div id="scroll" class="mt-3">
       <div
         v-if="props.details != null && props.details.length == 0"
         class="d-flex justify-content-center fs-6"
@@ -73,6 +85,13 @@ const goModifyMode = (detailId, onoff) => {
         @goModifyMode="goModifyMode"
       />
     </div>
+
+    <!-- 삭제 -->
+    <div class="d-flex justify-content-end" @click="deletePlan">
+      <button class="btn btn-outline-danger px-2 p-0 me-4 fs-6 fw-light">
+        전체삭제
+      </button>
+    </div>
   </div>
 </template>
 
@@ -82,12 +101,18 @@ const goModifyMode = (detailId, onoff) => {
   overflow-y: auto;
   overflow-x: hidden;
 }
+#scroll-x {
+  white-space: nowrap;
+  overflow-x: scroll;
+  overflow-y: hidden;
+}
 ::-webkit-scrollbar-track {
   border-radius: 0.125rem;
   background-color: white;
 }
 ::-webkit-scrollbar {
   width: 0.25rem;
+  height: 0.25rem;
   border-radius: 0.125rem;
 }
 ::-webkit-scrollbar-thumb {

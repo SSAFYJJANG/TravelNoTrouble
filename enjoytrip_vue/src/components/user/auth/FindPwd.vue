@@ -8,12 +8,15 @@ const router = useRouter();
 const userStore = useUserStore();
 
 const { isLogin, isLoginError } = storeToRefs(userStore);
-const { userLogin, getUserInfo, findUserPassword, userPwd } = userStore;
+const { findUserPassword, userPwd, isExist } = userStore;
 
 const userid = ref(null);
+const checkClick = ref(false);
 
 const findPassword = async () => {
+  checkClick.value = false;
   await findUserPassword(userid.value);
+  checkClick.value = true;
 };
 </script>
 
@@ -47,20 +50,22 @@ const findPassword = async () => {
             </table>
 
             <div>
-                <div v-if="userStore.userPwd == null">
-                    <button
-                        class="btn btn-primary display-7 py-2 px-4 mt-3 rounded-2 fs-6 fw-normal"
-                        @click="findPassword"
-                    >
-                        비밀번호 찾기
-                    </button>
-                </div>
-                
-                <div v-else>
-                    <div class="display-7 py-2 px-4 mt-3 fs-6 fw-light text-primary">
-                        비밀번호 : {{ userStore.userPwd }}
-                    </div>
-                </div>
+              <div>
+                  <div v-if="checkClick && userStore.userPwd" class="display-7 py-2 px-4 my-0 fs-6 fw-light">
+                      비밀번호 : {{ userStore.userPwd }}
+                  </div>
+                  <div v-if="checkClick && !userStore.userPwd" class="display-7 py-2 px-4 my-0 fs-6 fw-light" style="color: red">
+                    비밀번호를 찾을 수 없습니다.
+                  </div>
+              </div>
+              <div>
+                  <button
+                      class="btn btn-primary display-7 py-2 px-4 rounded-2 fs-6 fw-normal"
+                      @click="findPassword"
+                  >
+                      비밀번호 찾기
+                  </button>
+              </div>
             </div>
 
             <div class="mb-4">

@@ -110,5 +110,16 @@ export default {
       first_image2 : imgsrc,
       overview : "is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum."
     }
+  ],
+  content_types : [
+    { text: '전체', value: '0' },
+    { text: '관광지', value: '1' },
+    { text: '문화시설', value: '2' },
+    { text: '축제공연행사', value: '3' },
+    { text: '여행코스', value: '4' },
+    { text: '레포츠', value: '5' },
+    { text: '숙박', value: '6' },
+    { text: '쇼핑', value: '7' },
+    { text: '식당', value: '8' }
   ]
 };

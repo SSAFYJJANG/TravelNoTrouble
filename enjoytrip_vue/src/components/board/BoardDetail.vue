@@ -55,16 +55,17 @@ const onDeleteArticle = () => {
         >
           글목록
         </router-link>
-        <router-link
-          :to="{
-            name: 'article-modify',
-            params: { articleno: boardStore.articleInfo.board_id },
-          }"
-          class="btn btn-outline-success py-1 px-2 mb-3 ms-1 rounded-2"
-        >
-          글수정
-        </router-link>
         <div v-if="userInfo != null">
+          <router-link
+            v-if="userInfo.userId == boardStore.articleInfo.userId"
+            :to="{
+              name: 'article-modify',
+              params: { articleno: boardStore.articleInfo.board_id },
+            }"
+            class="btn btn-outline-success py-1 px-2 mb-3 ms-1 rounded-2"
+          >
+            글수정
+          </router-link>
           <button
             v-if="userInfo.userId == boardStore.articleInfo.userId"
             type="button"

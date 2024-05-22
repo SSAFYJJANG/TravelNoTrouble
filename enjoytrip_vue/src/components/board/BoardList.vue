@@ -76,13 +76,12 @@ const getArticleList = () => {
       <div class="col-lg-10">
         <div class="row align-self-center mb-2">
           <div class="col-md-2 text-start">
-            <button
-              type="button"
+            <router-link
               class="btn btn-sm btn-outline-success py-1 px-2"
-              @click="moveWrite"
+              :to="{ name: 'article-write' }"
             >
               글쓰기
-            </button>
+            </router-link>
           </div>
           <div class="col-md-5 offset-5">
             <form class="d-flex">

@@ -1,29 +1,62 @@
 <script setup>
-import { defineProps } from "vue";
+import { ref, defineProps } from "vue";
 import PlanDetailItem from "./PlanDetailItem.vue";
 
 const props = defineProps(["plan", "details"]);
+
+const selectedDay = ref(1);
+const clickDay = (day) => {
+  selectedDay.value = day;
+};
 </script>
 
 <template>
   <div id="modal" class="px-3">
     <!-- 여행 계획 헤더 -->
     <div>
-      <p class="fs-6 fw-light mb-3">
-        {{ props.plan.start_date }} ~ {{ props.plan.end_date }}
-      </p>
-      <p class="d-flex justify-content-center fs-4 fw-light">
+      <div class="d-flex justify-content-center">
+        <span
+          class="d-flex justify-content-center fw-light mb-3"
+          style="font-size: 15px"
+        >
+          {{ props.plan.start_date }}
+        </span>
+        <span
+          v-if="props.plan.end_date"
+          class="d-flex justify-content-center fw-light mb-3 ps-1"
+          style="font-size: 15px"
+        >
+          ~ {{ props.plan.end_date }}
+        </span>
+      </div>
+      <p class="d-flex justify-content-center fs-4 fw-light mb-2">
         {{ props.plan.title }}
       </p>
     </div>
 
-    <hr />
+    <button
+      v-for="(cnt, index) in props.plan.days"
+      class="border fs-6 m-0"
+      @click="clickDay(index + 1)"
+    >
+      {{ index + 1 }}일차
+    </button>
+    <hr class="mt-0" />
 
     <!-- 여행 계획 내용 -->
-    <div v-if="props.details != null && props.details.length == 0">
-      아직 계획이 없습니다.
+    <div
+      v-if="props.details != null && props.details.length == 0"
+      class="d-flex justify-content-center fs-6"
+    >
+      계획이 없습니다.
     </div>
-    <PlanDetailItem v-else v-for="detail in props.details" :detail="detail" />
+    <PlanDetailItem
+      v-else
+      v-for="detail in props.details"
+      :detail="detail"
+      :day="selectedDay"
+      :first_day="props.plan.first_day"
+    />
   </div>
 </template>
 

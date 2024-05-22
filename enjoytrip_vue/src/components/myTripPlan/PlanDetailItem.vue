@@ -1,27 +1,22 @@
 <script setup>
-import { defineProps, onMounted } from "vue";
+import { defineProps } from "vue";
 
-const props = defineProps(["detail"]);
+const props = defineProps(["detail", "day", "first_day"]);
 </script>
 
 <template>
   <div
+    v-if="props.detail.plan_days_id - props.first_day + 1 == day"
     class="row border rounded my-2 mx-4 py-2 align-items-center"
     style="font-size: 14px"
   >
     <div class="col-4">
-      <!-- 이미지1 -->
+      <!-- 이미지 -->
       <img
         :src="`/src/assets/images/${props.detail.first_image}`"
         style="width: 150px; height: 100px; object-fit: cover"
         class="rounded-2"
       />
-      <!-- 이미지2 -->
-      <!-- <img
-        :src="`/src/assets/images/${props.detail.first_image2}`"
-        style="width: 150px; height: 100px; object-fit: cover"
-        class="border"
-      /> -->
     </div>
 
     <div class="col-8">

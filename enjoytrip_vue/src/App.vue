@@ -1,9 +1,9 @@
 <script setup>
-import { ref , onMounted } from "vue";
+import { ref, onMounted } from "vue";
 import { RouterView } from "vue-router";
 import Header from "@/components/header/Header.vue";
 import Footer from "@/components/footer/Footer.vue";
-import router from "@/router"
+import router from "@/router";
 
 const path = ref("");
 
@@ -12,8 +12,8 @@ router.afterEach((to, from) => {
   if (from.name && to.name && to.name != "article-view") {
     router.go(0);
   }
-    path.value = to.name;
-    console.log(to.name);
+  path.value = to.name;
+  console.log(to.name);
 });
 
 onMounted(() => {
@@ -50,7 +50,9 @@ async function loadScripts() {
 .page {
   min-height: calc(100vh - 3rem);
 }
-.auth-login, .auth-signup, .auth-pwd {
+.auth-login,
+.auth-signup,
+.auth-pwd {
   display: none;
 }
 footer.place {

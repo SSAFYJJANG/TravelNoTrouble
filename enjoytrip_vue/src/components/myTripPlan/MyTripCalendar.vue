@@ -13,8 +13,6 @@ import { httpStatusCode } from "@/util/http-status";
 const userStore = useUserStore();
 const { userInfo } = userStore;
 
-const handleDateSelect = (selectInfo) => {};
-
 const viewPlanModal = ref(false);
 const togglePlanModal = () => {
   viewPlanModal.value = !viewPlanModal.value;
@@ -29,19 +27,30 @@ const planInfo = ref({
 });
 
 const handleEventClick = (clickInfo) => {
+  const start_day = new Date(clickInfo.event.startStr).getTime();
+  const end_day = new Date(clickInfo.event.endStr).getTime();
+  const diff = Math.abs((start_day - end_day) / (1000 * 60 * 60 * 24));
+
   planInfo.value = {
     plan_id: clickInfo.event.id,
     title: clickInfo.event.title,
     start_date: clickInfo.event.startStr,
     end_date: clickInfo.event.endStr,
+    days: isNaN(diff) ? 1 : diff + 1,
+    first_day: null,
   };
 
   listDetail(
     planInfo.value.plan_id,
     (response) => {
       if (response.status === httpStatusCode.OK) {
-        console.log("DETAIL", response.data);
         planDetailList.value = response.data;
+        planInfo.value.first_day = planDetailList.value.reduce(
+          (prev, value) => {
+            return prev.plan_days_id <= value.plan_days_id ? prev : value;
+          }
+        );
+        planInfo.value.first_day = planInfo.value.first_day.plan_days_id;
       }
     },
     async (error) => {
@@ -51,16 +60,16 @@ const handleEventClick = (clickInfo) => {
   togglePlanModal();
 };
 
+const planList = ref(null);
 onMounted(async () => {
   const plans = ref(null);
   list(
     userInfo.userId,
     (response) => {
       if (response.status === httpStatusCode.OK) {
-        // console.log("planList", response.data); // planList
-        const list = response.data;
+        planList.value = response.data;
         const calendarEl = document.querySelector("#calendar");
-        plans.value = list.map(function (plan) {
+        plans.value = planList.value.map(function (plan) {
           return {
             id: plan.plan_id,
             title: plan.title,
@@ -89,7 +98,6 @@ onMounted(async () => {
           },
           dayMaxEventRows: true,
           dayMaxEvents: true,
-          select: handleDateSelect,
           eventClick: handleEventClick,
           events: plans.value,
         });
@@ -107,8 +115,6 @@ onMounted(async () => {
   <div class="demo-app w-100">
     <div class="demo-app-main w-100">
       <div id="calendar"></div>
-      <!-- <FullCalendar class="demo-app-calendar" :options="calendarOptions">
-      </FullCalendar> -->
     </div>
   </div>
 

@@ -12,6 +12,11 @@
   "dependencies": {
     "@coreui/coreui": "^5.0.1",
     "@coreui/vue": "^5.0.0",
+    "@fullcalendar/core": "^6.1.12",
+    "@fullcalendar/daygrid": "^6.1.12",
+    "@fullcalendar/interaction": "^6.1.12",
+    "@fullcalendar/timegrid": "^6.1.12",
+    "@fullcalendar/vue3": "^6.1.12",
     "@headlessui/vue": "^1.7.22",
     "@popperjs/core": "^2.11.8",
     "@vueup/vue-quill": "^1.2.0",

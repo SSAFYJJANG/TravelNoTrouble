@@ -22,6 +22,7 @@ const signupUser = ref({
 const possible = ref(false);
 const checkClick = ref(false);
 const errorId = ref(false);
+
 const checkId = async () => {
   const validateId = /^[A-Za-z0-9]{4,8}$/
   userStore.isDuplicate = false;
@@ -42,20 +43,37 @@ const checkId = async () => {
 
 const clickSignup = () => {
   if (checkClick.value && !userStore.isDuplicate) {
-    userSignup(signupUser.value);
-    router.replace({ name: "auth-login" });
+    console.log(checkEmail(signupUser.value.email));
+    if (checkEmail(signupUser.value.email)) {
+      userSignup(signupUser.value);
+      router.replace({ name: "auth-login" });
+    } else {
+      alert("이메일 형식이 적절하지 않습니다.")
+    }
   } else {
     alert("아이디 중복 검사는 필수입니다.");
+    return;
   }
+
 };
 
-const validateEmail = (email) => {
-  return String(email)
-    .toLowerCase()
-    .match(
-      /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
-    );
-}
+
+const checkEmail = () => { 
+  const validateEmail = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
+
+  if (!validateEmail.test(signupUser.value.email) || !signupUser.value.email) {
+    return false;
+  }
+  return true;
+};
+
+// const validateEmail = (email) => {
+//   return String(email)
+//     .toLowerCase()
+//     .match(
+//       /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
+//     );
+// }
 </script>
 
 <template>

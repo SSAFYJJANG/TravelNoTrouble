@@ -5,13 +5,8 @@ const { VITE_VUE_API_URL } = import.meta.env;
 
 const userStore = useUserStore();
 
-const { getUserInfo, userInfo } = userStore;
+const { userInfo } = userStore;
 const defaultProfile = ref("/src/assets/images/default_profile.png"); // 기본 이미지
-
-onMounted(() => {
-  let token = sessionStorage.getItem("accessToken");
-  getUserInfo(token);
-});
 </script>
 
 <template>

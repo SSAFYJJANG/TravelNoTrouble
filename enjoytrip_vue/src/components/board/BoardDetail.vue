@@ -9,13 +9,11 @@ const route = useRoute();
 const router = useRouter();
 const userStore = useUserStore();
 const boardStore = useBoardStore();
-const { getUserInfo, userInfo } = userStore;
+const { userInfo } = userStore;
 const { getArticleView, articleInfo, deleteArticle } = boardStore;
 const { articleno } = route.params;
 
 onMounted(() => {
-  let token = sessionStorage.getItem("accessToken");
-  getUserInfo(token);
   getArticleView(articleno);
 });
 
@@ -44,7 +42,6 @@ const onDeleteArticle = () => {
 
         <div class="ql-editor mb-3">
           <div :innerHTML="boardStore.articleInfo.overview"></div>
-          <!-- <div class="mt-5"><button id="article-like">❤</button>좋아요 7</div> -->
         </div>
       </div>
 

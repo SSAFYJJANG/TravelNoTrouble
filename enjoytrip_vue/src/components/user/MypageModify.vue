@@ -6,12 +6,7 @@ const { VITE_VUE_API_URL } = import.meta.env;
 
 const userStore = useUserStore();
 const router = useRouter();
-const { getUserInfo, userInfo, updateUserInfo, deleteUserInfo } = userStore;
-
-onMounted(() => {
-  let token = sessionStorage.getItem("accessToken");
-  getUserInfo(token);
-});
+const { userInfo, updateUserInfo, deleteUserInfo } = userStore;
 
 const formData = new FormData();
 const info = ref({

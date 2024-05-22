@@ -70,4 +70,17 @@ const clickDay = (day) => {
   overflow-y: auto;
   overflow-x: hidden;
 }
+::-webkit-scrollbar-track {
+  border-radius: 0.125rem;
+  background-color: white;
+}
+::-webkit-scrollbar {
+  width: 0.25rem;
+  border-radius: 0.125rem;
+}
+::-webkit-scrollbar-thumb {
+  border-radius: 0.125rem;
+  /* background-color: gray; */
+  background-color: lightgray;
+}
 </style>

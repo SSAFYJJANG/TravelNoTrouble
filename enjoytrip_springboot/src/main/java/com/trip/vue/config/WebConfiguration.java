@@ -7,6 +7,7 @@ import org.springframework.http.HttpMethod;
 import org.springframework.web.filter.CharacterEncodingFilter;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
+import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
@@ -33,6 +34,7 @@ public class WebConfiguration implements WebMvcConfigurer {
 						HttpMethod.PATCH.name())
 			.maxAge(1800); // Pre-flight Caching
 	}
+
 	
 	@Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
@@ -40,5 +42,9 @@ public class WebConfiguration implements WebMvcConfigurer {
 		registry.addResourceHandler("/profile/**").addResourceLocations("file:///C:/profile/");
 //		registry.addResourceHandler("/*.html**").addResourceLocations("classpath:/static/");
     }
-
+	@Override
+	public void addInterceptors(InterceptorRegistry registry) {
+		// TODO Auto-generated method stub
+		registry.addInterceptor(jwtInterceptor).addPathPatterns("/**").excludePathPatterns("/user/**");
+	}
 }

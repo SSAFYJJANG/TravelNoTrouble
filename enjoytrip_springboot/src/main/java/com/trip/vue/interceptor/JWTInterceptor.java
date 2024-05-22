@@ -27,7 +27,9 @@ public class JWTInterceptor implements HandlerInterceptor {
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
 			throws Exception {
 		final String token = request.getHeader(HEADER_AUTH);
-
+		log.info("request : {}", request);		
+		log.info("token : {}", token);
+		log.info("JWT Interceptor 가능 : {}", token);
 		if (token != null && jwtUtil.checkToken(token)) {
 			log.info("토큰 사용 가능 : {}", token);
 			return true;

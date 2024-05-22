@@ -77,7 +77,7 @@ public class MapController {
 		}
 	}
 	// get추천 여행지(랜덤 or 핫플기반) 가져오기 - 메인화면 "/best"
-	@GetMapping("/best")
+	@GetMapping("/recommend")
 	public ResponseEntity<?> getRecommendationAttraction() throws Exception{
 		try {
 			return new ResponseEntity<AttractionDto>(service.getRecommendationAttraction(), HttpStatus.OK);
@@ -111,15 +111,6 @@ public class MapController {
 		try {
 			log.info("deleteAttraction access = {}", map);
 			return new ResponseEntity<Integer>(service.deleteAttraction(map), HttpStatus.OK);
-		} catch (Exception e) {
-			return new ResponseEntity<String>("서버 오류", HttpStatus.INTERNAL_SERVER_ERROR);
-		}
-	}
-	// 사용자가 찜한 관광지 다 삭제하기
-	@DeleteMapping("/cart/{userid}")
-	public ResponseEntity<?> deleteAllAttraction(@PathVariable("userid") String userid) throws Exception{
-		try {
-			return new ResponseEntity<Integer>(service.deleteAllAttraction(userid), HttpStatus.OK);
 		} catch (Exception e) {
 			return new ResponseEntity<String>("서버 오류", HttpStatus.INTERNAL_SERVER_ERROR);
 		}

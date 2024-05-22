@@ -29,13 +29,12 @@ function localAxios() {
   instance.defaults.headers.put["Content-Type"] = "application/json;charset=utf-8";
 
   // Request, Response 시 설정한 내용을 적용.
-  instance.interceptors.request.use((config) => {
-    console.log(config);
-    return config;
-  }),
-    (error) => {
-      return Promise.reject(error);
-    };
+  // instance.interceptors.request.use((config) => {
+  //   return config;
+  // }),
+  //   (error) => {
+  //     return Promise.reject(error);
+  //   };
 
   //   // accessToken의 값이 유효하지 않은 경우,
   //   // refreshToken을 이용해 재발급 처리.

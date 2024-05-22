@@ -4,6 +4,7 @@ import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.filter.CharacterEncodingFilter;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
@@ -15,6 +16,7 @@ import com.trip.vue.interceptor.JWTInterceptor;
 
 @Configuration
 @EnableWebMvc
+@CrossOrigin(origins="http://localhost:8080/trip")
 public class WebConfiguration implements WebMvcConfigurer {
 	
 	private JWTInterceptor jwtInterceptor;
@@ -42,9 +44,9 @@ public class WebConfiguration implements WebMvcConfigurer {
 		registry.addResourceHandler("/profile/**").addResourceLocations("file:///C:/profile/");
 //		registry.addResourceHandler("/*.html**").addResourceLocations("classpath:/static/");
     }
-	@Override
-	public void addInterceptors(InterceptorRegistry registry) {
-		// TODO Auto-generated method stub
-		registry.addInterceptor(jwtInterceptor).addPathPatterns("/**").excludePathPatterns("/user/**");
-	}
+//	@Override
+//	public void addInterceptors(InterceptorRegistry registry) {
+//		// TODO Auto-generated method stub
+//		registry.addInterceptor(jwtInterceptor).addPathPatterns("/**").excludePathPatterns("/user/**");
+//	}
 }

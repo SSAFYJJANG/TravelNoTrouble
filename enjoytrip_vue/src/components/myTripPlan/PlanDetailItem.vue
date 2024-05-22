@@ -14,12 +14,10 @@ const props = defineProps([
 const emit = defineEmits(["goModifyMode"]);
 
 const clickModify = () => {
-  console.log("수정할 플랜 디테일 아이디", props.detail.plan_detail_id);
   emit("goModifyMode", props.detail.plan_detail_id, true);
 };
 
 const completeModify = () => {
-  console.log("수정후", props.detail.overview);
   modifyDetail(
     {
       plan_detail_id: props.detail.plan_detail_id,
@@ -35,6 +33,10 @@ const completeModify = () => {
       console.log(error);
     }
   );
+};
+
+const clickDelete = () => {
+  console.log("삭제할 플랜 디테일 아이디", props.detail.plan_detail_id);
 };
 </script>
 
@@ -68,7 +70,7 @@ const completeModify = () => {
         />
         <p
           v-else
-          class="m-0 px-2 py-2 rounded-1 w-100"
+          class="m-0 p-2 rounded-1 w-100"
           style="background-color: #ebebeb"
         >
           {{ props.detail.overview }}
@@ -81,13 +83,28 @@ const completeModify = () => {
         >
           <i class="bi bi-check-square" style="color: gray"></i>
         </button>
-        <button
+        <div
           v-else
-          class="position-absolute bottom-0 end-0 p-0"
-          @click="clickModify"
+          class="position-absolute p-0"
+          style="bottom: -4px; right: 0"
         >
-          <i class="bi bi-pencil-square" style="color: gray"></i>
-        </button>
+          <div class="d-flex flex-column">
+            <button class="m-0 p-0">
+              <i
+                class="bi bi-pencil-square"
+                style="color: gray"
+                @click="clickModify"
+              ></i>
+            </button>
+            <button class="m-0 p-0">
+              <i
+                class="bi bi-trash3"
+                style="color: gray"
+                @click="clickDelete"
+              ></i>
+            </button>
+          </div>
+        </div>
       </div>
     </div>
   </div>

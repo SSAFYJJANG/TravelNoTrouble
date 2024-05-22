@@ -16,7 +16,7 @@ onMounted(async () => {
   loading.value = false;
 });
 
-const likeFeed = () => { 
+const likeFeed = () => {
   likeHotplaceFeed(info.value.hotplace_id);
   info.value.like++;
 };
@@ -24,27 +24,30 @@ const likeFeed = () => {
 
 <template>
   <div>
-    <div v-if="loading">
-      loading...
-    </div>
+    <div v-if="loading">loading...</div>
 
     <div v-else>
       <div class="d-flex justify-content-center">
-        <img class="hotplace_img border rounded-3" :src="`${VITE_VUE_API_URL}/img/${props.card.image}`" />
+        <img
+          class="hotplace_img border rounded-3"
+          :src="`${VITE_VUE_API_URL}/img/${props.card.image}`"
+        />
       </div>
 
       <div class="my-4 mx-5">
         <h4>{{ info.title }}</h4>
         <div class="d-flex justify-content-between">
-          <div>{{ hotplaceStore.feedInfo.userId }} | {{ info.regist_time }}</div>
+          <div>
+            {{ hotplaceStore.feedInfo.userId }} | {{ info.regist_time }}
+          </div>
           <button @click="likeFeed">
             <i class="bi bi-heart-fill"></i>
-            좋아요 {{ info.like }}</button>  
+            좋아요 {{ info.like }}
+          </button>
         </div>
-        
+
         <hr class="mt-3 mb-3" />
         <p>{{ info.overview }}</p>
-        
       </div>
     </div>
   </div>
@@ -52,7 +55,7 @@ const likeFeed = () => {
 
 <style scoped>
 .hotplace_img {
-  height: 300px;
+  height: 400px;
   width: 500px;
   object-fit: cover;
 }

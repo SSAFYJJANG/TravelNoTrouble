@@ -16,16 +16,17 @@ onMounted(() => {
   getUserInfo(token);
 });
 
-const previewImage = ref("/src/assets/images/gallery06.jpg"); // 기본 이미지
+const previewImage = ref("/src/assets/images/no_image.jpeg"); // 기본 이미지
 const info = ref({
   title: "",
   overview: "",
-  image: "",
+  image: null,
   userId: userInfo.userId,
   sido_code: null,
   gugun_code: null,
 });
 const fileImage = ref(null);
+const fileCheck = ref(false);
 
 const uploadImage = (event) => {
   const files = event.target?.files;
@@ -38,16 +39,20 @@ const uploadImage = (event) => {
     reader.readAsDataURL(file);
 
     info.value.image = file.name;
-    // 이미지 파일 이름 : file.name
     fileImage.value = file;
+    fileCheck.value = true;
   }
 };
 
 const clickSubmit = async () => {
-  formData.append("info", encodeURIComponent(JSON.stringify(info.value)));
-  formData.append("fileImage", fileImage.value);
-  await uploadHotplace(formData);
-  router.replace({ name: "hotplace-feed" });
+  if (fileCheck.value) {
+    formData.append("info", encodeURIComponent(JSON.stringify(info.value)));
+    formData.append("fileImage", fileImage.value);
+    await uploadHotplace(formData);
+    router.replace({ name: "hotplace-feed" });
+  } else {
+    alert("이미지를 첨부해주세요.");
+  }
 };
 </script>
 
@@ -58,22 +63,34 @@ const clickSubmit = async () => {
       <div>
         <div class="row">
           <!-- 이미지 파일 업로드 -->
-          <div class="col-lg-6">
-            <input
-              type="file"
-              id="upfile"
-              name="upfile"
-              multiple="multiple"
-              hidden
-              @change="uploadImage"
-            />
-            <label for="upfile">
-              <img
-                class="border rounded-2"
-                style="object-fit: cover; width: 516px; height: 516px"
-                :src="previewImage"
+          <div class="position-relative col-lg-6">
+            <div>
+              <input
+                type="file"
+                id="upfile"
+                name="upfile"
+                multiple="multiple"
+                hidden
+                @change="uploadImage"
               />
-            </label>
+              <label for="upfile" class="w-100">
+                <img
+                  class="border rounded-3"
+                  style="height: 410px; object-fit: cover"
+                  :src="previewImage"
+                />
+              </label>
+              <i
+                class="position-absolute top-0 end-0 fa-solid fa-square-pen fs-4"
+                style="color: #acb4b9"
+              ></i>
+            </div>
+            <div
+              v-if="fileCheck == false"
+              class="d-flex justify-content-center"
+            >
+              이미지 첨부는 필수입니다.
+            </div>
           </div>
 
           <!-- 입력 폼 -->
@@ -167,7 +184,7 @@ const clickSubmit = async () => {
                   <button
                     type="button"
                     class="btn btn-primary btn-xl fs-6"
-                    @click.once="clickSubmit"
+                    @click="clickSubmit"
                   >
                     피드 올리기
                   </button>
@@ -185,4 +202,14 @@ const clickSubmit = async () => {
 .hot-input {
   font-size: 0.9rem;
 }
+.hot-input:hover,
+.hot-input:focus {
+  box-shadow: rgba(0, 0, 0, 0.07) 0px 1px 1px 0px,
+    rgba(0, 0, 0, 0.07) 0px 1px 3px 0px, rgba(0, 0, 0, 0.03) 0px 0px 0px 1px;
+  border-color: #49a078;
+}
+/* i {
+  top: 10px;
+  left: 20px;
+} */
 </style>

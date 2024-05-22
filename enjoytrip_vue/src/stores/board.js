@@ -2,7 +2,7 @@ import { ref } from "vue";
 import { useRouter } from "vue-router";
 import { defineStore } from "pinia";
 
-import { listArticle, viewDetail, modify } from "@/api/board";
+import { write, list, view, modify } from "@/api/board";
 import { httpStatusCode } from "@/util/http-status";
 
 export const useBoardStore = defineStore("boardStore", () => {
@@ -16,41 +16,26 @@ export const useBoardStore = defineStore("boardStore", () => {
   const userInfo = ref(null);
   const isValidToken = ref(false);
 
-  const uploadHotplace = async (data) => {
-    await upload(
-      data,
+  const writeArticle = async (article) => {
+    await write(
+      article,
       (response) => {
         if (response.status === httpStatusCode.CREATE) {
-            console.log("response", response);
+          console.log("response", response);
         }
       },
       async (error) => {
-        console.error("upload hotplace feed", error);
+        console.error(error);
       }
     );
   };
 
   const getBoardList = async () => {
-    await listArticle(
-        "",
-        (response) => { 
-            if (response.status === httpStatusCode.OK) {
-                boardList.value = response.data;
-            }
-        },
-        async (error) => {
-            console.log(error);
-        }
-    );
-  };
-
-  const getArticleView = async (articleno) => {
-    await viewDetail(
-      articleno,
+    await list(
+      "",
       (response) => {
-          if (response.status === httpStatusCode.OK) {
-            articleInfo.value = response.data;
-            console.log("board view", articleInfo.value);
+        if (response.status === httpStatusCode.OK) {
+          boardList.value = response.data;
         }
       },
       async (error) => {
@@ -59,25 +44,41 @@ export const useBoardStore = defineStore("boardStore", () => {
     );
   };
 
-    const modifyArticle = async (article) => { 
-        await modify(
-            article,
-            (response) => { 
-                if (response.status === httpStatusCode.OK) {
-                    console.log("수정 성공!!!");
-                }
-            },
-            async (error) => {
-                console.log(error);
-             }
-        );
-    };
+  const getArticleView = async (articleno) => {
+    await view(
+      articleno,
+      (response) => {
+        if (response.status === httpStatusCode.OK) {
+          articleInfo.value = response.data;
+          console.log("board view", articleInfo.value);
+        }
+      },
+      async (error) => {
+        console.log(error);
+      }
+    );
+  };
+
+  const modifyArticle = async (article) => {
+    await modify(
+      article,
+      (response) => {
+        if (response.status === httpStatusCode.OK) {
+          console.log("수정 성공!!!");
+        }
+      },
+      async (error) => {
+        console.log(error);
+      }
+    );
+  };
 
   return {
-      boardList,
-      articleInfo,
-      getBoardList,
-      getArticleView,
-      modifyArticle
+    boardList,
+    articleInfo,
+    writeArticle,
+    getBoardList,
+    getArticleView,
+    modifyArticle,
   };
 });

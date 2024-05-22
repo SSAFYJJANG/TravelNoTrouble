@@ -31,7 +31,10 @@ function onDeleteArticle() {
 
 <template>
   <div class="container py-5">
-    <div v-if="boardStore.articleInfo != null" class="row justify-content-center px-4">
+    <div
+      v-if="boardStore.articleInfo != null"
+      class="row justify-content-center px-4"
+    >
       <div class="col-lg-10 border rounded-3">
         <h3 class="m-4">{{ boardStore.articleInfo.title }}</h3>
         <div class="m-4">
@@ -46,9 +49,9 @@ function onDeleteArticle() {
         </div>
       </div>
 
-      <div class="col-lg-10 d-flex justify-content-end mt-3">
+      <div class="col-lg-10 d-flex justify-content-end mt-3 mb-5">
         <router-link
-          class="btn btn-primary mb-3 ms-1 rounded-pill"
+          class="btn btn-primary py-1 px-2 mb-3 ms-1 rounded-2"
           :to="{ name: 'board-list' }"
         >
           글목록
@@ -58,13 +61,13 @@ function onDeleteArticle() {
             name: 'article-modify',
             params: { articleno: boardStore.articleInfo.board_id },
           }"
-          class="btn btn-outline-success mb-3 ms-1 rounded-pill"
+          class="btn btn-outline-success py-1 px-2 mb-3 ms-1 rounded-2"
         >
           글수정
         </router-link>
         <button
           type="button"
-          class="btn btn-outline-secondary mb-3 ms-1 rounded-pill"
+          class="btn btn-outline-secondary py-1 px-2 mb-3 ms-1 rounded-2"
           @click="onDeleteArticle"
         >
           글삭제

@@ -1,12 +1,11 @@
 <script setup>
-import { onMounted, ref } from "vue";
+import { computed, onMounted, ref } from "vue";
 import { useRouter } from "vue-router";
 import { useUserStore } from "@/stores/user";
 const { VITE_VUE_API_URL } = import.meta.env;
 
 const userStore = useUserStore();
 const router = useRouter();
-
 const { getUserInfo, userInfo, updateUserInfo, deleteUserInfo } = userStore;
 
 onMounted(() => {
@@ -24,7 +23,12 @@ const info = ref({
   gugun_code: userInfo.gugun_code,
 });
 
-const previewImage = ref(`${VITE_VUE_API_URL}/profile/${userInfo.image}`); // 기본 이미지
+const defaultImage = computed(() => {
+  return userInfo.image == null
+    ? "/src/assets/images/default_profile.png"
+    : `${VITE_VUE_API_URL}/profile/${userInfo.image}`;
+});
+const previewImage = ref(defaultImage.value);
 const fileImage = ref(null);
 
 const uploadImage = (event) => {
@@ -67,14 +71,25 @@ const deleteAccount = () => {
           <div class="mt-4 px-5 py-4 d-flex justify-content-center">
             <input type="file" id="profile-img" hidden @change="uploadImage" />
             <label for="profile-img">
-              <div class="position-relative">
-                <img
-                :src="previewImage"
-                style="width: 200px; height: 200px"
-                class="rounded-pill align-self-center border"
-                > 
-                  <i class="position-absolute bottom-0 end-0 fa-solid fa-square-pen fs-4" style="color: #acb4b9"></i> 
-                </img>
+              <div>
+                <div class="position-relative">
+                  <img
+                    v-if="userInfo.image == null"
+                    :src="previewImage"
+                    style="width: 200px; height: 200px; object-fit: cover"
+                    class="rounded-pill align-self-center border"
+                  />
+                  <img
+                    v-else
+                    :src="previewImage"
+                    style="width: 200px; height: 200px; object-fit: cover"
+                    class="rounded-pill align-self-center border"
+                  />
+                  <i
+                    class="position-absolute bottom-0 end-0 fa-solid fa-square-pen fs-4"
+                    style="color: #acb4b9"
+                  ></i>
+                </div>
               </div>
             </label>
           </div>

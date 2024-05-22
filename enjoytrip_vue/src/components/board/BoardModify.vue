@@ -1,7 +1,7 @@
 <script setup>
 import { onMounted } from "vue";
 import { useRoute, useRouter } from "vue-router";
-import { useBoardStore } from "@/stores/board"; 
+import { useBoardStore } from "@/stores/board";
 import "@vueup/vue-quill/dist/vue-quill.snow.css";
 
 const route = useRoute();
@@ -41,7 +41,7 @@ const clickModify = async () => {
         <div class="d-flex justify-content-center">
           <button
             id="btn-board"
-            class="btn btn-primary rounded-pill mt-3"
+            class="btn btn-primary py-1 px-2 rounded-2 my-5"
             @click="clickModify"
           >
             수정

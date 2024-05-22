@@ -9,7 +9,7 @@ const path = ref("");
 
 // 매 라우터 이동마다 새로고침
 router.afterEach((to, from) => {
-  if (from.name && to.name && from.name !== to.name) {
+  if (from.name && to.name && to.name != "article-view") {
     router.go(0);
   }
     path.value = to.name;

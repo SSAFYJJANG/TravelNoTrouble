@@ -6,15 +6,10 @@ import { useUserStore } from "@/stores/user";
 
 const router = useRouter();
 const userStore = useUserStore();
-const { getUserInfo, userInfo } = userStore;
+const { userInfo } = userStore;
 const hotplaceStore = useHotplaceStore();
 const { uploadHotplace } = hotplaceStore;
 const formData = new FormData();
-
-onMounted(() => {
-  let token = sessionStorage.getItem("accessToken");
-  getUserInfo(token);
-});
 
 const previewImage = ref("/src/assets/images/no_image.jpeg"); // 기본 이미지
 const info = ref({

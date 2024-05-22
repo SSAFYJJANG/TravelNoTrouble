@@ -1,11 +1,17 @@
 <script setup>
-import { computed } from "vue";
+import { computed, onMounted } from "vue";
 import { useUserStore } from "@/stores/user";
 const { VITE_VUE_API_URL } = import.meta.env;
 
 const userStore = useUserStore();
 
-const { userInfo } = userStore;
+const { getUserInfo, userInfo } = userStore;
+
+onMounted(() => {
+  let token = sessionStorage.getItem("accessToken");
+  getUserInfo(token);
+});
+
 const profileImage = computed(() => {
   return userInfo.image == null
     ? "/src/assets/images/default_profile.png"
@@ -16,7 +22,7 @@ const profileImage = computed(() => {
 <template>
   <div class="container">
     <div class="p-5">
-      <div class="d-flex flex-column">
+      <div v-if="userInfo != null" class="d-flex flex-column">
         <!-- 프로필 카드 -->
         <div class="mypage-item row justify-content-center rounded-4 mt-5 px-5">
           <!-- 프로필 이미지 -->

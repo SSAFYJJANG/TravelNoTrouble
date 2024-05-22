@@ -233,4 +233,7 @@ export const useUserStore = defineStore("userStore", () => {
     findUserPassword,
     checkIdDuplicate
   };
+},
+{
+  persist: true
 });

@@ -5,14 +5,15 @@ import { useAttractionStore } from "@/stores/attraction";
 import { storeToRefs } from "pinia";
 
 const attractionStore = useAttractionStore();
-const { isSelectSidoCode } = storeToRefs(attractionStore);
+const { isClickSidoCard } = storeToRefs(attractionStore);
 
+isClickSidoCard.value = null;
 defineProps({
     sido: Object
 })
 
 const clickMove = (sido) => {
-    isSelectSidoCode.value = sido;
+    isClickSidoCard.value = sido.sido_code;
     router.push({ name: 'place' });
 }
 
@@ -23,12 +24,12 @@ const clickMove = (sido) => {
         <div class="slide-content">
             <div class="item-img">
                 <div class="item-wrapper" @dblclick="clickMove(sido)">
-                    <img :src=sido.thumbnail :alt=sido.name :title=sido.name>
+                    <img :src=sido.thumbnail :alt=sido.sido_name :title=sido.sido_name>
                     <span class="img-txt-title">
-                        {{ sido.name }}
+                        {{ sido.sido_name }}
                     </span>
                     <span class="img-txt-slogan">
-                        {{ sido.slogan }}
+                        {{ sido.sido_slogan }}
                     </span>
                     <span class="img-txt">
                         <i class="fa-solid fa-map-location-dot"></i> 관광지 조회 하기

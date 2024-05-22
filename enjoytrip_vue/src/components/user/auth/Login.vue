@@ -1,8 +1,18 @@
 <script setup>
-import { ref } from "vue";
+import { ref, onMounted } from "vue";
 import { storeToRefs } from "pinia";
 import { useRouter } from "vue-router";
 import { useUserStore } from "@/stores/user";
+import { useAttractionStore } from "@/stores/attraction";
+const attractionStore = useAttractionStore();
+const { getSidoList, getGugunList} = attractionStore;
+
+onMounted(async () => {
+    await Promise.all([
+        getSidoList(),
+        getGugunList(),
+    ]);
+});
 
 const router = useRouter();
 const userStore = useUserStore();

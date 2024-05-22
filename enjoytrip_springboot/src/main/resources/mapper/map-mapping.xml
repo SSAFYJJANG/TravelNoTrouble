@@ -46,8 +46,9 @@
 	</select>
 	
 	<select id="getRecommendationAttraction" resultType="attractionDto">
-		select *
-		from attraction_info
+		select ai.content_id, title, addr1, first_image2, sido_code, gugun_code, longitude, latitude, overview
+		from attraction_info ai left join attraction_description ad
+		on ai.content_id = ad.content_id
 		Order by rand()
 		limit 1
 	</select>

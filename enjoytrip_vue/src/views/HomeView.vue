@@ -21,7 +21,7 @@ const { getTotalHotplaceCount, hotplaceCnt,
 const attractionStore = useAttractionStore();
 const { getTotalAttractionCount, attractionCnt,
     getRecommendationAttraction, recommendationAttraction,
-    getSidoList, sidoList } = attractionStore;
+    sidoList } = attractionStore;
 
 // const attractionCnt = ref(571);
 
@@ -32,7 +32,6 @@ onMounted(async () => {
         getTotalHotplaceCount(),
         getTotalAttractionCount(),
         getRecommendationAttraction(),
-        getSidoList(),
         getBestHotplaceFeed()
     ]);
 });

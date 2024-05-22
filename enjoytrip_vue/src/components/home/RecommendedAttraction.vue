@@ -1,5 +1,5 @@
 <template>
-  <section id="cta" class="cta" v-if="monthInfo">
+  <section id="cta" class="cta" v-if="recommendationAttraction">
     <div class="container" data-aos="zoom-out">
       <div class="title">
         <h3 style="font-weight: 700;">
@@ -11,16 +11,16 @@
         <div class="col-lg-7 content d-flex flex-column justify-content-center order-last ">
           <h4>
             <em>
-              {{ monthInfo.title }}
+              {{ recommendationAttraction.title }}
             </em>
           </h4>
-          <p>{{ monthInfo.address }}</p>
-          <p class="description">{{ monthInfo.desc }}</p>
+          <p>{{ recommendationAttraction.addr1 }}</p>
+          <p class="description">{{ monthInfo.overview }}</p>
           <router-link :to="{ name: 'place' }" class="cta-btn align-self-start">여행 계획 짜러가기</router-link>
         </div>
         <div class="col-lg-5 order-first d-flex align-items-center img-area">
           <div class="img">
-            <img :src="monthInfo.image" alt="" class="img-fluid" />
+            <img :src="recommendationAttraction.first_image2" alt="" class="img-fluid" />
           </div>
         </div>
       </div>
@@ -29,12 +29,9 @@
 </template>
 
 <script setup>
-const monthInfo = {
-  title: "가나다라마바사",
-  address: "울릉도 동남쪽 뱃길따라 200리",
-  desc: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
-  image: "/src/assets/images/main.jpg"
-}
+const props = defineProps({
+  recommendationAttraction: Object,
+});
 </script>
 
 

@@ -12,16 +12,13 @@ import AttractionView from "@/views/AttractionView.vue";
 import HotplaceView from "@/views/HotplaceView.vue";
 import HotplaceFeed from "@/components/hotplace/HotplaceFeed.vue";
 import HotplaceWrite from "@/components/hotplace/HotplaceWrite.vue";
-import MyTripPlanView from "@/views/MyTripPlanView.vue";
-import MyTripPlanList from "@/components/myTripPlan/MyTripPlanList.vue";
-import MyTripPlanWrite from "@/components/myTripPlan/MyTripPlanWrite.vue";
 import AuthView from "@/views/AuthView.vue";
 import Login from "@/components/user/auth/Login.vue";
 import Signup from "@/components/user/auth/Signup.vue";
 import FindPwd from "@/components/user/auth/FindPwd.vue";
 
 import AOS from "aos";
-import 'aos/dist/aos.css';
+import "aos/dist/aos.css";
 import { useUserStore } from "@/stores/user";
 import { storeToRefs } from "pinia";
 
@@ -133,27 +130,6 @@ const router = createRouter({
       component: AttractionView,
     },
     {
-      path: "/plan",
-      name: "plan",
-      beforeEnter: checkLoginUser,
-      component: MyTripPlanView,
-      redirect: { name: "plan-list" },
-      children: [
-        {
-          path: "",
-          name: "plan-list",
-          beforeEnter: checkLoginUser,
-          component: MyTripPlanList,
-        },
-        {
-          path: "write",
-          name: "plan-write",
-          beforeEnter: checkLoginUser,
-          component: MyTripPlanWrite,
-        },
-      ],
-    },
-    {
       path: "/auth",
       name: "auth",
       component: AuthView,
@@ -171,8 +147,8 @@ const router = createRouter({
         {
           path: "findpwd",
           name: "auth-pwd",
-          component: FindPwd
-        }
+          component: FindPwd,
+        },
       ],
     },
   ],

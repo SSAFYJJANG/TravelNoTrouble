@@ -1,11 +1,18 @@
 <script setup>
 import router from '@/router';
 import { ref } from 'vue';
+import { useAttractionStore } from "@/stores/attraction";
+import { storeToRefs } from "pinia";
+
+const attractionStore = useAttractionStore();
+const { isSelectSidoCode } = storeToRefs(attractionStore);
 
 defineProps({
     sido: Object
 })
-const clickMove = () => {
+
+const clickMove = (sido) => {
+    isSelectSidoCode.value = sido;
     router.push({ name: 'place' });
 }
 
@@ -15,8 +22,8 @@ const clickMove = () => {
     <div class="embla__slide slider-image item" style="margin-left: 0.25rem; margin-right: 0.25rem;">
         <div class="slide-content">
             <div class="item-img">
-                <div class="item-wrapper" @dblclick="clickMove">
-                    <img :src=sido.imgSrc :alt=sido.alt :title=sido.title>
+                <div class="item-wrapper" @dblclick="clickMove(sido)">
+                    <img :src=sido.thumbnail :alt=sido.name :title=sido.name>
                     <span class="img-txt-title">
                         {{ sido.name }}
                     </span>
@@ -24,7 +31,7 @@ const clickMove = () => {
                         {{ sido.slogan }}
                     </span>
                     <span class="img-txt">
-                        <i class="bi bi-arrow-right"></i> 관광지 조회 하기
+                        <i class="fa-solid fa-map-location-dot"></i> 관광지 조회 하기
                     </span>
                 </div>
             </div>

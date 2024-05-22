@@ -1,28 +1,57 @@
 <script setup>
 import { CFormCheck } from '@coreui/vue';
-import { ref } from 'vue';
+import { ref, onMounted, computed, watch } from 'vue';
 import VSelect from "@/components/common/VSelect.vue";
 import VSearchInput from "@/components/common/VSearchInput.vue";
 import AttractionCardList from "@/components/attraction/AttractionCardList.vue";
-const sidoSelectOption = ref([
-    { text: "시/도", value: "" },
-]);
-const gugunSelectOption = ref([
-    { text: "구/군", value: "" },
-]);
+import { useAttractionStore } from "@/stores/attraction";
+import { storeToRefs } from "pinia";
+const attractionStore = useAttractionStore();
+const { getSidoList, getGugunList, } = attractionStore;
+const { sidoList, isSelectSidoCode, gugunList } = storeToRefs(attractionStore);
 
-const param = ref({
-    key: "",
-    word: "",
+const selectGugunList = ref([]);
+const selectOptionSidoList = ref([]);
+
+onMounted(async () => {
+    await Promise.all([
+        getSidoList(),
+        getGugunList(),
+    ]);
+    selectOptionSidoList.value = sidoList.value.map((sido) => ({
+        text: sido.sido_name,
+        value: sido.sido_code,
+    }));
+    selectOptionSidoList.value.unshift({
+        text: '시/도',
+        value: 0,
+    });
+    selectGugunList.value.unshift({
+        text: '구/군',
+        value: 0,
+    });
+    console.log(selectOptionSidoList.value);
 });
+
 const selectClass = ref([
     'mb-2', 'me-1', 'ms-1'
 ]);
 
 const changeKey = (val) => {
-    param.value.key = val;
-    console.log(param.value.key);
+    isSelectSidoCode.value = val;
 };
+
+watch(isSelectSidoCode, (newVal) => {
+    console.log("sss");
+    if (newVal != 0 && gugunList != null) {
+        selectGugunList.value = gugunList.value.filter(gugun => newVal === gugun.sido_code);
+    }
+    selectGugunList.value.unshift({
+        text: '구/군',
+        value: 0,
+    });
+    console.log(selectGugunList.value);
+})
 
 const content_types = ref([
     { text: '전체', value: '0' },
@@ -36,15 +65,15 @@ const content_types = ref([
     { text: '식당', value: '8' }
 ]);
 
-const picked = ref('1');
+const isSelectContenType = ref('0');
 const btnColor = 'danger';
 </script>
 
 <template>
     <div>
         <div class="d-flex justify-content-between">
-            <VSelect :selectOption="sidoSelectOption" :selectClass="selectClass" @onKeySelect="changeKey" />
-            <VSelect :selectOption="gugunSelectOption" :selectClass="selectClass" @onKeySelect="changeKey" />
+            <VSelect :selectOption="selectOptionSidoList" :selectClass="selectClass" @onKeySelect="changeKey" />
+            <VSelect :selectOption="selectGugunList" :selectClass="selectClass" @onKeySelect="changeKey" />
         </div>
         <VSearchInput class="mb-3" :btn-color="btnColor" />
         <div>
@@ -52,7 +81,7 @@ const btnColor = 'danger';
             <div class="d-flex align-content-around flex-wrap">
                 <CFormCheck v-for="(content_type, index) in content_types" :key="content_type.text" type="radio" inline
                     :label="content_type.text" :value="content_type.value" :id="`content-type-${index}`"
-                    v-model="picked" />
+                    v-model="isSelectContenType" />
             </div>
             <hr>
             <CFormCheck :button="{ color: 'danger', variant: 'outline', class: 'save-load-button' }"

@@ -1,13 +1,19 @@
 <script setup>
 import { ref, computed, watch } from 'vue';
 import AreaAttraction from './AreaAttraction.vue';
-import data from "@/data/index.js";
-const sidoList = ref([]);
-sidoList.value = data.sidoList;
+// import data from "@/data/index.js";
+// const sidoList = ref([]);
+// sidoList.value = data.sidoList;
+
+const props = defineProps({
+    sidoList: Array,
+});
+
 </script>
 
 <template>
-    <section data-bs-version="5.1" class="features017 mbr-embla cid-uc9PmWNUs6" id="features017-2n">
+    <section data-bs-version="5.1" class="features017 mbr-embla cid-uc9PmWNUs6" id="features017-2n"
+        v-if="sidoList && sidoList.length > 0">
         <div class="position-relative">
             <div class="container-fluid">
                 <div class="row">
@@ -22,17 +28,14 @@ sidoList.value = data.sidoList;
                 </div>
             </div>
 
-            <div v-if="sidoList.length > 0" class="embla" data-skip-snaps="true" data-align="center"
-                data-contain-scroll="trimSnaps" data-loop="true" data-auto-play="true" data-auto-play-interval="2.5"
-                data-draggable="true">
+            <div class="embla" data-skip-snaps="true" data-align="center" data-contain-scroll="trimSnaps"
+                data-loop="true" data-auto-play="true" data-auto-play-interval="2.5" data-draggable="true">
 
                 <div class="embla__viewport container-fluid">
                     <div class="embla__container">
-                        <AreaAttraction v-for="sido
-                            in sidoList" :key="sido.no" :sido="sido" />
+                        <AreaAttraction v-for="sido in sidoList" :key="sido.sido_code" :sido="sido" />
                     </div>
                 </div>
-
                 <button class="embla__button embla__button--prev" style="display: none;">
                     <span class="mobi-mbri mobi-mbri-arrow-prev mbr-iconfont" aria-hidden="true">
                         <i class="bi bi-caret-left-fill"></i>

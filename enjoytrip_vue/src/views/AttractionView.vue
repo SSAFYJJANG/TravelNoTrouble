@@ -2,6 +2,21 @@
 import SearchOffCanvas from '@/components/attraction/SearchOffCanvas.vue';
 import AttractionMap from '@/components/attraction/AttractionMap.vue';
 import TripPlanOffCanvas from '@/components/attraction/TripPlanOffCanvas.vue';
+import { useAttractionStore } from "@/stores/attraction";
+import { onMounted } from "vue";
+const attractionStore = useAttractionStore();
+const { getAttractionList, clickSidoCard } = attractionStore;
+
+onMounted(async () => {
+    if (clickSidoCard != null) {
+        await Promise.all([
+            getAttractionList({
+                sido_code: clickSidoCard.sido_code,
+            }),
+        ]);
+        clickSidoCard.value = null;
+    }
+});
 
 </script>
 

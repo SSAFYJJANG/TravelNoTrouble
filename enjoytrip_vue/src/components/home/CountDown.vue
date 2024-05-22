@@ -2,24 +2,11 @@
 import { onMounted, ref, } from 'vue';
 // auto count
 import Vue3Autocounter from "vue3-autocounter";
-import { useUserStore } from "@/stores/user";
-import { useHotplaceStore } from "@/stores/hotplace";
 
-
-const userStore = useUserStore();
-const { getUsersCnt, userTotalCnt } = userStore;
-
-const hotplaceStore = useHotplaceStore();
-const { getTotalHotplaceCount, hotplaceCnt } = hotplaceStore;
-
-const attractionCnt = ref(571);
-
-
-onMounted(async () => {
-	await Promise.all([
-		getUsersCnt(),
-		getTotalHotplaceCount(),
-	]);
+const props = defineProps({
+	userCnt: Number,
+	hotplaceCnt: Number,
+	attractionCnt: Number,
 });
 
 </script>
@@ -34,8 +21,8 @@ onMounted(async () => {
 							<div class="number-wrap">
 								<span class="number display-2">
 									<vue3-autocounter ref='counter' class="number display-2" :startAmount='0'
-										:endAmount='hotplaceStore.hotplaceCnt' :duration='4' prefix='' suffix=''
-										:decimals='0' :autoinit='true' style="font-weight: bold;" />
+										:endAmount='props.hotplaceCnt' :duration='2' prefix='' suffix='' :decimals='0'
+										:autoinit='true' style="font-weight: bold;" />
 								</span>
 								<span mbr-text="" class="period display-7">
 									Hotplaces
@@ -46,8 +33,8 @@ onMounted(async () => {
 							<div class="number-wrap">
 								<span class="number display-2">
 									<vue3-autocounter ref='counter' class="number display-2" :startAmount='0'
-										:endAmount='hotplaceStore.hotplaceCnt' :duration='4' prefix='' suffix=''
-										:decimals='0' :autoinit='true' style="font-weight: bold;" />
+										:endAmount='props.attractionCnt' :duration='2' prefix='' suffix='' :decimals='0'
+										:autoinit='true' style="font-weight: bold;" />
 								</span>
 								<span mbr-text="" class="period display-7">
 									Tour Attractions
@@ -58,8 +45,8 @@ onMounted(async () => {
 							<div class="number-wrap">
 								<span class="number display-2">
 									<vue3-autocounter ref='counter' class="number display-2" :startAmount='0'
-										:endAmount='userStore.userTotalCnt' :duration='4' prefix='' suffix=''
-										:decimals='0' :autoinit='true' style="font-weight: bold;" />
+										:endAmount='props.userCnt' :duration='2' prefix='' suffix='' :decimals='0'
+										:autoinit='true' style="font-weight: bold;" />
 								</span>
 								<span mbr-text="" class="period display-7">
 									Users

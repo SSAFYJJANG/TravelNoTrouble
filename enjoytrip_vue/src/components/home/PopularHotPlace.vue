@@ -12,12 +12,11 @@ const clickMove = () => {
 </script>
 
 <template>
-    <div class="embla__slide slider-image item" 
-        style="margin-left: 0.25rem; margin-right: 0.25rem;">
+    <div class="embla__slide slider-image item" style="margin-left: 0.25rem; margin-right: 0.25rem;">
         <div class="slide-content">
             <div class="item-img">
                 <div class="item-wrapper">
-                    <img @dblclick="clickMove" :src=popularHotPlace.imgSrc :alt=popularHotPlace.alt
+                    <img @dblclick="clickMove" :src=popularHotPlace.image :alt=popularHotPlace.title
                         :title=popularHotPlace.title :data-slide-to=popularHotPlace.dataSlideTo
                         :data-bs-slide-to=popularHotPlace.dataBsSlideTo>
                 </div>

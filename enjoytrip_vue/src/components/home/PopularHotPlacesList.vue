@@ -1,84 +1,11 @@
 <script setup>
 import { ref, computed } from 'vue';
 import PopularHotPlace from './PopularHotPlace.vue';
-// import "/src/assets/js/embla/embla.min.js";
-// import "/src/assets/js/embla/script.js";
 
-let id = 1;
-const popularHotPlacesCnt = ref(1);
-const imgsrc = "/src/assets/images/trip.jpg"
-// TODO : dataSlideTo, dataBsSlideTo은 객체마다 숫자가 달라야하는지, 
-// 숫자는 순차적으로 나와야하는지 확인
-const popularHotPlaces = ref([
-    {
-        no: id,
-        imgSrc: imgsrc,
-        alt: "",
-        title: "",
-        dataSlideTo: id,
-        dataBsSlideTo: id++,
-    },
-    {
-        no: id,
-        imgSrc: imgsrc,
-        alt: "",
-        title: "",
-        dataSlideTo: id,
-        dataBsSlideTo: id++,
-    },
-    {
-        no: id,
-        imgSrc: imgsrc,
-        alt: "",
-        title: "",
-        dataSlideTo: id,
-        dataBsSlideTo: id++,
-    },
-    {
-        no: id,
-        imgSrc: imgsrc,
-        alt: "",
-        title: "",
-        dataSlideTo: id,
-        dataBsSlideTo: id++,
-    },
-    {
-        no: id,
-        imgSrc: imgsrc,
-        alt: "",
-        title: "",
-        dataSlideTo: id,
-        dataBsSlideTo: id++,
-    },
-    {
-        no: id,
-        imgSrc: imgsrc,
-        alt: "",
-        title: "",
-        dataSlideTo: id,
-        dataBsSlideTo: id++,
-    },
-    {
-        no: id,
-        imgSrc: imgsrc,
-        alt: "",
-        title: "",
-        dataSlideTo: id,
-        dataBsSlideTo: id++,
-    },
-    {
-        no: id,
-        imgSrc: imgsrc,
-        alt: "",
-        title: "",
-        dataSlideTo: id,
-        dataBsSlideTo: id++,
-    },
-]);
+const props = defineProps({
+    bestFeedList: Array,
+});
 
-const lengthOfPopularHotPlaces = computed(() => {
-    return popularHotPlaces.value.length;
-})
 </script>
 
 <template>
@@ -98,13 +25,13 @@ const lengthOfPopularHotPlaces = computed(() => {
                 </div>
             </div>
 
-            <div v-if="lengthOfPopularHotPlaces" class="embla" data-skip-snaps="true" data-align="center"
-                data-contain-scroll="trimSnaps" data-loop="true" data-auto-play="true" data-auto-play-interval="2.5"
-                data-draggable="true" data-direction="ltr">
+            <div v-show="bestFeedList && bestFeedList.length > 0" class="embla" data-skip-snaps="true"
+                data-align="center" data-contain-scroll="trimSnaps" data-loop="true" data-auto-play="true"
+                data-auto-play-interval="2.5" data-draggable="true" data-direction="ltr">
                 <div class="embla__viewport container-fluid">
                     <div class="embla__container">
-                        <PopularHotPlace v-for="popularHotPlace
-                            in popularHotPlaces" :key="popularHotPlace.no" :popular-hot-place="popularHotPlace" />
+                        <PopularHotPlace v-for="popularHotPlace in bestFeedList" :key="popularHotPlace.hotplace_id"
+                            :popular-hot-place="popularHotPlace" />
                     </div>
                 </div>
 
@@ -114,7 +41,7 @@ const lengthOfPopularHotPlaces = computed(() => {
                     </span>
                     <span class="sr-only visually-hidden visually-hidden visually-hidden">Previous</span>
                 </button>
-                <button class="embla__button embla__button--next"  style="display: none;">
+                <button class="embla__button embla__button--next" style="display: none;">
                     <span class="mobi-mbri mobi-mbri-arrow-next mbr-iconfont" aria-hidden="true">
                         <i class="bi bi-caret-right-fill"></i>
                     </span>
@@ -122,8 +49,12 @@ const lengthOfPopularHotPlaces = computed(() => {
                 </button>
             </div>
 
-            <div v-else>
-                현재 등록된 hotplace가 없습니다.
+            <div v-if="!bestFeedList || !(bestFeedList.length > 0)"
+                style=" margin: auto; position: relative; left: 20vw;">
+                <span>현재 등록된 리뷰가 없습니다.</span>
+                <router-link class="ms-4" :to="{ name: 'hotplace-write' }">
+                    <i class="fa-solid fa-right-long"></i>리뷰작성하러 가기
+                </router-link>
             </div>
 
         </div>
@@ -132,7 +63,7 @@ const lengthOfPopularHotPlaces = computed(() => {
 
 <style scoped>
 .cid-uc9PmWNUs6 {
-  /* padding-top: 1rem; */
-  padding-bottom: 5rem;
+    /* padding-top: 1rem; */
+    padding-bottom: 5rem;
 }
 </style>

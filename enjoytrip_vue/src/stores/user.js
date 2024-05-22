@@ -12,13 +12,15 @@ import {
   update,
   leave,
   findPwd,
-  duplicate
+  duplicate,
+  getUserCount,
 } from "@/api/user";
 import { httpStatusCode } from "@/util/http-status";
 
 export const useUserStore = defineStore("userStore", () => {
   const router = useRouter();
 
+  const userTotalCnt = ref(187);
   const isLogin = ref(false);
   const isLoginError = ref(false);
   const userInfo = ref(null);
@@ -27,17 +29,34 @@ export const useUserStore = defineStore("userStore", () => {
   const isDuplicate = ref(false);
   const isExist = ref(false);
 
+  const getUsersCnt = async () => {
+    await getUserCount(
+      (response) => {
+        if (response.status == httpStatusCode.OK) {
+          console.log(response.data);
+          userTotalCnt.value = response.data;
+          console.log(userTotalCnt.value);
+        }
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
+  };
+
   const userSignup = async (signupUser) => {
-    await signup(signupUser,
+    await signup(
+      signupUser,
       (response) => {
         if (response.status === httpStatusCode.CREATE) {
           console.log("회원가입 성공!!!");
           console.log("res", response);
         }
-       },
-      (error) => { 
+      },
+      (error) => {
         console.log(error);
-      });
+      }
+    );
   };
 
   const userLogin = async (loginUser) => {
@@ -182,7 +201,7 @@ export const useUserStore = defineStore("userStore", () => {
     userPwd.value = null;
     await findPwd(
       userId,
-      (response) => { 
+      (response) => {
         if (response.status === httpStatusCode.OK) {
           userPwd.value = response.data;
           isExist.value = true;
@@ -194,13 +213,13 @@ export const useUserStore = defineStore("userStore", () => {
         isExist.value = false;
         console.log(error);
       }
-    )
+    );
   };
 
   const checkIdDuplicate = async (userId) => {
     await duplicate(
       userId,
-      (response) => { 
+      (response) => {
         if (response.status === httpStatusCode.OK) {
           if (response.data > 0) {
             isDuplicate.value = true;
@@ -222,6 +241,7 @@ export const useUserStore = defineStore("userStore", () => {
     isValidToken,
     isDuplicate,
     userPwd,
+    userTotalCnt,
     isExist,
     userSignup,
     userLogin,
@@ -231,6 +251,7 @@ export const useUserStore = defineStore("userStore", () => {
     updateUserInfo,
     deleteUserInfo,
     findUserPassword,
-    checkIdDuplicate
+    checkIdDuplicate,
+    getUsersCnt,
   };
 });

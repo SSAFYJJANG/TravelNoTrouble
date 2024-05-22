@@ -1,10 +1,10 @@
 <script setup>
 import router from '@/router';
 import { ref } from 'vue';
+
 defineProps({
     sido: Object
 })
-
 const clickMove = () => {
     router.push({ name: 'place' });
 }

@@ -18,9 +18,6 @@ const { VITE_VUE_API_URL } = import.meta.env;
 function localAxios() {
   const instance = axios.create({
     baseURL: VITE_VUE_API_URL,
-    headers: {
-      "Content-Type": "application/json;charset=utf-8",
-    },
     // withCredentials: true,
     // headers: {
     //   "Content-Type": "application/json;charset=utf-8",
@@ -28,16 +25,17 @@ function localAxios() {
   });
   // Request 발생 시 적용할 내용.
   instance.defaults.headers.common["Authorization"] = "";
-  instance.defaults.headers.post["Content-Type"] = "application/json";
-  instance.defaults.headers.put["Content-Type"] = "application/json";
+  instance.defaults.headers.post["Content-Type"] = "application/json;charset=utf-8";
+  instance.defaults.headers.put["Content-Type"] = "application/json;charset=utf-8";
 
-  //   // Request, Response 시 설정한 내용을 적용.
-  //   instance.interceptors.request.use((config) => {
-  //     return config;
-  //   }),
-  //     (error) => {
-  //       return Promise.reject(error);
-  //     };
+  // Request, Response 시 설정한 내용을 적용.
+  instance.interceptors.request.use((config) => {
+    console.log(config);
+    return config;
+  }),
+    (error) => {
+      return Promise.reject(error);
+    };
 
   //   // accessToken의 값이 유효하지 않은 경우,
   //   // refreshToken을 이용해 재발급 처리.

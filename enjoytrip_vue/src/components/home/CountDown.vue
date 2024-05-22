@@ -1,11 +1,26 @@
 <script setup>
-import { ref, } from 'vue';
+import { onMounted, ref, } from 'vue';
 // auto count
 import Vue3Autocounter from "vue3-autocounter";
-const hotPlaceCnt = ref(231);
-const attractionCnt = ref(571);
-const userCnt = ref(57);
+import { useUserStore } from "@/stores/user";
+import { useHotplaceStore } from "@/stores/hotplace";
 
+
+const userStore = useUserStore();
+const { getUsersCnt, userTotalCnt } = userStore;
+
+const hotplaceStore = useHotplaceStore();
+const { getTotalHotplaceCount, hotplaceCnt } = hotplaceStore;
+
+const attractionCnt = ref(571);
+
+
+onMounted(async () => {
+	await Promise.all([
+		getUsersCnt(),
+		getTotalHotplaceCount(),
+	]);
+});
 
 </script>
 
@@ -19,8 +34,8 @@ const userCnt = ref(57);
 							<div class="number-wrap">
 								<span class="number display-2">
 									<vue3-autocounter ref='counter' class="number display-2" :startAmount='0'
-										:endAmount='hotPlaceCnt' :duration='4' prefix='' suffix='' :decimals='0'
-										:autoinit='true' style="font-weight: bold;" />
+										:endAmount='hotplaceStore.hotplaceCnt' :duration='4' prefix='' suffix=''
+										:decimals='0' :autoinit='true' style="font-weight: bold;" />
 								</span>
 								<span mbr-text="" class="period display-7">
 									Hotplaces
@@ -31,8 +46,8 @@ const userCnt = ref(57);
 							<div class="number-wrap">
 								<span class="number display-2">
 									<vue3-autocounter ref='counter' class="number display-2" :startAmount='0'
-										:endAmount='attractionCnt' :duration='4' prefix='' suffix='' :decimals='0'
-										:autoinit='true' style="font-weight: bold;" />
+										:endAmount='hotplaceStore.hotplaceCnt' :duration='4' prefix='' suffix=''
+										:decimals='0' :autoinit='true' style="font-weight: bold;" />
 								</span>
 								<span mbr-text="" class="period display-7">
 									Tour Attractions
@@ -43,8 +58,8 @@ const userCnt = ref(57);
 							<div class="number-wrap">
 								<span class="number display-2">
 									<vue3-autocounter ref='counter' class="number display-2" :startAmount='0'
-										:endAmount='userCnt' :duration='4' prefix='' suffix='' :decimals='0'
-										:autoinit='true' style="font-weight: bold;" />
+										:endAmount='userStore.userTotalCnt' :duration='4' prefix='' suffix=''
+										:decimals='0' :autoinit='true' style="font-weight: bold;" />
 								</span>
 								<span mbr-text="" class="period display-7">
 									Users

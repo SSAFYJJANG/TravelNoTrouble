@@ -6,6 +6,7 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import com.trip.vue.exception.UnAuthorizedException;
 
@@ -17,7 +18,7 @@ import lombok.extern.slf4j.Slf4j;
 
 @Component
 @Slf4j
-public class JWTUtil {
+public class JWTUtil{
 
 	@Value("${jwt.salt}")
 	private String salt;
@@ -61,7 +62,7 @@ public class JWTUtil {
 //			Signature 설정 : secret key를 활용한 암호화.
 			.signWith(SignatureAlgorithm.HS256, this.generateKey())
 			.compact(); // 직렬화 처리.
-
+		log.info("jwt : {}", jwt);
 		return jwt;
 	}
 

@@ -1,162 +1,65 @@
 <script setup>
-import { ref } from "vue";
+import { ref, onMounted, computed } from "vue";
 import FullCalendar from "@fullcalendar/vue3";
 import dayGridPlugin from "@fullcalendar/daygrid";
 import timeGridPlugin from '@fullcalendar/timegrid';
 import interactionPlugin from '@fullcalendar/interaction';
 import MyTripViewModal from "./MyTripViewModal.vue";
+import { useUserStore } from "@/stores/user";
+import { usePlanStore } from "@/stores/plan";
+import axios from "axios";
 
-// 여행계획 plans로 받아오기
-const plans = [
-  {
-    "id": "common001",
-    "title": "event1",
-    "start": "2024-05-02",
-    "end":"2024-05-05",
-    "allDay": true,
-    "backgroundColor":"#61a1ff",
-    "borderColor":"#61a1ff",
-    "textColor":"white",
-    "extendedProps": {
-      "comment": "명절"
-    }
-  },
-  {
-    "id": "common002",
-    "title": "event2",
-    "start": "2024-05-06",
-    "allDay": true,
-    "backgroundColor":"#ffc107",
-    "borderColor":"#ffc107",
-    "textColor":"white",
-    "extendedProps": {
-      "comment": "징검다리"
-    }
-  },
-  {
-    "id": "common003",
-    "title": "event3",
-    "start": "2024-05-23",
-    "allDay": true,
-    "backgroundColor": "#ffb1bf",
-    "borderColor": "#ffb1bf",
-    "textColor":"white",
-    "extendedProps": {
-      "comment": "국가휴일"
-    }
-  },  {
-    "id": "common004",
-    "title": "event4",
-    "start": "2024-05-23",
-    "allDay": true,
-    "backgroundColor": "#ffb1bf",
-    "borderColor": "#ffb1bf",
-    "textColor":"white",
-    "extendedProps": {
-      "comment": "국가휴일"
-    }
-  },
-  {
-    "id": "common005",
-    "title": "event5",
-    "start": "2024-05-23",
-    "allDay": true,
-    "backgroundColor": "#ffb1bf",
-    "borderColor": "#ffb1bf",
-    "textColor":"white",
-    "extendedProps": {
-      "comment": "국가휴일"
-    }
-  },
-  {
-    "id": "common006",
-    "title": "event6",
-    "start": "2024-05-23",
-    "allDay": true,
-    "backgroundColor": "#ffb1bf",
-    "borderColor": "#ffb1bf",
-    "textColor":"white",
-    "extendedProps": {
-      "comment": "국가휴일"
-    }
-  },
-  {
-    "id": "common007",
-    "title": "event7",
-    "start": "2024-05-23",
-    "allDay": true,
-    "backgroundColor": "#ffb1bf",
-    "borderColor": "#ffb1bf",
-    "textColor":"white",
-    "extendedProps": {
-      "comment": "국가휴일"
-    }
-  },
-  {
-    "id": "common008",
-    "title": "event8",
-    "start": "2024-05-23",
-    "allDay": true,
-    "backgroundColor": "#ffb1bf",
-    "borderColor": "#ffb1bf",
-    "textColor":"white",
-    "extendedProps": {
-      "comment": "국가휴일"
-    }
-  },
-  {
-    "id": "common009",
-    "title": "event9",
-    "start": "2024-05-23",
-    "allDay": true,
-    "backgroundColor": "#ffb1bf",
-    "borderColor": "#ffb1bf",
-    "textColor":"white",
-    "extendedProps": {
-      "comment": "국가휴일"
-    }
-  },
-  {
-    "id": "common010",
-    "title": "event10",
-    "start": "2024-05-23",
-    "allDay": true,
-    "backgroundColor": "#ffb1bf",
-    "borderColor": "#ffb1bf",
-    "textColor":"white",
-    "extendedProps": {
-      "comment": "국가휴일"
-    }
-  },
-  {
-    "id": "common011",
-    "title": "event11",
-    "start": "2024-04-14",
-    "allDay": true,
-    "backgroundColor": "#ffb1bf",
-    "borderColor": "#ffb1bf",
-    "textColor":"white",
-    "extendedProps": {
-      "comment": "국가휴일"
-    }
-  }
-];
+const userStore = useUserStore();
+const planStore = usePlanStore();
+const { userInfo } = userStore;
+const { getPlanList, planList } = planStore;
+
+const plans = ref(null);
+
+onMounted(async () => {
+  await axios.get(`/plan`, { params: { userInfo } })
+    .then((res) => res.json())
+    .then((data) => console.log(data));
+  // await getPlanList(userInfo.userId);
+  // plans.value = planList;
+  // console.log("Plans.value", plans.value); 
+});
+
+const isLoading = computed(() => {
+  return planList == null ? true : false;
+});
+
+// userid 로 -> get(`/plan`) 여행계획 planList로 받아오기
+// const plans = [
+//   {
+//     "id": "common001",
+//     "title": "event1",
+//     "start": "2024-05-02",
+//     "end":"2024-05-05",
+//     "allDay": true,
+//     "backgroundColor":"#ffb1bf",
+//     "borderColor":"#ffb1bf",
+//     "textColor":"white",
+//     "extendedProps": {
+//       "comment": "명절"
+//     }
+//   }
+  // , {
+  //   "id": variable.plan_id,
+  //   "title": variable.title,
+  //   "start": variable.start_date,
+  //   "end": variable.end_date,
+  //   "allDay": true,
+  //   "backgroundColor": "#ffb1fb",
+  //   "borderColor": "#ffb1bf",
+  //   "textColor": "white",
+  //   "extendedProps": {
+  //     "comment": "여행"
+  //   }
+  // }
+// ];
 
 const handleDateSelect = (selectInfo) => {
-  // let title = prompt('Please enter a new title for your event')
-  // let calendarApi = selectInfo.view.calendar
-
-  // calendarApi.unselect() // clear date selection
-
-  // if (title) {
-  //   calendarApi.addEvent({
-  //     id: createEventId(),
-  //     title,
-  //     start: selectInfo.startStr,
-  //     end: selectInfo.endStr,
-  //     allDay: selectInfo.allDay
-  //   })
-  // }
 };
 
 const viewPlanModal = ref(false);
@@ -164,7 +67,16 @@ const togglePlanModal = () => {
   viewPlanModal.value = !viewPlanModal.value;
 };
 
+const plan_id = ref(null);
+
 const handleEventClick = (clickInfo) => {
+  console.log("id", clickInfo.event.id); // plan.plan_id
+  plan_id = clickInfo.event.id;
+  console.log("title", clickInfo.event.title); // plan.title
+  console.log("start date", clickInfo.event.startStr); // plan.start_date
+  console.log("end date", clickInfo.event.endStr); // plan.end_date
+  // get - plan_days 테이블에서 plan_id가 plan_id.value인 튜플들 들고 오기
+  // get - 들고온 plan_days_id로 plan_detail 테이블에서 튜플들 들고 오기
   togglePlanModal();
 };
 
@@ -182,7 +94,7 @@ const calendarOptions = {
     views: {
       timeGrid: {
         dayMaxEventRows: 5,
-        dayMaxEventRows: 30
+        dayMaxEventRows: 10
       }
     },
     initialView: 'dayGridMonth',
@@ -191,13 +103,12 @@ const calendarOptions = {
     selectMirror: true,
     dayMaxEvents: true,
     weekends: true,
-    
     select: handleDateSelect,
     eventClick: handleEventClick,
-    // eventsSet: handleEvents,
+  // events: plans,
     events: plans,
-    eventColor: '#49a078'
-    /* you can update a remote database when these fire:
+    eventColor: '#ffb1bf'
+    /* 
     eventAdd:
     eventChange:
     eventRemove:

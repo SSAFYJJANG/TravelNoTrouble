@@ -2,7 +2,7 @@ import { ref } from "vue";
 import { useRouter } from "vue-router";
 import { defineStore } from "pinia";
 
-import { write, list, view, modify } from "@/api/board";
+import { write, list, view, modify, del } from "@/api/board";
 import { httpStatusCode } from "@/util/http-status";
 
 export const useBoardStore = defineStore("boardStore", () => {
@@ -73,6 +73,20 @@ export const useBoardStore = defineStore("boardStore", () => {
     );
   };
 
+  const deleteArticle = async (articleId) => {
+    await del(
+      articleId,
+      (response) => { 
+        if (response.status === httpStatusCode.OK) {
+          console.log("삭제 성공!!!");
+        }
+      },
+      async (error) => {
+        console.log(error);
+      }
+    );
+  };
+
   return {
     boardList,
     articleInfo,
@@ -80,5 +94,6 @@ export const useBoardStore = defineStore("boardStore", () => {
     getBoardList,
     getArticleView,
     modifyArticle,
+    deleteArticle
   };
 });

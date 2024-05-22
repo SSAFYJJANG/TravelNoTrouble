@@ -1,31 +1,30 @@
 <script setup>
 import { ref, onMounted } from "vue";
 import { useRoute, useRouter } from "vue-router";
+import { useUserStore } from "@/stores/user";
 import { useBoardStore } from "@/stores/board";
 import "@vueup/vue-quill/dist/vue-quill.snow.css";
 
 const route = useRoute();
 const router = useRouter();
+const userStore = useUserStore();
 const boardStore = useBoardStore();
-
-const { getArticleView, articleInfo } = boardStore;
-
+const { getUserInfo, userInfo } = userStore;
+const { getArticleView, articleInfo, deleteArticle } = boardStore;
 const { articleno } = route.params;
 
 onMounted(() => {
+  let token = sessionStorage.getItem("accessToken");
+  getUserInfo(token);
   getArticleView(articleno);
 });
 
-function moveList() {
-  router.replace({ name: "article-list" });
-}
-
-function moveModify() {
-  router.replace({ name: "article-modify", params: { articleno } });
-}
-
-function onDeleteArticle() {
-  console.log(articleno + "번글 삭제하러 가자!!!");
+const onDeleteArticle = () => {
+  const checkDel = confirm("정말 삭제하시겠습니까?");
+  if (checkDel) {
+    deleteArticle(articleno);
+    router.replace({ name: 'board-list' });
+  }
 }
 </script>
 
@@ -65,13 +64,17 @@ function onDeleteArticle() {
         >
           글수정
         </router-link>
-        <button
-          type="button"
-          class="btn btn-outline-secondary py-1 px-2 mb-3 ms-1 rounded-2"
-          @click="onDeleteArticle"
-        >
-          글삭제
-        </button>
+        <div v-if="userInfo != null">
+          <button
+            v-if="userInfo.userId == boardStore.articleInfo.userId"
+            type="button"
+            class="btn btn-outline-secondary py-1 px-2 mb-3 ms-1 rounded-2"
+            @click="onDeleteArticle"
+          >
+            글삭제
+          </button>
+        </div>
+        
       </div>
     </div>
   </div>

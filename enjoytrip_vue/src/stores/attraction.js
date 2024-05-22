@@ -1,5 +1,6 @@
 import { ref, watch } from "vue";
 import { defineStore } from "pinia";
+import { jwtDecode } from "jwt-decode";
 
 import {
   sido,
@@ -23,6 +24,8 @@ export const useAttractionStore = defineStore(
     const recommendationAttraction = ref(null);
     const likeAttractionList = ref(null);
     const isClickSidoCard = ref(0);
+    const clickLikeBnt = ref(false);
+
 
     const getSidoList = async () => {
       await sido(
@@ -105,13 +108,13 @@ export const useAttractionStore = defineStore(
         }
       );
     };
-    const insertAttraction = async (data) => {
+    const insertAttraction = async (token, attraction_id) => {
+      let decodeToken = jwtDecode(token);
       await addLikeAttraction(
-        data,
+        decodeToken.userId, attraction_id,
         (response) => {
           if (response.status === httpStatusCode.OK) {
             console.log("insert Like Attraction", response.data);
-            getUserAttractionList();
           }
         },
         async (error) => {
@@ -120,14 +123,18 @@ export const useAttractionStore = defineStore(
       );
     };
 
-    const deleteAttraction = async (data) => {
+    const deleteAttraction = async (token, attraction_id) => {
+      let decodeToken = jwtDecode(token);
+      const params = {
+        userid: decodeToken.userId,
+        content_id: attraction_id
+      }
       await deleteLikeAttraction(
-        data,
+        params,
         (response) => {
           if (response.status === httpStatusCode.OK) {
             console.log("response", response);
             console.log("like Attraction List", response.data);
-            getUserAttractionList();
           }
         },
         async (error) => {
@@ -144,6 +151,7 @@ export const useAttractionStore = defineStore(
       attractionCnt,
       recommendationAttraction,
       likeAttractionList,
+      clickLikeBnt,
       getSidoList,
       getGugunList,
       getAttractionList,

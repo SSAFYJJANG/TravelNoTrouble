@@ -65,7 +65,7 @@ img {
 }
 
 .img-txt-title {
-    font-size: 2rem;
+    font-size: 1.8rem;
     font-weight: 500;
     top: 2rem;
     left: 2rem;

@@ -19,8 +19,8 @@ async function recommendedAttraction(success, fail) {
 async function userLikeAttraction(userId, success, fail) {
   await local.get(`/attraction/cart/${userId}`).then(success).catch(fail);
 }
-async function addLikeAttraction(params, success, fail) {
-  await local.post(`/attraction/cart`, { params }).then(success).catch(fail);
+async function addLikeAttraction(userId, content_id, success, fail) {
+  await local.post(`/attraction/cart/${userId}`, content_id).then(success).catch(fail);
 }
 async function deleteLikeAttraction(params, success, fail) {
   await local.delete(`/attraction/cart`, { params }).then(success).catch(fail);

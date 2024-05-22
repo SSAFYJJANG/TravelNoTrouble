@@ -1,21 +1,30 @@
 <script setup>
 import { CAccordion, CAccordionItem, CButton, CAccordionHeader, CAccordionBody } from '@coreui/vue';
+import data from "@/data/index.js";
 
 defineProps({ attraction: Object });
+const emit = defineEmits(["pushHeart"]);
+const pushHeart = (attraction) => {
+    emit('pushHeart', attraction);
+}
+
 </script>
 
 <template>
     <div class="card" style="width: 100%">
-        <img class="card-img-top" :src="attraction.first_image2" alt="Card image cap">
+        <img class="card-img-top" :src="attraction.first_image?attraction.first_image:data.imgsrc" alt="Card image cap">
         <div class="card-body">
             <div class="card-btn d-flex flex-nowrap align-items-center justify-content-between">
                 <h5 class="card-title">{{ attraction.title }}</h5>
                 <div class="card-btn">
                     <button><i class="fa-regular fa-square-plus"></i></button>
-                    <button><i class="fa-regular fa-heart"></i></button>
+                    <button>
+                        <i :class="attraction.isLiked=='1'?'fa-solid':'fa-regular'" 
+                        class=" fa-heart" style="color: #f77e7e;" @click="pushHeart(attraction)"></i>
+                    </button>
                 </div>
             </div>
-            <p class="card-text">{{ attraction.add1 }}</p>
+            <p class="card-text">{{ attraction.addr1 }}</p>
         </div>
         <CAccordion flush>
             <CAccordionItem>

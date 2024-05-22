@@ -254,4 +254,7 @@ export const useUserStore = defineStore("userStore", () => {
     checkIdDuplicate,
     getUsersCnt,
   };
+},
+{
+  persist: true
 });

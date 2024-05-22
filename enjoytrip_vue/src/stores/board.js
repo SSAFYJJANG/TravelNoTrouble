@@ -9,13 +9,6 @@ export const useBoardStore = defineStore("boardStore", () => {
   const boardList = ref(null);
   const articleInfo = ref(null);
 
-  const router = useRouter();
-
-  const isLogin = ref(false);
-  const isLoginError = ref(false);
-  const userInfo = ref(null);
-  const isValidToken = ref(false);
-
   const writeArticle = async (article) => {
     await write(
       article,

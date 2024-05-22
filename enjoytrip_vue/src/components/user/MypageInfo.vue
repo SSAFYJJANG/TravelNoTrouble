@@ -1,6 +1,7 @@
 <script setup>
 import { computed, onMounted } from "vue";
 import { useUserStore } from "@/stores/user";
+import MyTripCalendar from "../myTripPlan/MyTripCalendar.vue";
 const { VITE_VUE_API_URL } = import.meta.env;
 
 const userStore = useUserStore();
@@ -70,11 +71,10 @@ const profileImage = computed(() => {
 
         <!-- 캘린더 -->
         <div
-          class="mypage-item row justify-content-center rounded-4 mt-5"
-          style="height: 600px"
+          class="mypage-item row justify-content-center rounded-4 my-5"
         >
           <div class="h2 d-flex justify-content-center align-self-center">
-            캘린더 자리
+            <MyTripCalendar />
           </div>
         </div>
       </div>

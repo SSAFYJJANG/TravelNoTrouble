@@ -13,9 +13,14 @@ import { httpStatusCode } from "@/util/http-status";
 const userStore = useUserStore();
 const { userInfo } = userStore;
 
+const selectedDay = ref(1);
+const clickDay = (day) => {
+  selectedDay.value = day;
+};
 const viewPlanModal = ref(false);
 const togglePlanModal = () => {
   viewPlanModal.value = !viewPlanModal.value;
+  selectedDay.value = 1;
 };
 
 const planDetailList = ref(null);
@@ -123,7 +128,12 @@ onMounted(async () => {
       <div class="modal-btn d-flex justify-content-end">
         <button @click="togglePlanModal" class="display-4">✖</button>
       </div>
-      <MyTripViewModal :plan="planInfo" :details="planDetailList" />
+      <MyTripViewModal
+        :plan="planInfo"
+        :details="planDetailList"
+        :selectedDay="selectedDay"
+        @clickDay="clickDay"
+      />
     </div>
   </div>
 </template>

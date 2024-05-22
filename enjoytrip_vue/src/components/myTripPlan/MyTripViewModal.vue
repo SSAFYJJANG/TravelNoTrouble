@@ -2,11 +2,13 @@
 import { ref, defineProps } from "vue";
 import PlanDetailItem from "./PlanDetailItem.vue";
 
-const props = defineProps(["plan", "details"]);
+const props = defineProps(["plan", "details", "selectedDay"]);
+const emit = defineEmits(["clickDay"]);
 
-const selectedDay = ref(1);
+// const selectedDay = ref(1);
 const clickDay = (day) => {
-  selectedDay.value = day;
+  emit("clickDay", day);
+  //   selectedDay.value = day;
 };
 </script>
 

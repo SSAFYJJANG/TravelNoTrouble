@@ -5,17 +5,19 @@ import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Options;
-import org.apache.ibatis.annotations.Param;
 
+import com.trip.vue.plan.model.PlanDaysDto;
 import com.trip.vue.plan.model.PlanDto;
 @Mapper
 public interface PlanDao {
 	//list 가져오기
 	public List<PlanDto> listPlan(String userId) throws Exception;
 	//일정 쓰기
+	@Options(useGeneratedKeys = true, keyProperty = "plan_id", keyColumn = "plan_id")
 	public int insertPlan(PlanDto ob) throws Exception;
 	// 일정 날짜 기록
-    int insertPlanDays(@Param("plan_id") int planId);
+	@Options(useGeneratedKeys = true, keyProperty = "plan_days_id", keyColumn = "plan_days_id")
+    int insertPlanDays(PlanDaysDto planDays);
 	//일정 삭제
 	public int deletePlan(Map<String, Object> map) throws Exception;
 	//일정 메모 수정

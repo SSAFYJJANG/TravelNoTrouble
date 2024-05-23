@@ -11,6 +11,13 @@ export const usePlanStore = defineStore("planStore", () => {
   const days = ref({});
   const diffDate = ref(0);
   const isSelectAttraction = ref(null);
+  const columns = ref({});
+
+  const scene = ref({
+    type: "container",
+    props: { orientation: "horizontal" },
+    children: [],
+  });
 
   const setSelectedAttraction = (newAttration) => {
     isSelectAttraction.value = newAttration;
@@ -91,6 +98,12 @@ export const usePlanStore = defineStore("planStore", () => {
       endDate.value = new Date();
       overview.value = "";
       days.value = {};
+      scene.value = {
+        type: "container",
+        props: { orientation: "horizontal" },
+        children: [],
+      };
+      columns = {};
     };
   };
 
@@ -102,6 +115,8 @@ export const usePlanStore = defineStore("planStore", () => {
     days,
     isSelectAttraction,
     diffDate,
+    scene,
+    columns,
     setTitle,
     setStartDate,
     setEndDate,

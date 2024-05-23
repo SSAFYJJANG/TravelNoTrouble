@@ -52,19 +52,11 @@ import PlanDaysDetail from "@/components/attraction/PlanDaysDetailItem.vue"
 import { usePlanStore } from "@/stores/plan";
 const planStore = usePlanStore();
 
-const scene = ref({
-    type: 'container',
-    props: { orientation: 'horizontal' },
-    children: []
-});
-
-const days = ref({});
-
 watch(
     () => planStore.isSelectAttraction,
     newAttractoin => {
         if (newAttractoin == null) return;
-        if (scene.value.children.length <= 0) {
+        if (planStore.scene.value.children.length <= 0) {
             alert("먼저 Day를 추가해주세요");
         }
         addRow(selectedColumnId.value, newAttractoin);
@@ -74,12 +66,11 @@ watch(
 
 watch(() => planStore.diffDate,
     (newDate) => {
-        scene.value = {
+        planStore.scene.value = {
             type: 'container',
             props: { orientation: 'horizontal' },
             children: []
         };
-        days.value = {};
     }
 );
 
@@ -110,28 +101,28 @@ const applyDrag = (arr, dragResult) => {
 
 
 const addRow = (columnId, newAttractoin) => {
-    const column = scene.value.children.find(column => column.id === columnId);
+    const column = planStore.scene.value.children.find(column => column.id === columnId);
     console.log(column)
     if (column) {
         console.log(columnId);
         const newRow = {
             type: 'draggable',
-            id: `${scene.value.children.length}${(column.children && column.children.length > 0) ? column.children.length : 0}`,
+            id: `${planStore.scene.value.children.length}${(column.children && column.children.length > 0) ? column.children.length : 0}`,
             props: { className: 'card', style: { boxShadow: "0px 2px 6px 0px #89737380" } },
             attraction: newAttractoin,
         };
-        days.value[columnId].push({
+        planStore.columns[columnId] = {
             row_id: newRow.id,
             content_id: newAttractoin.id,
             overview: ""
-        })
+        };
         console.log("day" + JSON.stringify(days.value, 2, null));
         column.children.push(newRow);
     }
 }
 
 const addColumn = () => {
-    if (scene.value.children.length > planStore.diffDate) {
+    if (planStore.scene.value.children.length > planStore.diffDate) {
         alert(`여행 기간(${planStore.diffDate + 1}일)까지만 만들 수 있어요!`);
         return;
     }
@@ -143,7 +134,7 @@ const addColumn = () => {
         children: [],
         zIndex: 0,
     };
-    scene.value.children.push(newColumn);
+    planStore.scene.value.children.push(newColumn);
     days.value[newColumn.id] = [];
     // 새 열을 추가한 후 자동으로 선택
     selectCol(newColumn.id);
@@ -162,9 +153,9 @@ const dropPlaceholderOptions = {
 };
 
 const onColumnDrop = (dropResult) => {
-    const updatedScene = { ...scene.value };
+    const updatedScene = { ...planStore.scene.value };
     updatedScene.children = applyDrag(updatedScene.children, dropResult);
-    scene.value = updatedScene;
+    planStore.scene.value = updatedScene;
     // Ensure the selected column stays highlighted after drop
     if (selectedColumnId.value) {
         const selectedColumn = updatedScene.children.find(column => column.id === selectedColumnId.value);
@@ -176,10 +167,9 @@ const onColumnDrop = (dropResult) => {
 
 const onCardDrop = (columnId, dropResult) => {
     if (dropResult.removedIndex !== null || dropResult.addedIndex !== null) {
-        const updatedScene = { ...scene.value };
+        const updatedScene = { ...planStore.scene.value };
         const column = updatedScene.children.find(p => p.id === columnId);
         const columnIndex = updatedScene.children.indexOf(column);
-        days.value[columnId] = []
         const newColumn = { ...column };
         newColumn.children = applyDrag(newColumn.children, dropResult);
         for (let card in newColumn.children) {
@@ -187,22 +177,21 @@ const onCardDrop = (columnId, dropResult) => {
         }
         updatedScene.children.splice(columnIndex, 1, newColumn);
 
-        scene.value = updatedScene;
+        planStore.scene.value = updatedScene;
     }
 };
 
 const getCardPayload = (columnId) => (index) => {
-    return scene.value.children.find(p => p.id === columnId).children[index];
+    return planStore.scene.value.children.find(p => p.id === columnId).children[index];
 };
 // 열 삭제 함수
 const removeColumn = (columnId) => {
-    scene.value.children = scene.value.children.filter(column => column.id !== columnId);
+    planStore.scene.value.children = planStore.scene.value.children.filter(column => column.id !== columnId);
     delete days.value[columnId];
     console.log("day" + JSON.stringify(days.value, 2, null));
 };
 
 const removeCard = (column, cardId) => {
-    console.log("day" + days.value[column.id]);
     days.value[column.id] = days.value[column.id].filter(card => card.row_id !== cardId)
     column.children = column.children.filter(card => card.id !== cardId);
     console.log("day" + JSON.stringify(days.value, 2, null));
@@ -260,12 +249,12 @@ const getContainerStyle = (columnId) => {
 const itemsPerPage = 6;
 const currentPage = ref(1);
 
-const totalPages = computed(() => Math.ceil(scene.value.children.length / itemsPerPage));
+const totalPages = computed(() => Math.ceil(planStore.scene.value.children.length / itemsPerPage));
 
 const paginatedColumns = computed(() => {
     const start = (currentPage.value - 1) * itemsPerPage;
     const end = start + itemsPerPage;
-    return scene.value.children.slice(start, end);
+    return planStore.scene.value.children.slice(start, end);
 });
 
 const getColumnNumber = (index) => {

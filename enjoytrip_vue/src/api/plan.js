@@ -5,6 +5,15 @@ async function list(userId, success, fail) {
   await local.get(`/plan`, { params: { userId } }).then(success).catch(fail);
 }
 
+async function del(param, success, fail) {
+  await local.delete(`/plan`, {
+    params: {
+      "userId": param.userId,
+      "plan_id": param.plan_id
+    }
+  }).then(success).catch(fail);
+}
+
 async function listDetail(plan_id, success, fail) {
   await local.get(`/plan/${plan_id}`).then(success).catch(fail);
 }
@@ -14,4 +23,8 @@ async function modifyDetail(param, success, fail) {
   await local.put(`/plan/detail`, param).then(success).catch(fail);
 }
 
-export { list, listDetail, modifyDetail };
+async function deleteDetail(plan_detail_id, success, fail) {
+  await local.delete(`/plan/detail`, { params: {plan_detail_id} }).then(success).catch(fail);
+}
+
+export { list, del, listDetail, modifyDetail, deleteDetail };

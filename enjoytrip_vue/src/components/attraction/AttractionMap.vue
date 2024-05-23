@@ -40,7 +40,7 @@ const onLoadKakaoMap = (mapRef: kakao.maps.Map) => {
   // const ps = new kakao.maps.services.Places();
   // 키워드로 장소를 검색합니다
   // ps.keywordSearch(keyword.value, placesSearchCB);
-  makeMaker(attractionStore.searchAttractionList.value, false);
+  makeMaker(attractionStore.searchAttractionList, false);
 };
 
 const makeMaker = (data, isSearch) => {

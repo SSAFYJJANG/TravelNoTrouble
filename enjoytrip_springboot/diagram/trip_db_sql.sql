@@ -257,8 +257,8 @@ DROP TABLE IF EXISTS `db_trip`.`plan` ;
 CREATE TABLE IF NOT EXISTS `db_trip`.`plan` (
   `plan_id` INT NOT NULL AUTO_INCREMENT,
   `title` VARCHAR(255) NOT NULL,
-  `start_date` TIMESTAMP NOT NULL,
-  `end_date` TIMESTAMP NOT NULL,
+  `start_date` date NOT NULL,
+  `end_date` date NOT NULL,
   `overview` MEDIUMTEXT NULL DEFAULT NULL,
   `userid` VARCHAR(8) NOT NULL,
   PRIMARY KEY (`plan_id`),

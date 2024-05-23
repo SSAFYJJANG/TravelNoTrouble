@@ -24,13 +24,6 @@ const goModifyMode = (modifyId, onOff) => {
   modifyDetailId.value = modifyId;
 };
 
-const viewPlanModal = ref(false);
-const togglePlanModal = () => {
-  viewPlanModal.value = !viewPlanModal.value;
-  selectedDay.value = 1;
-  isModifyMode.value = false;
-};
-
 const details = ref(null);
 const planInfo = ref({
   plan_id: null,
@@ -39,11 +32,20 @@ const planInfo = ref({
   end_date: null,
 });
 
+const viewPlanModal = ref(false);
+const togglePlanModal = () => {
+  viewPlanModal.value = !viewPlanModal.value;
+  selectedDay.value = 1;
+  isModifyMode.value = false;
+};
+
 const handleEventClick = (clickInfo) => {
   const start_day = new Date(clickInfo.event.startStr).getTime();
   const end_day = new Date(clickInfo.event.endStr).getTime();
   const diff = Math.abs((start_day - end_day) / (1000 * 60 * 60 * 24));
 
+  console.log(end_day);
+  console.log(clickInfo.event.endStr);
   planInfo.value = {
     plan_id: clickInfo.event.id,
     title: clickInfo.event.title,
@@ -81,11 +83,13 @@ onMounted(async () => {
         planList.value = response.data;
         const calendarEl = document.querySelector("#calendar");
         plans.value = planList.value.map(function (plan) {
+          const end = new Date(plan.end_date);
+          end.setDate(end.getDate() + 1);
           return {
             id: plan.plan_id,
             title: plan.title,
             start: plan.start_date,
-            end: plan.end_date,
+            end: end,
             allDay: true,
             backgroundColor: "#46bb85",
             borderColor: "#46bb85",
@@ -102,7 +106,7 @@ onMounted(async () => {
           },
           views: {
             timeGrid: {
-              dayMaxEventRows: 5,
+              dayMaxEventRows: 4,
               dayMaxEvents: 10,
             },
           },

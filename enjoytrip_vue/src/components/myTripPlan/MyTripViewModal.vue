@@ -1,6 +1,14 @@
 <script setup>
 import { ref, defineProps } from "vue";
+import { useRouter } from "vue-router";
 import PlanDetailItem from "./PlanDetailItem.vue";
+import { del } from "@/api/plan";
+import { useUserStore } from "@/stores/user";
+import { httpStatusCode } from "@/util/http-status";
+
+const router = useRouter();
+const userStore = useUserStore();
+const { userInfo } = userStore;
 
 const props = defineProps([
   "plan",
@@ -9,7 +17,7 @@ const props = defineProps([
   "isModifyMode",
   "modifyDetailId",
 ]);
-const emit = defineEmits(["clickDay", "goModifyMode"]);
+const emit = defineEmits(["clickDay", "goModifyMode", "goDeleteMode"]);
 
 const clickDay = (day) => {
   emit("clickDay", day);
@@ -21,6 +29,20 @@ const goModifyMode = (detailId, onoff) => {
 
 const deletePlan = () => {
   console.log("삭제할 플랜", props.plan.plan_id);
+  del(
+    {
+      userId: userInfo.userId,
+      plan_id: props.plan.plan_id
+    },
+    (response) => { 
+      if (response.status === httpStatusCode.OK) {
+        console.log("삭제 성공");
+        router.go(0);
+      }
+    },
+    async (error) => { 
+      console.log(error);
+    });
 };
 </script>
 

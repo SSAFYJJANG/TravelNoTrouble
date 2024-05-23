@@ -24,13 +24,6 @@ const goModifyMode = (modifyId, onOff) => {
   modifyDetailId.value = modifyId;
 };
 
-const viewPlanModal = ref(false);
-const togglePlanModal = () => {
-  viewPlanModal.value = !viewPlanModal.value;
-  selectedDay.value = 1;
-  isModifyMode.value = false;
-};
-
 const details = ref(null);
 const planInfo = ref({
   plan_id: null,
@@ -38,6 +31,13 @@ const planInfo = ref({
   start_date: null,
   end_date: null,
 });
+
+const viewPlanModal = ref(false);
+const togglePlanModal = () => {
+  viewPlanModal.value = !viewPlanModal.value;
+  selectedDay.value = 1;
+  isModifyMode.value = false;
+};
 
 const handleEventClick = (clickInfo) => {
   const start_day = new Date(clickInfo.event.startStr).getTime();

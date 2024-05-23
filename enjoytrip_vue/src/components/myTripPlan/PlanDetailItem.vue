@@ -1,6 +1,6 @@
 <script setup>
 import { ref, defineProps, defineEmits } from "vue";
-import { modifyDetail } from "@/api/plan";
+import { modifyDetail, deleteDetail } from "@/api/plan";
 import { httpStatusCode } from "@/util/http-status";
 
 const props = defineProps([
@@ -35,13 +35,26 @@ const completeModify = () => {
   );
 };
 
+const isDeleted = ref(false);
 const clickDelete = () => {
   console.log("삭제할 플랜 디테일 아이디", props.detail.plan_detail_id);
+  deleteDetail(
+    props.detail.plan_detail_id,
+    (response) => { 
+      if (response.status === httpStatusCode.OK) {
+        console.log("삭제 성공");
+        // emit("goDeleteMode", props.index);
+      }
+    },
+    async (error) => {
+      console.log(error);
+    }
+  );
 };
 </script>
 
 <template>
-  <!-- <div class="bg-primary fs-6">{{ props.detail }}</div> -->
+  <!-- <div class="fs-6">{{ props.isDelete?"true":"false" }} | {{ props.detail.plan_detail_id }}</div> -->
   <div
     v-if="props.detail.plan_days_id - props.first_day + 1 == day"
     class="row border rounded my-2 mx-4 py-2 align-items-center"
@@ -89,18 +102,18 @@ const clickDelete = () => {
           style="bottom: -4px; right: 0"
         >
           <div class="d-flex flex-column">
-            <button class="m-0 p-0">
+            <button class="m-0 p-0"
+                @click="clickModify">
               <i
                 class="bi bi-pencil-square"
                 style="color: gray"
-                @click="clickModify"
               ></i>
             </button>
-            <button class="m-0 p-0">
+            <button class="m-0 p-0"
+                @click="clickDelete">
               <i
                 class="bi bi-trash3"
                 style="color: gray"
-                @click="clickDelete"
               ></i>
             </button>
           </div>

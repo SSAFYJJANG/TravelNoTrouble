@@ -194,7 +194,7 @@ b {
   position: relative;
   top: 50%;
   left: 50%;
-  transform: translate(-50%, -50%);
+  transform: translate(-50%, -47%);
   max-width: 600px;
   background: white;
   border-radius: 10px;

@@ -24,8 +24,12 @@ const profileImage = computed(() => {
   <div class="container">
     <div class="p-5">
       <div v-if="userInfo != null" class="d-flex flex-column">
+
+        <h3 style="font-weight: 700;">
+          마이페이지
+        </h3>
         <!-- 프로필 카드 -->
-        <div class="mypage-item row justify-content-center rounded-4 mt-5 px-5">
+        <div class="mypage-item row justify-content-center rounded-4 mt-4 px-5">
           <!-- 프로필 이미지 -->
           <div class="col-lg-4 px-4 py-4 d-flex justify-content-center">
             <img
@@ -69,9 +73,14 @@ const profileImage = computed(() => {
           </div>
         </div>
 
+        <div class="my-5"></div>
+
         <!-- 캘린더 -->
+        <h3 style="font-weight: 700;">
+          나의 여행 계획 캘린더
+        </h3>
         <div
-          class="mypage-item row justify-content-center rounded-4 my-5"
+          class="mypage-item row justify-content-center rounded-4 mt-4 mb-5"
         >
           <div class="h2 d-flex justify-content-center align-self-center">
             <MyTripCalendar />

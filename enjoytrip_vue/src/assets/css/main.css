@@ -688,7 +688,7 @@ a:hover {
 .form-control:focus {
   box-shadow: rgba(0, 0, 0, 0.07) 0px 1px 1px 0px,
     rgba(0, 0, 0, 0.07) 0px 1px 3px 0px, rgba(0, 0, 0, 0.03) 0px 0px 0px 1px;
-  border-color: #49a078 ;
+  border-color: #49a078;
 }
 .form-control:-webkit-input-placeholder {
   font-family: "Brygada 1918", sans-serif;
@@ -1611,7 +1611,7 @@ a {
   justify-content: center;
   position: relative;
 }
-.cid-uc0ssjsXFN{
+.cid-uc0ssjsXFN {
   min-width: 370px;
   max-width: 370px;
 }
@@ -3392,7 +3392,6 @@ a {
   /*change*/
   text-align: left;
   margin-left: 15%;
-
 }
 .cid-uc9PmZ4HqK {
   padding-top: 3rem;
@@ -8122,39 +8121,40 @@ a {
     text-align: center;
   }
 }
-.save-load-button{
-  padding : 0.25rem;
+.save-load-button {
+  padding: 0.25rem;
   width: 100%;
-  margin :  .25rem auto !important;
+  margin: 0.25rem auto !important;
   align-self: self-end;
   border-radius: 35px;
   font-size: small;
   font-weight: normal !important;
 }
-.form-check-label{
+.form-check-label {
   font-size: small;
 }
 .form-check {
   margin-right: 8px;
 }
-.accordion-button{
-  padding: .25rem 1rem;
+.accordion-button {
+  padding: 0.25rem 1rem;
 }
 
-.memo{
-  padding : 1rem !important;
+.memo {
+  padding: 1rem !important;
 }
 
 .memo:hover,
 .memo:focus {
-    box-shadow: rgba(0, 0, 0, 0.07) 0px 1px 1px 0px, rgba(0, 0, 0, 0.07) 0px 1px 3px 0px, rgba(0, 0, 0, 0.03) 0px 0px 0px 1px;
-    border-color: #e69985 !important;
+  box-shadow: rgba(0, 0, 0, 0.07) 0px 1px 1px 0px,
+    rgba(0, 0, 0, 0.07) 0px 1px 3px 0px, rgba(0, 0, 0, 0.03) 0px 0px 0px 1px;
+  border-color: #e69985 !important;
 }
 
-.info{
+.info {
   font-size: smaller;
-  color : #485664;
-  margin : 0.01rem;
+  color: #485664;
+  margin: 0.01rem;
 }
 
 .input-day {
@@ -8167,26 +8167,30 @@ a {
 }
 
 .inputs {
-  margin-bottom: .5rem;
-  margin-left: .5rem;
+  margin-bottom: 0.5rem;
+  margin-left: 0.5rem;
 }
 
 .accordion-body {
-  padding: 0 ;
+  padding: 0;
 }
 
-.fc .fc-button-primary { 
-  color: black; 
-  background-color: white !important; 
-  border-color: #FFFFFF; 
+.fc .fc-button-primary {
+  color: black;
+  background-color: white !important;
+  border-color: #ffffff;
 }
 .fc .fc-button-primary:hover {
   color: #49a078;
-  border-color: #FFFFFF; 
+  border-color: #ffffff;
 }
-.fc-col-header-cell-cushion, .fc-daygrid-day-number {
-  color: black
+.fc-col-header-cell-cushion,
+.fc-daygrid-day-number {
+  color: black;
 }
 .fc-daygrid-more-link {
   color: gray;
+}
+.fc-daygrid-event {
+  border-radius: 1px;
 }

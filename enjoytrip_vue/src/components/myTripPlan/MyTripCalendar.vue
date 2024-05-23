@@ -1,129 +1,130 @@
 <script setup>
-import { ref, onMounted, computed } from "vue";
+import { ref, onMounted } from "vue";
+import { Calendar } from "@fullcalendar/core";
 import FullCalendar from "@fullcalendar/vue3";
 import dayGridPlugin from "@fullcalendar/daygrid";
-import timeGridPlugin from '@fullcalendar/timegrid';
-import interactionPlugin from '@fullcalendar/interaction';
+import timeGridPlugin from "@fullcalendar/timegrid";
+import interactionPlugin from "@fullcalendar/interaction";
 import MyTripViewModal from "./MyTripViewModal.vue";
 import { useUserStore } from "@/stores/user";
-import { usePlanStore } from "@/stores/plan";
-import axios from "axios";
+import { list, listDetail } from "@/api/plan";
+import { httpStatusCode } from "@/util/http-status";
 
 const userStore = useUserStore();
-const planStore = usePlanStore();
 const { userInfo } = userStore;
-const { getPlanList, planList } = planStore;
 
-const plans = ref(null);
-
-onMounted(async () => {
-  await axios.get(`/plan`, { params: { userInfo } })
-    .then((res) => res.json())
-    .then((data) => console.log(data));
-  // await getPlanList(userInfo.userId);
-  // plans.value = planList;
-  // console.log("Plans.value", plans.value); 
-});
-
-const isLoading = computed(() => {
-  return planList == null ? true : false;
-});
-
-// userid 로 -> get(`/plan`) 여행계획 planList로 받아오기
-// const plans = [
-//   {
-//     "id": "common001",
-//     "title": "event1",
-//     "start": "2024-05-02",
-//     "end":"2024-05-05",
-//     "allDay": true,
-//     "backgroundColor":"#ffb1bf",
-//     "borderColor":"#ffb1bf",
-//     "textColor":"white",
-//     "extendedProps": {
-//       "comment": "명절"
-//     }
-//   }
-  // , {
-  //   "id": variable.plan_id,
-  //   "title": variable.title,
-  //   "start": variable.start_date,
-  //   "end": variable.end_date,
-  //   "allDay": true,
-  //   "backgroundColor": "#ffb1fb",
-  //   "borderColor": "#ffb1bf",
-  //   "textColor": "white",
-  //   "extendedProps": {
-  //     "comment": "여행"
-  //   }
-  // }
-// ];
-
-const handleDateSelect = (selectInfo) => {
+const selectedDay = ref(1);
+const clickDay = (day) => {
+  selectedDay.value = day;
+};
+const isModifyMode = ref(false);
+const modifyDetailId = ref(null);
+const goModifyMode = (modifyId, onOff) => {
+  isModifyMode.value = onOff ? true : false;
+  modifyDetailId.value = modifyId;
 };
 
 const viewPlanModal = ref(false);
-const togglePlanModal = () => { 
+const togglePlanModal = () => {
   viewPlanModal.value = !viewPlanModal.value;
+  selectedDay.value = 1;
+  isModifyMode.value = false;
 };
 
-const plan_id = ref(null);
+const details = ref(null);
+const planInfo = ref({
+  plan_id: null,
+  title: null,
+  start_date: null,
+  end_date: null,
+});
 
 const handleEventClick = (clickInfo) => {
-  console.log("id", clickInfo.event.id); // plan.plan_id
-  plan_id = clickInfo.event.id;
-  console.log("title", clickInfo.event.title); // plan.title
-  console.log("start date", clickInfo.event.startStr); // plan.start_date
-  console.log("end date", clickInfo.event.endStr); // plan.end_date
-  // get - plan_days 테이블에서 plan_id가 plan_id.value인 튜플들 들고 오기
-  // get - 들고온 plan_days_id로 plan_detail 테이블에서 튜플들 들고 오기
+  const start_day = new Date(clickInfo.event.startStr).getTime();
+  const end_day = new Date(clickInfo.event.endStr).getTime();
+  const diff = Math.abs((start_day - end_day) / (1000 * 60 * 60 * 24));
+
+  planInfo.value = {
+    plan_id: clickInfo.event.id,
+    title: clickInfo.event.title,
+    start_date: clickInfo.event.startStr,
+    end_date: clickInfo.event.endStr,
+    days: isNaN(diff) ? 1 : diff + 1,
+    first_day: null,
+  };
+
+  listDetail(
+    planInfo.value.plan_id,
+    (response) => {
+      if (response.status === httpStatusCode.OK) {
+        details.value = response.data;
+        planInfo.value.first_day = details.value.reduce((prev, value) => {
+          return prev.plan_days_id <= value.plan_days_id ? prev : value;
+        });
+        planInfo.value.first_day = planInfo.value.first_day.plan_days_id;
+      }
+    },
+    async (error) => {
+      console.log(error);
+    }
+  );
   togglePlanModal();
 };
 
-const calendarOptions = {
-    plugins: [
-        dayGridPlugin,
-        timeGridPlugin,
-        interactionPlugin // needed for dateClick
-    ],
-    headerToolbar: {
-        left: 'prev,next',
-        center: 'title',
-        right: ''
-    },
-    views: {
-      timeGrid: {
-        dayMaxEventRows: 5,
-        dayMaxEventRows: 10
+const planList = ref(null);
+onMounted(async () => {
+  const plans = ref(null);
+  list(
+    userInfo.userId,
+    (response) => {
+      if (response.status === httpStatusCode.OK) {
+        planList.value = response.data;
+        const calendarEl = document.querySelector("#calendar");
+        plans.value = planList.value.map(function (plan) {
+          return {
+            id: plan.plan_id,
+            title: plan.title,
+            start: plan.start_date,
+            end: plan.end_date,
+            allDay: true,
+            backgroundColor: "#46bb85",
+            borderColor: "#46bb85",
+            textColor: "white",
+          };
+        });
+        var calendar = new Calendar(calendarEl, {
+          plugins: [dayGridPlugin, timeGridPlugin, interactionPlugin],
+          initialView: "dayGridMonth",
+          headerToolbar: {
+            left: "prev,next",
+            center: "title",
+            right: "",
+          },
+          views: {
+            timeGrid: {
+              dayMaxEventRows: 5,
+              dayMaxEvents: 10,
+            },
+          },
+          dayMaxEventRows: true,
+          dayMaxEvents: true,
+          eventClick: handleEventClick,
+          events: plans.value,
+        });
+        calendar.render();
       }
     },
-    initialView: 'dayGridMonth',
-    editable: true,
-    selectable: true,
-    selectMirror: true,
-    dayMaxEvents: true,
-    weekends: true,
-    select: handleDateSelect,
-    eventClick: handleEventClick,
-  // events: plans,
-    events: plans,
-    eventColor: '#ffb1bf'
-    /* 
-    eventAdd:
-    eventChange:
-    eventRemove:
-    */
-};
+    async (error) => {
+      console.log(error);
+    }
+  );
+});
 </script>
 
 <template>
-  <div class='demo-app w-100'>
-    <div class='demo-app-main w-100'>
-      <FullCalendar
-        class='demo-app-calendar'
-        :options='calendarOptions'
-      >
-      </FullCalendar>
+  <div class="demo-app w-100">
+    <div class="demo-app-main w-100">
+      <div id="calendar"></div>
     </div>
   </div>
 
@@ -132,7 +133,15 @@ const calendarOptions = {
       <div class="modal-btn d-flex justify-content-end">
         <button @click="togglePlanModal" class="display-4">✖</button>
       </div>
-      <MyTripViewModal />
+      <MyTripViewModal
+        :plan="planInfo"
+        :details="details"
+        :selectedDay="selectedDay"
+        :isModifyMode="isModifyMode"
+        :modifyDetailId="modifyDetailId"
+        @clickDay="clickDay"
+        @goModifyMode="goModifyMode"
+      />
     </div>
   </div>
 </template>
@@ -150,7 +159,8 @@ li {
   margin: 1.5em 0;
   padding: 0;
 }
-b { /* used for event dates/times */
+b {
+  /* used for event dates/times */
   margin-right: 3px;
 }
 .demo-app {
@@ -163,7 +173,8 @@ b { /* used for event dates/times */
   flex-grow: 1;
   padding: 3em;
 }
-.fc { /* the calendar root */
+.fc {
+  /* the calendar root */
   /* max-width: 1100px; */
   margin: 0 auto;
 }

@@ -1,14 +1,13 @@
 <script setup lang="ts">
 import { KakaoMap, KakaoMapMarker, type KakaoMapMarkerListItem } from 'vue3-kakao-maps';
 import { ref, watch } from 'vue';
+
 import { useAttractionStore } from "@/stores/attraction";
-const attractionStore = useAttractionStore();
 import { storeToRefs } from "pinia";
+const attractionStore = useAttractionStore();
 const { searchAttractionList, clickHeart } = storeToRefs(attractionStore);
 const { insertAttraction, deleteAttraction } = attractionStore;
-import AttractionCardItem from './AttractionCardItem.vue';
 
-import { CAccordion, CAccordionItem, CButton, CAccordionHeader, CAccordionBody } from '@coreui/vue';
 import data from "@/data/index.js";
 
 const likeImg = data.likedMarkerImg;

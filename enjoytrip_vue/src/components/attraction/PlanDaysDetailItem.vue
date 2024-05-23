@@ -1,25 +1,32 @@
 <script setup>
 import { ref } from 'vue'
 import { CFormTextarea, CInputGroup, CCard, CRow, CCol, CCardImage, CCardBody, CCardTitle, CCardText, CAccordion, CAccordionItem, CAccordionHeader, CAccordionBody } from '@coreui/vue';
-
+import data from "@/data/index.js";
 defineProps({ attraction: Object });
-
+const emit = defineEmits(["removeCard"]);
 const planDetailMemo = ref("");
+
+const removeCard = () => {
+    emit('removeCard');
+}
+
 </script>
 
 <template>
     <CCard class="plan-detail-card">
         <CRow class="g-0">
             <CCol :md="4">
-                <CCardImage class="rounded-0 card-img" :src="attraction.first_image1" />
+                <CCardImage class="rounded-0 card-img"
+                    :src="attraction.first_image ? attraction.first_image : data.imgsrc" />
             </CCol>
             <CCol :md="8">
                 <CCardBody class="card-content">
                     <CCardTitle class="card-title">{{ attraction.title }}</CCardTitle>
-                    <CCardText class="card-text">{{ attraction.add1 }}</CCardText>
+                    <CCardText class="card-text">{{ attraction.addr1 }}</CCardText>
                     <CCardText class="card-text card-btn d-flex justify-content-end">
-                        <i class="fa-solid fa-square-plus"></i>
-                        <i class="fa-regular fa-heart"></i>
+                        <button>
+                            <i class="fa-solid fa-square-plus" @click="removeCard(attraction)"></i>
+                        </button>
                     </CCardText>
                 </CCardBody>
             </CCol>

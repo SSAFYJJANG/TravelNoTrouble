@@ -14,4 +14,8 @@ async function modifyDetail(param, success, fail) {
   await local.put(`/plan/detail`, param).then(success).catch(fail);
 }
 
-export { list, listDetail, modifyDetail };
+async function savePlan(plan, success, fail) {
+  await local.post(`/plan`, plan).then(success).catch(fail);
+}
+
+export { list, listDetail, modifyDetail, savePlan };

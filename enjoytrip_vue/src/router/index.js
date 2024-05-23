@@ -135,7 +135,7 @@ const router = createRouter({
       component: AuthView,
       children: [
         {
-          path: "login",
+          path: "",
           name: "auth-login",
           component: Login,
         },

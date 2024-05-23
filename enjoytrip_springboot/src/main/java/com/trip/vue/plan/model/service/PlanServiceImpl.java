@@ -1,5 +1,7 @@
 package com.trip.vue.plan.model.service;
 
+import java.sql.Timestamp;
+import java.time.Instant;
 import java.util.List;
 import java.util.Map;
 
@@ -27,14 +29,20 @@ public class PlanServiceImpl implements PlanService {
 	public List<PlanDto> listPlan(String userId) throws Exception {
 		return planDao.listPlan(userId);
 	}
+	
+	// 문자열을 Timestamp로 변환하는 메소드
+	public Timestamp convertToTimestamp(String isoDate) {
+	    Instant instant = Instant.parse(isoDate); // ISO 8601 문자열을 Instant로 변환
+	    return Timestamp.from(instant);
+	}
 
 	@Transactional
     @Override
     public int insertPlan(Map<String, Object> planData) throws Exception {
         PlanDto planDto = new PlanDto();
         planDto.setTitle((String) planData.get("title"));
-        planDto.setStart_date((String) planData.get("start_date"));
-        planDto.setEnd_date((String) planData.get("end_date"));
+        planDto.setStart_date(convertToTimestamp((String) planData.get("start_date")));
+        planDto.setEnd_date(convertToTimestamp((String) planData.get("end_date")));
         planDto.setUserId((String) planData.get("userId"));
         planDto.setOverview((String) planData.get("overview"));
         planDao.insertPlan(planDto);

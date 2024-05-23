@@ -38,7 +38,7 @@
 	<delete id="deleteAllPlanDays" parameterType="string">
 		delete pd
 		from ( plan p left join plan_days pd on p.plan_id = pd.plan_id) 
-		where p.userid=#{userId};
+		where p.userid=#{userId}
 	</delete>
 	
 </mapper>

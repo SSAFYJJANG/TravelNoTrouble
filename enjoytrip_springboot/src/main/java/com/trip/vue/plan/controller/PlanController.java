@@ -55,7 +55,7 @@ public class PlanController {
 	}
 	//delete 일정 삭제 '/'
 	@DeleteMapping("")
-	// @RequestParam Map<String, Object> map = key : userId, paln_id
+	// @RequestParam Map<String, Object> map = key : userId, plan_id
 	public ResponseEntity<?> deletePlan(@RequestParam Map<String, Object> map) throws Exception{
 		log.info("deletePlan access = {}", map);
 		try {
@@ -95,8 +95,8 @@ public class PlanController {
 		}
 	}
 	
-	// delete 세부일정 삭제 '/{plan_id}'
-	@DeleteMapping("/{plan_id}")
+	// delete 세부일정 삭제
+	@DeleteMapping("/detail")
 	public ResponseEntity<?> deletePlanDetail(@RequestParam("plan_detail_id") int plan_detail_id) throws Exception{
 		try {
 			return new ResponseEntity<Integer>(planDetailService.deletePlanDetail(plan_detail_id), HttpStatus.OK);

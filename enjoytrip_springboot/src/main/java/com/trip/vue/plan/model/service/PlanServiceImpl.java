@@ -32,8 +32,12 @@ public class PlanServiceImpl implements PlanService {
 	@Transactional
 	@Override
 	public int deletePlan(Map<String, Object> map) throws Exception {
-		planDao.deleteAllPlanDays(String.valueOf(map.get("userId")));
-		planDetailDao.deleteAllPlanDetail(String.valueOf(map.get("userId")));
+		String userId = String.valueOf(map.get("userId"));
+		int plan_id = Integer.valueOf((String) map.get("plan_id"));
+//		planDetailDao.deleteAllPlanDetail(userId);
+//		planDao.deleteAllPlanDays(String.valueOf(map.get("userId")));
+		planDetailDao.deletePlanDetails(plan_id);
+		planDetailDao.deletePlanDays(plan_id);
 		return planDao.deletePlan(map);
 	}
 

@@ -64,14 +64,9 @@ const likeFeed = () => {
           :src="`${VITE_VUE_API_URL}/img/${props.card.image}`"
         />
       </div>
-
       <div class="my-4 mx-5">
         <h4 class="mb-3">{{ info.title }}</h4>
-        <div>
-          {{ hotplaceStore.feedInfo.username }} ({{
-            hotplaceStore.feedInfo.userId
-          }})
-        </div>
+        <div>{{ info.username }} ({{ info.userId }})</div>
         <div class="d-flex justify-content-between">
           <div>
             {{ addr.sido_name }} {{ addr.gugun_name }} | {{ info.regist_time }}

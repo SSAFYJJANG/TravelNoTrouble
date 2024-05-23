@@ -10,6 +10,6 @@ public class PlanDto {
 	private String title;
 	private String userId;
 	private String overview;
-	private Timestamp start_date;
-	private Timestamp end_date;
+	private String start_date;
+	private String end_date;
 }

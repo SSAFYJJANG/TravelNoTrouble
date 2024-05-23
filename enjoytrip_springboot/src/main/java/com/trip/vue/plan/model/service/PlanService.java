@@ -9,7 +9,7 @@ public interface PlanService {
 	//list 가져오기
 	public List<PlanDto> listPlan(String userId) throws Exception;
 	//일정 쓰기
-	public int insertPlan(PlanDto ob) throws Exception;
+	public int insertPlan(Map<String, Object> planData) throws Exception;
 	//일정 삭제
 	public int deletePlan(Map<String, Object> map) throws Exception;
 	//일정 메모 수정

@@ -6,8 +6,10 @@ import VSearchInput from "@/components/common/VSearchInput.vue";
 import AttractionCardList from "@/components/attraction/AttractionCardList.vue";
 import { useAttractionStore } from "@/stores/attraction";
 import { storeToRefs } from "pinia";
+
+
 const attractionStore = useAttractionStore();
-const { getSidoList, getGugunList, getAttractionList } = attractionStore;
+const { getAttractionList } = attractionStore;
 const { sidoList, isClickSidoCard, gugunList } = storeToRefs(attractionStore);
 
 const selectGugunList = ref([]);
@@ -33,6 +35,7 @@ onMounted(async () => {
             getAttractionList(params),
             changeSido(isClickSidoCard.value),
         ]);
+        isClickSidoCard.value = null;
     }
 
 
@@ -76,8 +79,8 @@ const changeSido = (val) => {
 };
 
 const changeGugun = (val) => {
-    isSelectGugunCode = val;
-    console.log(isSelectGugunCode);
+    isSelectGugunCode.value = val;
+    console.log(isSelectGugunCode.value);
 }
 
 const clickSearch = (val) => {

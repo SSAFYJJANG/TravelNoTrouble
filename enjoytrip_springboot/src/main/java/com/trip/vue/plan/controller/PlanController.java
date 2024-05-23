@@ -45,14 +45,15 @@ public class PlanController {
 	}
 	//post 일정 쓰기 '/'
 	@PostMapping("")
-	public ResponseEntity<?> insertPlan(@RequestBody PlanDto ob) throws Exception{
-		log.info("insertPlan access = {}", ob);
+	public ResponseEntity<?> insertPlan(@RequestBody Map<String, Object> planData) throws Exception{
+		log.info("insertPlan access = {}", planData);
 		try {
-			return new ResponseEntity<Integer>(planService.insertPlan(ob), HttpStatus.OK);
+			return new ResponseEntity<Integer>(planService.insertPlan(planData), HttpStatus.OK);
 		} catch (Exception e) {
 			return new ResponseEntity<String>("서버 오류", HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
+	
 	//delete 일정 삭제 '/'
 	@DeleteMapping("")
 	// @RequestParam Map<String, Object> map = key : userId, paln_id
@@ -87,9 +88,9 @@ public class PlanController {
 	}
 	// post 세부일정 쓰기 '/{plan_id}'
 	@PostMapping("/{plan_id}")
-	public ResponseEntity<?> insertPlanDetail(@RequestBody PlanDetailDto ob) throws Exception{
+	public ResponseEntity<?> addPlanDetail(@RequestBody PlanDetailDto ob) throws Exception{
 		try {
-			return new ResponseEntity<Integer>(planDetailService.insertPlanDetail(ob), HttpStatus.OK);
+			return new ResponseEntity<Integer>(planDetailService.addPlanDetail(ob), HttpStatus.OK);
 		} catch (Exception e) {
 			return new ResponseEntity<String>("서버 오류", HttpStatus.INTERNAL_SERVER_ERROR);
 		}

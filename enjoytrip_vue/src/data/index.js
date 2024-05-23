@@ -113,13 +113,16 @@ export default {
   ],
   content_types : [
     { text: '전체', value: '0' },
-    { text: '관광지', value: '1' },
-    { text: '문화시설', value: '2' },
-    { text: '축제공연행사', value: '3' },
-    { text: '여행코스', value: '4' },
-    { text: '레포츠', value: '5' },
-    { text: '숙박', value: '6' },
-    { text: '쇼핑', value: '7' },
-    { text: '식당', value: '8' }
-  ]
+    { text: '관광지', value: '12' },
+    { text: '문화시설', value: '14' },
+    { text: '축제공연행사', value: '15' },
+    { text: '여행코스', value: '25' },
+    { text: '레포츠', value: '28' },
+    { text: '숙박', value: '32' },
+    { text: '쇼핑', value: '38' },
+    { text: '식당', value: '39' }
+  ],
+  imgsrc : "/src/assets/images/trip2.jpeg",
+  likedMarkerImg : "/src/assets/images/likedMarker.png",
+  defaultMarkerImg : "/src/assets/images/defaultMarker.png",
 };

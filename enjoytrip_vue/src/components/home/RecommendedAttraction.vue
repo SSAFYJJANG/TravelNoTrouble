@@ -15,12 +15,12 @@
             </em>
           </h4>
           <p>{{ recommendationAttraction.addr1 }}</p>
-          <p class="description">{{ monthInfo.overview }}</p>
+          <p class="description">{{ recommendationAttraction.overview }}</p>
           <router-link :to="{ name: 'place' }" class="cta-btn align-self-start">여행 계획 짜러가기</router-link>
         </div>
-        <div class="col-lg-5 order-first d-flex align-items-center img-area">
+        <div class="col-lg-5 order-first d-flex justify-content-center; align-items-center img-area">
           <div class="img">
-            <img :src="recommendationAttraction.first_image2" alt="" class="img-fluid" />
+            <img :src="recommendationAttraction.first_image2?recommendationAttraction.first_image2:data.imgsrc" alt="" class="img-fluid" />
           </div>
         </div>
       </div>
@@ -29,6 +29,7 @@
 </template>
 
 <script setup>
+import data from "@/data/index.js";
 const props = defineProps({
   recommendationAttraction: Object,
 });
@@ -130,6 +131,8 @@ const props = defineProps({
   position: relative;
   z-index: 3;
   border-radius: 15px;
+  width: 500px;
+    object-fit: cover;
 }
 
 .img-area {

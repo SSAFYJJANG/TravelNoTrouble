@@ -1,16 +1,44 @@
 <script setup>
-import { computed, onMounted } from "vue";
+import { ref, computed, onMounted, watch } from "vue";
 import { useUserStore } from "@/stores/user";
 import MyTripCalendar from "../myTripPlan/MyTripCalendar.vue";
+import { useAttractionStore } from "@/stores/attraction";
+import { storeToRefs } from "pinia";
+const attractionStore = useAttractionStore();
+const { sidoList, gugunList } = storeToRefs(attractionStore);
 const { VITE_VUE_API_URL } = import.meta.env;
 
 const userStore = useUserStore();
+const { userInfo } = userStore;
 
-const { getUserInfo, userInfo } = userStore;
+const addr = ref({
+  sido_name: null,
+  gugun_name: null
+});
+
+const selectGugunList = ref([]);
 
 onMounted(() => {
-  let token = sessionStorage.getItem("accessToken");
-  getUserInfo(token);
+  for (let i = 0; i < sidoList.value.length; i++) {
+    if (sidoList.value[i].sido_code == userInfo.sido_code) {
+      addr.value.sido_name = sidoList.value[i].sido_name;
+      break;
+    }
+  }
+
+  if (addr.value.sido_name != null && gugunList.value != null) {
+    selectGugunList.value = gugunList.value[userInfo.sido_code].map(item => ({
+      text: item.gugun_name,
+      value: item.gugun_code
+    }));
+  }
+
+  for (let i = 0; i < selectGugunList.value.length; i++) {
+    if (selectGugunList.value[i].value == userInfo.gugun_code) {
+      addr.value.gugun_name = selectGugunList.value[i].text;
+      break;
+    }
+  }
 });
 
 const profileImage = computed(() => {
@@ -26,7 +54,7 @@ const profileImage = computed(() => {
       <div v-if="userInfo != null" class="d-flex flex-column">
 
         <h3 style="font-weight: 700;">
-          마이페이지
+          프로필 정보
         </h3>
         <!-- 프로필 카드 -->
         <div class="mypage-item row justify-content-center rounded-4 mt-4 px-5">
@@ -65,7 +93,7 @@ const profileImage = computed(() => {
                 <div class="col-lg-6 my-3">
                   <p class="fw-light">주소</p>
                   <p class="mb-0 fw-llight">
-                    {{ userInfo.sido_code }}시 {{ userInfo.gugun_code }}구
+                    {{ addr.sido_name }}  {{ addr.gugun_name }}
                   </p>
                 </div>
               </div>

@@ -1,7 +1,11 @@
 <script setup>
-import { computed, onMounted, ref } from "vue";
+import { computed, watch, ref } from "vue";
 import { useRouter } from "vue-router";
 import { useUserStore } from "@/stores/user";
+import { storeToRefs } from "pinia";
+import { useAttractionStore } from "@/stores/attraction";
+const attractionStore = useAttractionStore();
+const { sidoList, gugunList } = storeToRefs(attractionStore);
 const { VITE_VUE_API_URL } = import.meta.env;
 
 const userStore = useUserStore();
@@ -55,6 +59,46 @@ const deleteAccount = () => {
     router.replace({ name: "auth-login" });
   }
 };
+
+const selectGugunList = ref([]);
+
+const sidos = sidoList.value.map((sido) => ({
+  text: sido.sido_name,
+  value: sido.sido_code,
+}));
+
+sidos.unshift({
+  text: '시/도',
+  value: 0,
+});
+
+selectGugunList.value.unshift({
+  text: '구/군',
+  value: 0,
+});
+
+const selectSido = ref(0);
+const selectOptionSidoList = ref(sidos);
+
+// select 변수의 변경을 감시하고 변경될 때마다 onSelect 함수를 호출합니다.
+watch(selectSido, (newValue, oldValue) => {
+  info.value.sido_code = newValue;
+  info.value.gugun_code = 0;
+  selectGugunList.value = [];
+  if (newValue != 0 && gugunList.value != null) {
+    selectGugunList.value = gugunList.value[newValue].map(item => ({
+      text: item.gugun_name,
+      value: item.gugun_code
+    }));
+  }
+  selectGugunList.value.unshift({
+    text: '구/군',
+    value: 0,
+  });
+
+  // console.log(newValue);
+  // console.log("selectGugunList " + selectGugunList.value);
+});
 </script>
 
 <template>
@@ -113,30 +157,26 @@ const deleteAccount = () => {
                 <tr>
                   <td>시도</td>
                   <td class="ps-5">
-                    <select
-                      name="sido"
-                      class="form-control fs-6 py-0 px-4"
-                      data-form-field="sido"
-                      v-model="info.sido_code"
-                    >
-                      <option value="0">시도</option>
-                      <option value="1">서울</option>
+                    <select name="sido" data-form-field="sido" class="form-control fs-6 py-0 px-4"
+                      v-model="selectSido">
+                      <option v-for="option in selectOptionSidoList" 
+                        :key="option.value" 
+                        :value="option.value"
+                        :disabled="option.value === '' ? true : false">
+                        {{ option.text }}
+                      </option>
                     </select>
                   </td>
                 </tr>
                 <tr>
-                  <td>구군</td>
+                  <td>구/군</td>
                   <td class="ps-5">
-                    <select
-                      name="gugun"
-                      class="form-control fs-6 py-0 px-4"
-                      data-form-field="gugun"
-                      v-model="info.gugun_code"
-                    >
-                      <option value="0">구군</option>
-                      <option value="1">강서</option>
-                      <option value="2">강북</option>
-                      <option value="3">강남</option>
+                    <select name="gugun" data-form-field="gugun" class="form-control fs-6 py-0 px-4"
+                      v-model="info.gugun_code">
+                      <option v-for="option in selectGugunList" :key="option.value" :value="option.value"
+                        :disabled="option.value === '' ? true : false">
+                        {{ option.text }}
+                      </option>
                     </select>
                   </td>
                 </tr>

@@ -1,7 +1,10 @@
 <script setup>
-import { ref, computed } from 'vue';
-
+import { ref, computed, watch } from 'vue';
 import PlanDurCalendar from "@/components/attraction/PlanDurCalendar.vue";
+
+import { usePlanStore } from "@/stores/plan";
+const planStore = usePlanStore();
+
 // 달력 열고 닫기 추가 ---------------------------
 // 달력 표시 상태를 제어하는 반응형 속성
 const isCalendarOpen = ref(false);
@@ -10,8 +13,16 @@ const toggleMap = () => {
     isCalendarOpen.value = !isCalendarOpen.value;
 };
 
-const startDate = ref(new Date());
-const endDate = ref(new Date());
+const startDate = ref(planStore.startDate);
+const endDate = ref(planStore.endDate);
+
+watch(startDate, (newDate) => {
+    planStore.setStartDate(newDate);
+});
+
+watch(endDate, (newDate) => {
+    planStore.setEndDate(newDate);
+});
 
 const formattedStartDate = computed({
     get() {

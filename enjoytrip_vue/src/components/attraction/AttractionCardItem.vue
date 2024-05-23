@@ -1,6 +1,10 @@
 <script setup>
 import { CAccordion, CAccordionItem, CButton, CAccordionHeader, CAccordionBody } from '@coreui/vue';
 import data from "@/data/index.js";
+import { usePlanStore } from "@/stores/plan";
+import { watch } from 'vue';
+const planStore = usePlanStore();
+
 
 defineProps({ attraction: Object });
 const emit = defineEmits(["pushHeart"]);
@@ -8,19 +12,27 @@ const pushHeart = (attraction) => {
     emit('pushHeart', attraction);
 }
 
+const selectAttraction = (attraction) => {
+    console.log(attraction);
+    planStore.setSelectedAttraction(attraction);
+};
+
 </script>
 
 <template>
     <div class="card" style="width: 100%">
-        <img class="card-img-top" :src="attraction.first_image?attraction.first_image:data.imgsrc" alt="Card image cap">
+        <img class="card-img-top" :src="attraction.first_image ? attraction.first_image : data.imgsrc"
+            alt="Card image cap">
         <div class="card-body">
             <div class="card-btn d-flex flex-nowrap align-items-center justify-content-between">
                 <h5 class="card-title">{{ attraction.title }}</h5>
                 <div class="card-btn">
-                    <button><i class="fa-regular fa-square-plus"></i></button>
                     <button>
-                        <i :class="attraction.isLiked=='1'?'fa-solid':'fa-regular'" 
-                        class=" fa-heart" style="color: #f77e7e;" @click="pushHeart(attraction)"></i>
+                        <i class="fa-regular fa-square-plus" @click="selectAttraction(attraction)"></i>
+                    </button>
+                    <button>
+                        <i :class="attraction.isLiked == '1' ? 'fa-solid' : 'fa-regular'" class=" fa-heart"
+                            style="color: #f77e7e;" @click="pushHeart(attraction)"></i>
                     </button>
                 </div>
             </div>

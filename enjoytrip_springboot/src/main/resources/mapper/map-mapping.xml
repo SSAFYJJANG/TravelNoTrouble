@@ -19,20 +19,20 @@
 		from attraction_info ai left join attraction_description ad
 		on ai.content_id = ad.content_id left join attraction_cart ac 
 		on ai.content_id = ac.content_id
-		<where>
-	        <if test='sido_code != 0 and sido_code != ""'>
+		where 1 = 1
+	        <if test='sido_code != 0 and sido_code != null'>
 	            AND sido_code = #{sido_code}
 	        </if>
-	        <if test='gugun_code != 0 and gugun_code != ""'>
+	        <if test='gugun_code != 0 and gugun_code != null'>
 	            AND gugun_code = #{gugun_code}
 	        </if>
-	        <if test='content_type_id != 0 and content_type_id != ""'>
+	        <if test='content_type_id != 0 and content_type_id != null'>
 	            AND content_type_id = #{content_type_id}
 	        </if>
 	        <if test='overview != null and overview != ""'>
-	            AND overview like CONCAT(‘%’, #{overview}, ‘%’)
+	            AND (overview like CONCAT('%', #{overview}, '%')
+	            OR title like CONCAT('%', #{overview}, '%'))
 	        </if>
-        </where>
 	</select>
 	
 	<select id="viewAttraction" parameterType="int" resultType="attractionDto">

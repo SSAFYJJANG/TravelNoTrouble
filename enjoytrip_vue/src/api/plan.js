@@ -23,8 +23,16 @@ async function modifyDetail(param, success, fail) {
   await local.put(`/plan/detail`, param).then(success).catch(fail);
 }
 
+
+async function savePlan(plan, success, fail) {
+  await local.post(`/plan`, plan).then(success).catch(fail);
+}
+
+export { list, listDetail, modifyDetail, savePlan };
+
 async function deleteDetail(plan_detail_id, success, fail) {
   await local.delete(`/plan/detail`, { params: {plan_detail_id} }).then(success).catch(fail);
 }
 
 export { list, del, listDetail, modifyDetail, deleteDetail };
+

@@ -13,14 +13,15 @@
 	</select>
 
 	<insert id="insertPlan" parameterType="planDto"
-	useGeneratedKeys="true" keyProperty = "plan_id"
-    keyColumn ="plan_id">
+		useGeneratedKeys="true" keyProperty = "plan_id"
+    	keyColumn ="plan_id">
 		insert into plan(title, start_date, end_date, userId, overview)
 		values (#{title}, #{start_date}, #{end_date}, #{userId}, #{overview})
 	</insert>
 	
-	<insert id="insertPlanDays" parameterType="int" useGeneratedKeys="true" keyProperty = "plan_days_id"
-    keyColumn ="plan_days_id" >
+	<insert id="insertPlanDays" 
+		parameterType="int"
+		useGeneratedKeys="true" keyProperty = "plan_days_id" keyColumn ="plan_days_id" >
 		INSERT INTO plan_days (plan_id) VALUES (#{plan_id})
 	</insert>
 

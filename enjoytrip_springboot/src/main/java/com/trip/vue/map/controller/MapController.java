@@ -54,6 +54,7 @@ public class MapController {
 	@GetMapping("")
 	public ResponseEntity<?> getAttractionList(@RequestParam Map<String, Object> map) throws Exception{
 		try {
+			log.info("getAttractionList access {}", map);
 			return new ResponseEntity<List<AttractionDto>>(service.getAttractionList(map), HttpStatus.OK);
 		} catch (Exception e) {
 			return new ResponseEntity<String>("서버 오류", HttpStatus.INTERNAL_SERVER_ERROR);

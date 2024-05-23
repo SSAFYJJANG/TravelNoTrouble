@@ -1,10 +1,30 @@
 <script setup>
-import { ref } from 'vue';
+import { ref, watch } from 'vue';
 import { COffcanvas, CButton, CInputGroup, COffcanvasHeader, COffcanvasTitle, COffcanvasBody, CFormTextarea } from '@coreui/vue';
 import PlanDaysDetailList from "@/components/attraction/PlanDaysDetailList.vue";
 import PlanCalendar from '@/components/attraction/PlanCalendar.vue';
+
+import { usePlanStore } from "@/stores/plan";
+const planStore = usePlanStore();
+
 const visibleOffCanvas = ref(false);
-const plan_title = ref("나의 여행계획");
+const title = ref(planStore.title);
+const overview = ref(planStore.overview);
+
+watch(title, (newTitle) => {
+    planStore.setTitle(newTitle);
+});
+
+watch(overview, (newOverview) => {
+    planStore.setOverview(newOverview);
+});
+
+const savePlan = () => {
+    console.log(planStore.scene.value);
+    let token = sessionStorage.getItem("accessToken");
+    planStore.insertPlan(token);
+};
+
 </script>
 
 <template>
@@ -28,23 +48,22 @@ const plan_title = ref("나의 여행계획");
                             <i class="fa-solid fa-pen-to-square"></i> title:
                         </strong>
                     </label>
-                    <input type="text" id="plan_title" class="plan_title" name="plan_title" v-model="plan_title" />
+                    <input type="text" id="plan_title" class="plan_title" name="plan_title" v-model="title" />
                 </div>
 
                 <PlanCalendar />
                 <CInputGroup>
-                    <CFormTextarea class="memo" aria-label="With textarea" placeholder="전체 계획에 대해 자유롭게 메모해보세요">
+                    <CFormTextarea class="memo" aria-label="With textarea" placeholder="전체 계획에 대해 자유롭게 메모해보세요"
+                        v-model="overview">
                     </CFormTextarea>
                 </CInputGroup>
-                <CButton color="danger" variant="outline" class="save-load-button">저장하기</CButton>
-
+                <CButton color="danger" variant="outline" class="save-load-button" @click="savePlan">
+                    저장하기
+                </CButton>
                 <PlanDaysDetailList />
             </COffcanvasBody>
         </COffcanvas>
-
     </div>
-
-
 </template>
 
 <style scoped>

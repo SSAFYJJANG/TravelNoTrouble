@@ -6,8 +6,6 @@ const calendar = ref(null);
 function moveToday() {
     calendar.value.move(new Date());
 }
-
-
 const props = defineProps({
     startDate: {
         type: Date,
@@ -18,7 +16,6 @@ const props = defineProps({
         required: true
     }
 });
-
 const selectedColor = ref('blue');
 const today = ref(new Date().toISOString().split('T')[0]);
 const attrs = computed(() => [

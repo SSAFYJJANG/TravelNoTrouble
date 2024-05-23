@@ -28,8 +28,9 @@ const goModifyMode = (detailId, onoff) => {
 };
 
 const deletePlan = () => {
-  console.log("삭제할 플랜", props.plan.plan_id);
-  del(
+  const checkDel = confirm("정말 삭제하시겠습니까?");
+  if (checkDel) {
+    del(
     {
       userId: userInfo.userId,
       plan_id: props.plan.plan_id
@@ -43,6 +44,8 @@ const deletePlan = () => {
     async (error) => { 
       console.log(error);
     });
+  }
+  
 };
 </script>
 
@@ -74,7 +77,10 @@ const deletePlan = () => {
     <div id="scroll-x" class="border-bottom">
       <button
         v-for="(cnt, index) in props.plan.days"
-        class="border fs-6 m-0 pb-1"
+        class="fs-6 m-0 pb-1"
+        :style="selectedDay == index + 1 ?
+                'background-color: #49a078; color: white; border: 1px solid #49a078'
+                :'background-color:white; border: 1px solid #d8d8d8'"
         style="
           text-align: center;
           text-decoration: none;

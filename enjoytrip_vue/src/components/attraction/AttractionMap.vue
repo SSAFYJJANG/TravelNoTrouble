@@ -4,7 +4,7 @@ import { ref, watch } from 'vue';
 import { useAttractionStore } from "@/stores/attraction";
 const attractionStore = useAttractionStore();
 import { storeToRefs } from "pinia";
-const { searchAttractionList } = storeToRefs(attractionStore);
+const { searchAttractionList, clickHeart } = storeToRefs(attractionStore);
 const { insertAttraction, deleteAttraction } = attractionStore;
 import AttractionCardItem from './AttractionCardItem.vue';
 
@@ -25,14 +25,14 @@ const keyword = ref("서울");
 let bounds: kakao.maps.LatLngBounds;
 
 const onPushHeart = (attraction) => {
-    let token = sessionStorage.getItem("accessToken");
-    if(attraction.isLiked == 0){
-        attraction.isLiked = 1;
-        insertAttraction(token ,attraction.content_id);
-    }else{
-        attraction.isLiked = 0;
-        deleteAttraction(token ,attraction.content_id);
-    }
+  let token = sessionStorage.getItem("accessToken");
+  if (attraction.isLiked == 0) {
+    attraction.isLiked = 1;
+    insertAttraction(token, attraction.content_id);
+  } else {
+    attraction.isLiked = 0;
+    deleteAttraction(token, attraction.content_id);
+  }
 }
 
 const onLoadKakaoMap = (mapRef: kakao.maps.Map) => {
@@ -52,20 +52,15 @@ const makeMaker = (data, isSearch) => {
   }
   bounds = new kakao.maps.LatLngBounds();
   for (let marker of data) {
-    let markerImg = defaultImg;
-    if (marker.isLiked != '0') {
-      markerImg = likeImg;
-    }
-    console.log(likeImg);
     const markerItem: KakaoMapMarkerListItem = {
       lat: marker.latitude,
       lng: marker.longitude,
       image: {
-          imageSrc: markerImg,
-          imageWidth: 48,
-          imageHeight: 48,
-          imageOption: {}
-        },
+        imageSrc: marker.isLiked != '1' ? defaultImg : likeImg,
+        imageWidth: 48,
+        imageHeight: 48,
+        imageOption: {}
+      },
       infoWindow: {
         content: `<div class="card" style="width: 100%">
                     <div class="card-body">
@@ -86,6 +81,14 @@ const makeMaker = (data, isSearch) => {
   map.value?.setBounds(bounds);
 
 }
+
+watch(
+  () => attractionStore.clickHeart,
+  (changeLike) => {
+    console.log(changeLike);
+    makeMaker(attractionStore.searchAttractionList, false);
+  },
+);
 
 watch(
   () => attractionStore.searchAttractionList,
@@ -122,8 +125,7 @@ const coordinate = {
   <KakaoMap style="border-radius: 0;" width="100%" height="100%" :lat="coordinate.lat" :lng="coordinate.lng"
     @onLoadKakaoMap="onLoadKakaoMap">
     <KakaoMapMarker v-for="(marker, index) in markerList" :key="marker.key === undefined ? index : marker.key"
-      :lat="marker.lat" :lng="marker.lng" :infoWindow="marker.infoWindow" 
-      :clickable="true" :image="marker.image" 
+      :lat="marker.lat" :lng="marker.lng" :infoWindow="marker.infoWindow" :clickable="true" :image="marker.image"
       @onClickKakaoMapMarker="onClickMapMarker(marker)" />
   </KakaoMap>
   <button class="reset-button" @click="setBounds">

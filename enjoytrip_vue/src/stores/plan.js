@@ -112,7 +112,6 @@ export const usePlanStore = defineStore("planStore", () => {
         console.log("계획 저장 실패 " + error);
       }
     );
-
   };
 
   return {

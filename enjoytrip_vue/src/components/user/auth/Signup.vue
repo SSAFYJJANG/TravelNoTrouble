@@ -46,7 +46,6 @@ const checkId = async () => {
 
 const clickSignup = () => {
   if (checkClick.value && !userStore.isDuplicate) {
-    console.log(checkEmail(signupUser.value.email));
     if (checkEmail(signupUser.value.email)) {
       userSignup(signupUser.value);
       router.replace({ name: "auth-login" });
@@ -68,14 +67,6 @@ const checkEmail = () => {
   }
   return true;
 };
-
-// const validateEmail = (email) => {
-//   return String(email)
-//     .toLowerCase()
-//     .match(
-//       /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
-//     );
-// }
 
 const selectGugunList = ref([]);
 

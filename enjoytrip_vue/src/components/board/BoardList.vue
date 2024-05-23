@@ -62,14 +62,15 @@ const getArticleList = () => {
 </script>
 
 <template>
-  <div class="container">
+  <div class="container p-5">
+    
     <div class="row justify-content-center">
       <div class="col-lg-10">
-        <h2 class="my-3 py-3 shadow-sm bg-light text-center">
-          <mark class="sky">글목록</mark>
-        </h2>
+        <h3 style="font-weight: 700;">
+          자유게시판
+        </h3>
       </div>
-      <div class="col-lg-10">
+      <div class="col-lg-10 mt-4">
         <div class="row align-self-center mb-2">
           <div class="col-md-2 text-start">
             <router-link

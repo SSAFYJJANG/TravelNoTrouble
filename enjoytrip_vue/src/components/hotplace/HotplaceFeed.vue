@@ -37,20 +37,21 @@ watch(
       </router-link>
     </div>
 
-    <div class="container">
+    <div class="container p-5">
+      <h3 style="font-weight: 700;">
+        인기 리뷰
+      </h3>
       <section
         data-bs-version="5.1"
         class="clients1 cid-uc9Pp8Jzvy"
         id="clients01-2f"
       >
-        <div class="">
-          <div class="mt-5">
-            <div v-if="!loading" class="row">
-              <HotplaceCard
-                v-for="feed in hotplaceStore.feedList"
-                :card="feed"
-              />
-            </div>
+        <div class="mt-5">
+          <div v-if="!loading" class="row">
+            <HotplaceCard
+              v-for="feed in hotplaceStore.feedList"
+              :card="feed"
+            />
           </div>
         </div>
       </section>

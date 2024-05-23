@@ -1,5 +1,6 @@
 package com.trip.vue.user.model.service;
 
+import java.io.File;
 import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -9,6 +10,8 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
+import org.apache.commons.io.FileUtils;
+import org.apache.commons.io.filefilter.TrueFileFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -61,7 +64,17 @@ public class UserServiceImpl implements UserService {
 	public int updateUserInfo(UserDto ob, MultipartFile file) throws Exception {		
 		if (file != null) {
 			final String extension = file.getContentType().split("/")[1];
-			final String fileName = UUID.randomUUID() + "." + extension;
+			
+			String dir_path = "/profile";
+			int count = 0;
+			File dir = new File(dir_path);
+			File[] list = dir.listFiles();
+			for (File info : FileUtils.listFiles(dir, TrueFileFilter.INSTANCE, TrueFileFilter.INSTANCE)) {
+				count++;
+			}
+
+//			final String fileName = UUID.randomUUID() + "." + extension;
+			final String fileName = "profile" + count + "." + extension;
 			
 			Path uploadPath = Paths.get("/profile/");
 			if (!Files.exists(uploadPath)) {

@@ -1,6 +1,7 @@
 <script setup>
 import router from '@/router';
 import { ref } from 'vue';
+const { VITE_VUE_API_URL } = import.meta.env;
 defineProps({
     popularHotPlace: Object
 })
@@ -16,7 +17,7 @@ const clickMove = () => {
         <div class="slide-content">
             <div class="item-img">
                 <div class="item-wrapper">
-                    <img @dblclick="clickMove" :src=popularHotPlace.image :alt=popularHotPlace.title
+                    <img @dblclick="clickMove" :src="`${VITE_VUE_API_URL}/img/${popularHotPlace.image}`" :alt=popularHotPlace.title
                         :title=popularHotPlace.title :data-slide-to=popularHotPlace.dataSlideTo
                         :data-bs-slide-to=popularHotPlace.dataBsSlideTo>
                 </div>

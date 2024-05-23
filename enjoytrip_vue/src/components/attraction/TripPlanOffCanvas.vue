@@ -20,7 +20,6 @@ watch(overview, (newOverview) => {
 });
 
 const savePlan = () => {
-    console.log(planStore.scene.value);
     let token = sessionStorage.getItem("accessToken");
     planStore.insertPlan(token);
 };

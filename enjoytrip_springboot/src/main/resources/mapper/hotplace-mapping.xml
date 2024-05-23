@@ -37,7 +37,7 @@
 	</update>
 	
 	<select id="viewHotplace" parameterType="integer">
-		select h.hotplace_id, h.title, h.overview, h.image, h.userid, h.like, h.regist_time, u.username
+		select h.hotplace_id, h.title, h.overview, h.image, h.userid, h.like, h.regist_time, u.username, h.sido_code, h.gugun_code
 		from hotplace h
 		left join user u on h.userid = u.userid
 		where hotplace_id=#{hotplace_id}

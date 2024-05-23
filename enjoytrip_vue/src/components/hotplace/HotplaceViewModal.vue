@@ -1,6 +1,11 @@
 <script setup>
 import { ref, defineProps, onMounted } from "vue";
 import { useHotplaceStore } from "@/stores/hotplace";
+import { useAttractionStore } from "@/stores/attraction";
+import { storeToRefs } from "pinia";
+
+const attractionStore = useAttractionStore();
+const { sidoList, gugunList } = storeToRefs(attractionStore);
 const { VITE_VUE_API_URL } = import.meta.env;
 
 const hotplaceStore = useHotplaceStore();
@@ -10,10 +15,38 @@ const props = defineProps(["card"]);
 const info = ref(null);
 const loading = ref(true);
 
+const addr = ref({
+  sido_name: null,
+  gugun_name: null,
+});
+
+const selectGugunList = ref([]);
+
 onMounted(async () => {
   await getHotplaceDetail(props.card.hotplace_id);
   info.value = hotplaceStore.feedInfo;
   loading.value = false;
+
+  for (let i = 0; i < sidoList.value.length; i++) {
+    if (sidoList.value[i].sido_code == feedInfo.sido_code) {
+      addr.value.sido_name = sidoList.value[i].sido_name;
+      break;
+    }
+  }
+
+  if (addr.value.sido_name != null && gugunList.value != null) {
+    selectGugunList.value = gugunList.value[feedInfo.sido_code].map((item) => ({
+      text: item.gugun_name,
+      value: item.gugun_code,
+    }));
+  }
+
+  for (let i = 0; i < selectGugunList.value.length; i++) {
+    if (selectGugunList.value[i].value == feedInfo.gugun_code) {
+      addr.value.gugun_name = selectGugunList.value[i].text;
+      break;
+    }
+  }
 });
 
 const likeFeed = () => {
@@ -34,9 +67,14 @@ const likeFeed = () => {
 
       <div class="my-4 mx-5">
         <h4 class="mb-3">{{ info.title }}</h4>
+        <div>
+          {{ hotplaceStore.feedInfo.username }} ({{
+            hotplaceStore.feedInfo.userId
+          }})
+        </div>
         <div class="d-flex justify-content-between">
           <div>
-            {{ hotplaceStore.feedInfo.username }} ({{ hotplaceStore.feedInfo.userId }}) | {{ info.regist_time }}
+            {{ addr.sido_name }} {{ addr.gugun_name }} | {{ info.regist_time }}
           </div>
           <button @click="likeFeed">
             <i class="bi bi-heart-fill"></i>
@@ -44,7 +82,7 @@ const likeFeed = () => {
           </button>
         </div>
 
-        <hr class="mt-3 mb-3" />
+        <hr class="mt-2 mb-3" />
         <p>{{ info.overview }}</p>
       </div>
     </div>

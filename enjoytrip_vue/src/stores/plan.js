@@ -103,7 +103,7 @@ export const usePlanStore = defineStore("planStore", () => {
         props: { orientation: "horizontal" },
         children: [],
       };
-      columns = {};
+      columns.value = {};
     };
   };
 

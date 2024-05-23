@@ -2,12 +2,17 @@
 import { ref } from 'vue'
 import { CFormTextarea, CInputGroup, CCard, CRow, CCol, CCardImage, CCardBody, CCardTitle, CCardText, CAccordion, CAccordionItem, CAccordionHeader, CAccordionBody } from '@coreui/vue';
 import data from "@/data/index.js";
-defineProps({ attraction: Object });
-const emit = defineEmits(["removeCard"]);
+const props = defineProps({ columnId: String , card : Object});
+const emit = defineEmits(["removeCard", "writeOverview"]);
 const planDetailMemo = ref("");
 
 const removeCard = () => {
     emit('removeCard');
+}
+
+const writeOverview = () => {
+    const updatedItem = { card : props.card , columnId : props.columnId , value: planDetailMemo.value };
+    emit('writeOverview', updatedItem);
 }
 
 </script>
@@ -17,15 +22,15 @@ const removeCard = () => {
         <CRow class="g-0">
             <CCol :md="4">
                 <CCardImage class="rounded-0 card-img"
-                    :src="attraction.first_image ? attraction.first_image : data.imgsrc" />
+                    :src="props.card.attraction.first_image ? props.card.attraction.first_image : data.imgsrc" />
             </CCol>
             <CCol :md="8">
                 <CCardBody class="card-content">
-                    <CCardTitle class="card-title">{{ attraction.title }}</CCardTitle>
-                    <CCardText class="card-text">{{ attraction.addr1 }}</CCardText>
+                    <CCardTitle class="card-title">{{ props.card.attraction.title }}</CCardTitle>
+                    <CCardText class="card-text">{{ props.card.attraction.addr1 }}</CCardText>
                     <CCardText class="card-text card-btn d-flex justify-content-end">
                         <button>
-                            <i class="fa-solid fa-square-plus" @click="removeCard(attraction)"></i>
+                            <i class="fa-solid fa-square-plus" @click="removeCard"></i>
                         </button>
                     </CCardText>
                 </CCardBody>
@@ -39,7 +44,7 @@ const removeCard = () => {
                         <CInputGroup>
                             <CFormTextarea class="memo" id="detail-memo" aria-label="With textarea" rows="5"
                                 placeholder="장소에 대해 간단히 메모해보세요" style="resize: none;" maxlength="100"
-                                v-model="planDetailMemo">
+                                v-model="planDetailMemo" @change="writeOverview">
                             </CFormTextarea>
                             <span class="countTextLen">{{ planDetailMemo.length }}/100</span>
                         </CInputGroup>
@@ -50,7 +55,7 @@ const removeCard = () => {
                         <strong>자세히 보기</strong>
                     </CAccordionHeader>
                     <CAccordionBody>
-                        {{ attraction.overview }}
+                        {{ props.card.attraction.overview }}
                     </CAccordionBody>
                 </CAccordionItem>
             </CAccordion>

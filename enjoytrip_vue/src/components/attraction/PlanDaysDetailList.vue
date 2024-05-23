@@ -21,7 +21,6 @@
                         <i class="bi bi-x remove-column-button ml-auto" @click="removeColumn(column.id)">
                         </i>
                     </button>
-
                     <Container group-name="col"
                         v-show="selectedColumnId === column.id || (isDragging && hoveredColumnId === column.id)"
                         @drop="e => onCardDrop(column.id, e)" @drag-start="onDragStart" @drag-end="onDragEnd"
@@ -30,8 +29,11 @@
                         :style="getContainerStyle(column.id)">
                         <Draggable v-for="card in column.children" :key="card.id">
                             <div :class="card.props.className" :style="card.props.style">
-                                <PlanDaysDetail :attraction="card.attraction"
-                                    @remove-card="removeCard(column, card.id)">
+                                <PlanDaysDetail 
+                                    :card="card"
+                                    :columnId="column.id"
+                                    @remove-card="removeCard(column, card.id)"
+                                    @write-overview="onWriteOverview">
                                 </PlanDaysDetail>
                             </div>
                         </Draggable>
@@ -52,7 +54,7 @@ import PlanDaysDetail from "@/components/attraction/PlanDaysDetailItem.vue"
 import { usePlanStore } from "@/stores/plan";
 import { storeToRefs } from "pinia";
 const planStore = usePlanStore();
-const { scene, column } = storeToRefs(planStore);
+const { scene } = storeToRefs(planStore);
 
 watch(
     () => planStore.isSelectAttraction,
@@ -86,6 +88,11 @@ const selectedStyle = {
 // Column ID Counter
 let columnIdCounter = 0;
 
+const onWriteOverview = (updatedItem) => {
+    // console.log(updatedItem);
+    updatedItem.card.overview = updatedItem.value;
+}
+
 const applyDrag = (arr, dragResult) => {
     const { removedIndex, addedIndex, payload } = dragResult
     if (removedIndex === null && addedIndex === null) return arr
@@ -112,13 +119,9 @@ const addRow = (columnId, newAttractoin) => {
             id: `${scene.value.children.length}${(column.children && column.children.length > 0) ? column.children.length : 0}`,
             props: { className: 'card', style: { boxShadow: "0px 2px 6px 0px #89737380" } },
             attraction: newAttractoin,
+            overview : "",
         };
-        planStore.columns[columnId] = {
-            row_id: newRow.id,
-            content_id: newAttractoin.id,
-            overview: ""
-        };
-        console.log("day" + JSON.stringify(days.value, 2, null));
+        console.log(newRow.attraction);
         column.children.push(newRow);
     }
 }
@@ -137,7 +140,6 @@ const addColumn = () => {
         zIndex: 0,
     };
     scene.value.children.push(newColumn);
-    days.value[newColumn.id] = [];
     // 새 열을 추가한 후 자동으로 선택
     selectCol(newColumn.id);
 };
@@ -174,12 +176,9 @@ const onCardDrop = (columnId, dropResult) => {
         const columnIndex = updatedScene.children.indexOf(column);
         const newColumn = { ...column };
         newColumn.children = applyDrag(newColumn.children, dropResult);
-        for (let card in newColumn.children) {
-            console.log("card" + card);
-        }
         updatedScene.children.splice(columnIndex, 1, newColumn);
-
         scene.value = updatedScene;
+        console.log(scene.value);
     }
 };
 
@@ -189,14 +188,10 @@ const getCardPayload = (columnId) => (index) => {
 // 열 삭제 함수
 const removeColumn = (columnId) => {
     scene.value.children = scene.value.children.filter(column => column.id !== columnId);
-    delete days.value[columnId];
-    console.log("day" + JSON.stringify(days.value, 2, null));
 };
 
 const removeCard = (column, cardId) => {
-    days.value[column.id] = days.value[column.id].filter(card => card.row_id !== cardId)
     column.children = column.children.filter(card => card.id !== cardId);
-    console.log("day" + JSON.stringify(days.value, 2, null));
 }
 
 // 열 선택 함수

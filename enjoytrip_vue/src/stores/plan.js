@@ -11,7 +11,6 @@ export const usePlanStore = defineStore("planStore", () => {
   const days = ref({});
   const diffDate = ref(0);
   const isSelectAttraction = ref(null);
-  const columns = ref({});
 
   const scene = ref({
     type: "container",
@@ -68,43 +67,52 @@ export const usePlanStore = defineStore("planStore", () => {
     days.value[dayKey].push(detail);
   };
 
+  
+  const resetPlan = () => {
+    title.value = "나의 여행 계획";
+    startDate.value = new Date();
+    endDate.value = new Date();
+    overview.value = "";
+    days.value = {};
+    scene.value = {
+      type: "container",
+      props: { orientation: "horizontal" },
+      children: [],
+    };
+  };
+
   const insertPlan = async (token) => {
+    const result = {};
+    scene.value.children.forEach((item, index) => {
+        result[index + 1] = item.children.map(child => ({
+            content_id: child.attraction.content_id,
+            overview: child.overview
+        }));
+    });
+
     let decodeToken = jwtDecode(token);
     const planData = {
       title: title.value,
-      start_date: startDate.value.toISOString(),
-      end_date: endDate.value.toISOString(),
+      start_date: startDate.value.toISOString().split("T")[0],
+      end_date: endDate.value.toISOString().split("T")[0],
       userId: decodeToken.userId,
       overview: overview.value,
-      day: days.value,
+      day: result,
     };
     console.log("저장 버튼 누름 " + JSON.stringify(planData, null, 2));
-    // await savePlan(
-    //   planData,
-    //   (response) => {
-    //     if (response.status === httpStatusCode.OK) {
-    //       console.log("저장 성공!!!");
-    //       resetPlan();
-    //     }
-    //   },
-    //   async (error) => {
-    //     console.log("계획 저장 실패 " + error);
-    //   }
-    // );
+    await savePlan(
+      planData,
+      (response) => {
+        if (response.status === httpStatusCode.OK) {
+          console.log("저장 성공!!!");
+          resetPlan();
+        }
+      },
+      async (error) => {
+        console.log("계획 저장 실패 " + error);
+      }
+    );
 
-    const resetPlan = () => {
-      title.value = "나의 여행 계획";
-      startDate.value = new Date();
-      endDate.value = new Date();
-      overview.value = "";
-      days.value = {};
-      scene.value = {
-        type: "container",
-        props: { orientation: "horizontal" },
-        children: [],
-      };
-      columns = {};
-    };
   };
 
   return {
@@ -116,7 +124,6 @@ export const usePlanStore = defineStore("planStore", () => {
     isSelectAttraction,
     diffDate,
     scene,
-    columns,
     setTitle,
     setStartDate,
     setEndDate,

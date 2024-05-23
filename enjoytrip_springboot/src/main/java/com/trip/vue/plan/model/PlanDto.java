@@ -1,5 +1,6 @@
 package com.trip.vue.plan.model;
 
+import java.sql.Date;
 import java.sql.Timestamp;
 
 import lombok.Data;
@@ -10,6 +11,6 @@ public class PlanDto {
 	private String title;
 	private String userId;
 	private String overview;
-	private Timestamp start_date;
-	private Timestamp end_date;
+	private Date start_date;
+	private Date end_date;
 }

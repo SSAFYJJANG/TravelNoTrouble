@@ -1,7 +1,6 @@
 package com.trip.vue.plan.model;
 
 import java.sql.Date;
-import java.sql.Timestamp;
 
 import lombok.Data;
 
